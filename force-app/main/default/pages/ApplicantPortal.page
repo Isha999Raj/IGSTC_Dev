@@ -1,0 +1,336 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false"  docType="html-5.0" controller="ApplicantPortal_Contoller">
+    <head>
+        <c:Libraries /> 
+        <script> 
+                        var tabValues = JSON.parse('{!tabValues}');
+                        var userId = '{!$CurrentPage.parameters.id}';
+                        var candidateId = '{!candidateId}';
+                        var campaigntype = '{!campaigntype}';
+                        var projectId =  '{!projectId}';
+                        var campaignName = '{!campaignName}';
+                        var countrytype = JSON.parse('{!countrytype}');
+                        var countryCode = JSON.parse('{!countryCode}');
+                        var availingFellowship = JSON.parse('{!availingFellowship}');
+                        var pairedApplicant = JSON.parse('{!pairedApplicant}');
+                        var participantType = JSON.parse('{!participantType}');
+                        var bankType = JSON.parse('{!bankType}');
+                        var participatingWorkshop = JSON.parse('{!participatingWorkshop}');
+                        var specialization = JSON.parse('{!specialization}');
+                        var presentingWorkshop = JSON.parse('{!presentingWorkshop}');
+                        var siteURL = '{!ApplicantPortalSiteURL}';
+                        var financialConDetails = JSON.parse('{!financialConDetails}');
+                        var thematicAreaList = JSON.parse('{!thematicAreaList}');
+                        var domainURL = '{!$Label.ApplicantPortalSiteURL}';
+                        var contactId = '{!contactId}';
+                        var secondstage = '{!secondstage}';
+                        var emailVerified = '{!emailVerified}'; 
+                        var proposalStage = '{!proposalStage}';          
+                        var gender = JSON.parse('{!gender}');
+                        var country = JSON.parse('{!country}');
+                        var nationality = JSON.parse('{!nationality}');
+                        var available_followship = '{!available_followship}';
+                        var associated_with_igstc = '{!associated_with_igstc}';
+                        var expanseHead = JSON.parse('{!expanseHead}');
+                        var applicantName='{!applicantName}';
+                        var applicantEmail='{!applicantEmail}';
+                        var isPrimaryContact='{!isPrimaryContact}';
+                        var accountId='{!accountId}';
+                        var natureOfThesisWork=JSON.parse('{!natureOfThesisWork}');
+                        var natureOfPhDWork=JSON.parse('{!natureOfPhDWork}');
+                        var percentCGPA=JSON.parse('{!percentCGPA}');
+                        var states=JSON.parse('{!states}');
+                        var campaignData='{!campaignData}';
+                        var signDate='{!signDate}';
+                        var currencyPickList=JSON.parse('{!currencyPickList}');
+                        debugger;
+                        
+            </script>
+        <apex:stylesheet value="{!$Resource.ApplicantPortalCSS}" />
+        <apex:stylesheet value="{!$Resource.ReviewerPortalCss}" />
+        <apex:stylesheet value="{!$Resource.SlickThemeCSS}" />
+        <apex:stylesheet value="{!$Resource.SlickCss}" />
+    
+        <apex:stylesheet value="{!$Resource.SmallCss}" />
+        <apex:stylesheet value="{!$Resource.MediumCss}" />
+        <apex:stylesheet value="{!$Resource.LargCss}" />
+        <!--script src="{!$Resource.AngularMultiSelectDirective}" /-->
+        <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.7.0/lodash.min.js">
+        </script>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css'/>
+        <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular-sanitize.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/textAngular/1.1.2/textAngular.min.js'></script>
+        <script src="{!$Resource.datetimepicker}"></script>
+        <c:Controllers />
+        <style> 
+        
+/* body {
+    background: #F5F5F5;
+} */
+ /* .card-img-left { */
+    /*width: 45%;*/
+    /* Link to your background image using in the property below! */
+    /* background: scroll center url('https://source.unsplash.com/WEQbe2jBg40/414x512');
+    background-size: 'cover'; */
+/* } */
+/*
+.btn-login {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+}
+
+.btn-google {
+    color: white !important;
+    background-color: #ea4335;
+}
+
+.btn-facebook {
+    color: white !important;
+    background-color: #3b5998;
+}
+
+.loadingBackground {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: #F6F6F6;
+    z-index: 11111;
+    opacity: 0.7;
+    top: 0px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.loading {
+    top: 50%;
+    left: 50%;
+    margin: -50px 0px 0px -50px;
+    z-index: 111111;
+    position: fixed;
+}
+.i-padding{
+            padding-right: 10px;
+        }
+@media only screen and (min-width:850px) and (max-width:1000px){
+    .padding_1000{
+        padding-left:20px !important;
+        padding-right:20px !important;
+    }
+}
+@media only screen and (max-width: 750px) {
+    @media screen and (min-device-width: 650px) and (max-device-width: 750px) { 
+        .col{
+            padding:unset;
+        }
+    }
+    .col{
+        flex-shrink: 0 !important;
+        flex: unset;
+        
+    }
+}
+        </style>
+        <c:Controllers />
+        <style> 
+            @media (min-width: 576px) {
+        .h-sm-100 {
+            height: 100%;
+        }
+        } */
+</style>
+
+    </head>
+    <body ng-app="cp_app" ng-controller="cp_dashboard_ctrl" style="background-color: #ffffff; !important;">
+
+        <!-- <div class="top-nav">
+            <div class="container-fluid">
+                <div class="row mx-5">
+                    <div class="col-7">
+                        Email:
+                        <a href="mailto:info@igstc.com" class="link">
+                            info@igstc.com
+                        </a>
+                    </div>
+                    <div class="col-5">
+                        <ul class="social text-end">
+                            <li>
+                                <a href="https://www.facebook.com/IGSTC.IndoGerman/" target="_blank">
+                                    <i class="fab fa-facebook"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/INDOGSTC" target="_blank">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://in.linkedin.com/company/igstc" target="_blank">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>        
+            </div>
+        </div> -->
+
+        <!-- <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid mx-5">
+                <a class="navbar-brand" href="#/Home">
+                    <apex:image url="{!$Resource.Logo}" style="margin-top:-20px;" alt="IGSTC"/>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#/Home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#/Campaign">Campaign</a>
+                        </li>
+                        <li class="nav-item" ng-if="projectId != ''">
+                            <a class="nav-link" href="#/MyProposal">MyProposal</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span>Login</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-success btn-sm" href="#">
+                                Sign Up
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav> -->
+        <!-- <a class="nav-link" href="#/Home" ng-class="{activeColor:activeTab==0}" style="color: rgba(63,63,70,1)"></a> -->
+        <nav class="navbar navbar-expand-lg navbar-light" ng-hide="programmeHeaderName=='CONNECT PLUS'">
+            <div class="wrapper px-5">
+                <a class="navbar-brand p-0" href="#/Home">
+                    <apex:image url="{!$Resource.Logo}" alt="IGSTC" styleClass="brand-logo"/>
+                </a>
+                <div class="">
+                    <!-- <p class="nav-link text-center ps-5"><b>Application submission Deadline :</b></p> -->
+                    <li class="nav-link text-center" ng-if="programmeHeaderName=='WISER' || programmeHeaderName=='Workshop'"><b>Cut-off dates: {{cutOffSD}} and {{cutOffED}}</b></li>
+                    <li class="nav-link text-center" ng-if="programmeHeaderName=='2PLUS2' || programmeHeaderName=='PECFAR' || programmeHeaderName=='INDUSTRIAL FELLOWSHIPS'"><b>Application submission Deadline : {{campaignEndDate}}</b></li>
+                    <li class="nav-link text-center" ng-if="programmeHeaderName=='SING'"><b>Applications are accepted throughout the year</b></li>
+                    <!-- <marquee>
+                        <p class="nav-link"><b>{{campaignEndDate}}</b></p>
+                     </marquee> -->
+                </div>
+                <button class="navbar-toggler float-end m-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <!-- <span class="navbar-toggler-icon"></span> -->
+                    <i class="fa fa-bars" />
+                </button>
+                <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarNavDarkDropdown">                 
+                    <ul class="navbar-nav mt-2">
+                            <li class="nav-item pe-5">
+                                <a class="nav-link" href="#/Home" ng-class="{activeColor:activeTab==0}">Home/{{programmeHeaderName}}</a>
+                            </li>
+                            <!-- <li class="nav-item me-5">
+                                <a class="nav-link" href="#/Campaign" ng-class="{activeColor:activeTab==1}">Campaign</a>
+                            </li> -->
+                           
+                            <!-- <li class="nav-item me-5">
+                                <a class="nav-link" href="#/CampaignTheme" ng-class="{activeColor:activeTab==2}" style="color: rgba(63,63,70,1)">Campaign Theme</a>
+                            </li> -->
+                             <li class="nav-item pe-5" ng-if="projectId != ''" >
+                                <a class="nav-link" href="#/MyProposal" ng-class="{activeColor:activeTab==3}">My Proposal</a>
+                            </li>
+                    </ul>
+                        <!-- <div class="nav-item">
+                            <button type="button" class="nav-link btn btn-dark"  href="" ng-class="{activeColor:activeTab==2}" style="color: white;padding-right:1%;padding-left:1%" ng-click="redirect()">Login/Signup</button>
+                        </div> -->
+                        <div class="d-flex" ng-if="applicantName==''">
+                            <a class="blue-btn" href="#/RegistrationForm" ng-click="redirect()">Login/Signup</a>
+                        </div>
+                        <div class="d-flex text-align-center" ng-if="applicantName!=''">
+                        <div class="dropdown" ng-if="applicantName!=''">
+                            <i class="far fa-user fa-2x" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            </i>
+                            <ul class="dropdown-menu" style="width: 300px" aria-labelledby="dropdownMenuButton1">                                                            
+                              <li><a class="dropdown-item pe-5"><i class="fa-solid fa-user me-3"></i>{{applicantName}}</a></li>
+                              <li>
+                                <hr class="dropdown-divider" />
+                            </li>
+                              <li><a class="dropdown-item pe-5"><i class="fa-solid fa-at me-3"></i>{{applicantEmail}}</a></li>
+                              <li>
+                                <hr class="dropdown-divider" />
+                            </li>
+                            <li>
+                                <a class="dropdown-item pe-5" ng-click="LogoutApplicant()"><i class="fa-solid fa-right-from-bracket me-3"></i>Logout</a>
+                            </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <!-- <div class="d-flex" ng-if="applicantName!=''">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                    style="color: white !important;">
+                                    <div class="profile-header-img">
+                                        <img ng-show="profilePicId == undefined" class=" rounded-circle mr-2 img-circle" src="https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
+                                            width="40" height="40" alt="avatar" />
+                                        <img ng-hide="profilePicId == undefined" class="rounded-circle mr-2 profile-pic" src="https://ondonte--dev--c.documentforce.com/sfc/servlet.shepherd/version/download/{{profilePicId}}"
+                                            width="40" height="40" alt="avatar" />
+                                    </div>
+                                    <span class="rank-label-container">
+                                        <span class="label label-default rank-label">{{userDetails.LastName}}</span>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu me-5 mobile-drops" aria-labelledby="navbarDropdown" style="margin-left: -100px">
+                                    <li>
+                                        <a class="dropdown-item" href="#/CP_EditProfile">Edit Profile</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#referralModal">Referrals</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" ng-click="redirectToSchdlPlnr()">My Calender</a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider" />
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" ng-click="logoutContact()">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </div> -->
+                       
+                </div>
+            </div>
+        </nav>
+<!-- <div>
+    <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-white border rounded-5 shadow-sm" id="pillNav2" role="tablist">
+        <li class="nav-item" role="presentation">                
+          <button class="nav-link active rounded-5" id="basic_tab" data-bs-toggle="tab" type="button" role="tab" aria-selected="true"><i class="fa fa-home i-padding"></i>Basic Details</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link rounded-5" id="consortia_tab" data-bs-toggle="tab" type="button" role="tab" aria-selected="false"><i class="fa-solid fa-people-group i-padding"></i>Consortia Details</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link rounded-5" id="finance_tab" data-bs-toggle="tab" type="button" role="tab" aria-selected="false"><i class="fa-solid fa-money-bill-trend-up i-padding"></i>Finance Contribution</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link rounded-5" id="project_tab" data-bs-toggle="tab" type="button" role="tab" aria-selected="false"><i class="fa-solid fa-arrows-to-dot i-padding"></i>Project Details</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link rounded-5" id="packge_tab" data-bs-toggle="tab" type="button" role="tab" aria-selected="false"><i class="fa-solid fa-box i-padding"></i>Work Package</button>
+        </li>
+    </ul>
+</div> -->
+            <div style="background-color: #fff;">  
+                <ng-view>
+                </ng-view>
+            </div>
+            <!-- <apex:includeScript value="{!$Resource.SlickJs}" />
+    <apex:includeScript value="{!$Resource.CustomJs}" /> -->
+    </body>
+</apex:page>

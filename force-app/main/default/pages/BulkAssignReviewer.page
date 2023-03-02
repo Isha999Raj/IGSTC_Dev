@@ -1,0 +1,271 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" controller="BulkAssignReviewerController">
+    <html>
+
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" /> -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"/>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="assets/styles/salesforce-lightning-design-system.min.css" />
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    </head>
+    <style>
+    .blue-btn {
+    background: #171347;
+    color: #fff;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    padding: 8px 20px;
+    border: none;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+    .blue-btn:hover {
+        background: rgba(177, 210, 240, 0.3);
+        color: #171347;
+        border: none;
+        text-decoration: none;
+    }
+    .blue-btn:disabled{
+        color:#fff;
+  border-color: #a0a0a0;
+  background-color: #a0a0a0;
+    }
+    </style>
+    <!-- <style>
+            .container{
+            	padding-top:15px;
+            	margin-top:50px;
+            	background-color:#ECECEC;
+    			
+            }
+            
+           
+        </style> -->
+
+    <body ng-app="GetCampaignApp" ng-controller="GetCampaignCtrl">
+        <div class="container-fluid px-5 mt-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" ng-click="saveReviewersAction()" class="blue-btn float-end">Save</button>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-5">
+                    <label>Select Call Type</label>
+                    <select class="form-control w-100" id="listDropDown" ng-change="catchCampaign(myValue)" ng-model="myValue">
+                        <option value="none" ng-selected="true">--None--</option>
+                        <option ng-repeat="appID in listOfCampaign" value="{{appID.Id}}">
+                            {{appID.Name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <!-- <tr>
+                                <th colspan="2">
+                                    <select class="form-control w-100" id="listDropDown" ng-change="catchCampaign(myValue)" ng-model="myValue">
+                                        <option value="none" ng-selected="true">--None--</option>
+                                        <option ng-repeat="appID in listOfCampaign" value="{{appID.Id}}">
+                                            {{appID.Name}}
+                                        </option>
+                                    </select>
+                                </th>
+                                <th colspan="{{applicationData.allReviewer.length+1}}"></th>
+                            </tr> -->
+                            <tr>
+                                <th>Application Id</th>
+                                <th>Title</th>
+                                <th>Submitted By</th>
+                                <th colspan="{{applicationData.allReviewer.length}}" class="text-center">Reviewer(s)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td ng-repeat="revID in applicationData.allReviewer">{{revID.Name}}
+                                    <span class="badge bg-success" ng-repeat="x in reviewerPropCount" ng-if="x.Id==revID.Id">{{x.count}}</span>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="app in applicationData.allAppWithRM">
+                                <td>
+                                    {{app.application.Name}}
+                                    <!-- <div>
+                                        <div class="card" style="width: 170px; background-color:#B5EFF">
+                                            <div class="card-body">
+
+                                                {{app.application.Name}}
+                                                <br/> {{app.application.Title_Of__c}}
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </td>
+                                <td width="20%">
+                                    {{app.application.Title_Of__c}}
+                                </td>
+                                <td>
+                                   <p ng-repeat="con in app.application.Contacts__r">{{con.Name}}</p> 
+                                </td>
+                                
+                                <td ng-repeat="rRecord in applicationData.allReviewer">
+                                    <span ng-repeat="rmRecord in app.reviewerList" ng-show="rmRecord.Reviewer__c==rRecord.Id">
+                                    <input type="checkbox" ng-click="setCount(rmRecord.Reviewer__c,rmRecord.isSelected__c,$index,$parent.$parent.$index)" ng-model="rmRecord.isSelected__c" name="abc" />                                    
+                                </span>
+                                </td>
+                                <!-- <td ng-repeat="rmRecord in app.reviewerList">
+                                    <input type="checkbox" ng-click="setCount(rmRecord.Reviewer__c,rmRecord.isSelected__c,$index,$parent.$index)" ng-model="rmRecord.isSelected__c" name="abc" />                                    
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" ng-click="saveReviewersAction()" class="blue-btn float-end">Save</button>
+                </div>
+            </div>
+        </div>
+
+    </body>
+    <script>
+        var app = angular.module('GetCampaignApp', []);
+        app.controller('GetCampaignCtrl', function ($scope) {
+            $scope.reviewerPropCount=[];
+            $scope.listOfCampaign = [];
+            $scope.checkList = [];
+            $scope.getCampaignList = function () {
+                BulkAssignReviewerController.getCampaign(function (result, event) {
+                    //debugger;
+                    if (event.status) {
+                        $scope.listOfCampaign = result;
+                        debugger;
+                        $scope.$apply();
+                    }
+                })
+            }
+            $scope.getCampaignList();
+
+$scope.setCount=function(reviewerId,val,index,parIndex){  
+// alert("parent=>"+parIndex+", child=>"+index+"");
+console.log("before");
+console.log($scope.applicationData.allAppWithRM[parIndex].reviewerList[index].isSelected__c);    
+$scope.applicationData.allAppWithRM[parIndex].reviewerList[index].isSelected__c=val;
+console.log("after");
+console.log($scope.applicationData.allAppWithRM[parIndex].reviewerList[index].isSelected__c);    
+    for(var i=0;i<$scope.reviewerPropCount.length;i++){
+        if($scope.reviewerPropCount[i].Id==reviewerId){
+            if(val){
+                $scope.reviewerPropCount[i].count=$scope.reviewerPropCount[i].count+1;
+            }
+            else{
+                $scope.reviewerPropCount[i].count=$scope.reviewerPropCount[i].count-1;
+            }
+        }
+    }
+}
+            $scope.catchCampaign = function (name) {
+                //debugger;
+                $scope.nameOfSelectedCampaign = name;
+                $scope.reviewerPropCount=[];
+                BulkAssignReviewerController.getProposalAndReviewer($scope.nameOfSelectedCampaign, function (result, event) {
+                    if (event.status) {
+                        debugger;
+                        console.log('on change data');
+                        console.log(result);
+                        $scope.applicationData = result;
+                        var revId=0;
+                        var proCount=0;
+                        for(var x=0;x<$scope.applicationData.allAppWithRM.length;x++){
+                            if($scope.applicationData.allAppWithRM[x].reviewerList.length<$scope.applicationData.allReviewer.length){
+                                for(var y=0;y<$scope.applicationData.allReviewer.length;y++){
+                                    var revIdd=$scope.applicationData.allReviewer[y].Id;
+                                    var validFag=true;
+                                    for(z=0;z<$scope.applicationData.allAppWithRM[x].reviewerList.length;z++){
+                                        if($scope.applicationData.allAppWithRM[x].reviewerList[z].Reviewer__c==revIdd){
+                                            validFag=false;
+                                        }
+                                    }
+                                    if(validFag){
+                                        $scope.applicationData.allAppWithRM[x].reviewerList.push({Proposals__c:$scope.applicationData.allAppWithRM[x].application.Id,Reviewer__c:revIdd,isSelected__c:false});
+                                    }
+                                }
+                            }
+                        }
+                        for(var i=0;i<$scope.applicationData.allReviewer.length;i++){
+                            revId=$scope.applicationData.allReviewer[i].Id;
+                            for(var j=0;j<$scope.applicationData.allAppWithRM.length;j++){
+                                for(var k=0;k<$scope.applicationData.allAppWithRM[j].reviewerList.length;k++){
+                                    if(revId==$scope.applicationData.allAppWithRM[j].reviewerList[k].Reviewer__c && $scope.applicationData.allAppWithRM[j].reviewerList[k].isSelected__c){
+                                        proCount=proCount+1;
+                                    }
+                                }
+                            }
+                            $scope.reviewerPropCount.push({Id:revId,count:proCount});
+                            revId=0;
+                            proCount=0;
+                        }
+                        //debugger;
+                        $scope.$apply();
+                    } else {
+                        swal('Get Reviewers Details','Exception occured, please try again or contact to support team.','error');
+                    }
+                })
+            }
+
+
+            $scope.saveReviewersAction = function () {
+                debugger;
+                var finalReviewermappingForInsert = [];
+                var finalReviewermappingForDelete = [];
+                for (var i = 0; i < $scope.applicationData.allAppWithRM.length; i++) {
+                    // Each App and It's Reviewer ka List
+                    var allReviewer = $scope.applicationData.allAppWithRM[i].reviewerList;
+
+                    for (var j = 0; j < allReviewer.length; j++) {
+                        if (allReviewer[j].isSelected__c == true) {
+                            delete allReviewer[j]['$$hashKey'];
+                            finalReviewermappingForInsert.push(allReviewer[j]);
+                        }else{
+                            delete allReviewer[j]['$$hashKey'];
+                            if(allReviewer[j].Id!=undefined)
+                            finalReviewermappingForDelete.push(allReviewer[j]);
+                        }
+                    }
+                }
+                    console.log("for insert=>");
+                    console.log(finalReviewermappingForInsert);
+                    console.log("for delete=>");
+                    console.log(finalReviewermappingForDelete);
+                BulkAssignReviewerController.getReviewerAction(finalReviewermappingForInsert,finalReviewermappingForDelete, function (result, event) {
+                    debugger;
+                    if (event.status) {
+                        swal('Save Details','Reviewers details have been saved successfully.','success');
+                        $scope.reviewerPropCount=[];
+                        $scope.catchCampaign($scope.nameOfSelectedCampaign);
+                    } else {
+                        swal('Save Details','Exception occured, please try again or contact to support team.','error');
+                        // $scope.$apply();
+                    }
+
+                })
+
+            }
+        });
+
+    </script>
+
+    </html>
+</apex:page>

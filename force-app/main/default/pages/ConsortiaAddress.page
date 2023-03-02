@@ -1,0 +1,368 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false">
+
+<html>
+    <div ng-controller="address_ctrl">
+        <head>
+            <apex:stylesheet value="{!$Resource.ApplicantPortalCSS}" />
+            <apex:stylesheet value="{!$Resource.timeLineCss}" />
+            <script>
+                var userId = '{!$CurrentPage.parameters.id}';
+            </script>
+            <style>
+                .ta-editor {
+                    min-height: 150px;
+                    height: auto;
+                    overflow: auto;
+                }
+            </style>
+        </head>
+
+        <body ng-init="getDependentPicklistValues()">
+
+            <div class="container mt-5">
+                <div class="row mx-5">
+                    <div class="col-md-12">
+                        <div class="tab-link" ng-show="proposalStage">
+                            <div class="progress">
+                                <div class="progress-success w-100"></div>
+                            </div>
+                            <ul>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('ProjectDetailPage')">
+                                        <div class="icon-circle">
+                                            <i class="fa fa-home"></i>
+                                        </div>
+                                        <span>Project Details</span>
+                                    </a>
+                                </li>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('Consortia')">
+                                        <div class="icon-circle">
+                                            <i class="fa fa-user"></i>
+                                        </div>
+                                        <span>Consortia Details</span>
+                                    </a>
+                                </li>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('ConsortiaContacts')">
+                                        <div class="icon-circle">
+                                            <i class="fas fa-file-invoice"></i>
+                                        </div>
+                                        <span>Consortia Partner Details</span>
+                                    </a>
+                                </li>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('Financial_Overview')">
+                                        <div class="icon-circle">
+                                            <i class="fas fa-chart-line"></i>
+                                        </div>
+                                        <span>Financial Contribution</span>
+                                    </a>
+                                </li>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('ProjectDetail')">
+                                        <div class="icon-circle">
+                                            <i class="far fa-address-card"></i>
+                                        </div>
+                                        <span>Project Details</span>
+                                    </a>
+                                </li>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('WorkPackages')">
+                                        <div class="icon-circle">
+                                            <i class="fa-solid fa-box"></i>
+                                        </div>
+                                        <span>Work Package</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-link" ng-hide="proposalStage">
+                            <div class="progress">
+                                <div class="progress-success wp-3"></div>
+                            </div>
+                            <ul>
+                                <li class="active">
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fa fa-home"></i>
+                                        </div>
+                                        <span>Project Details</span>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fas fa-user-alt"></i>
+                                        </div>
+                                        <span>Consortia Details</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fas fa-file-invoice"></i>
+                                        </div>
+                                        <span>Consortia Partner Details</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fas fa-chart-line"></i>
+                                        </div>
+                                        <span>Financial Contribution</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="far fa-address-card"></i>
+                                        </div>
+                                        <span>Project Details</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fa-solid fa-box"></i>
+                                        </div>
+                                        <span>Work Package</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row box-shadow-2 mt-5 mx-5">
+                    <div class="row ms-3">
+                        <!-- <div class="col-md-4 mt-3">
+                            <div class="form-check form-check-inline mt-5">
+                                <input class="form-check-input" ng-click="industryAcademia('academia',$index)" type="radio" ng-checked="addressDetails.Academia__c"
+                                    name="inlineRadioOptions{{$index}}" ng-disabled="proposalStage" />
+                                <label class="pb-3 color-theme px-3" for="inlineRadio2">Academia</label>
+                            </div>
+                            <div class="form-check form-check-inline mt-5">
+                                <input class="pb-3 color-theme px-3" ng-click="industryAcademia('industry',$index)" type="radio" name="inlineRadioOptions{{$index}}"
+                                    ng-checked="addressDetails.Industry__c" ng-disabled="proposalStage" />
+                                <label class="form-check-label" for="inlineRadio1">Industry</label>
+                            </div>
+                        </div> -->
+
+                    <div class="row mt-5">
+                        <div class="col-md-4">
+                            <label class="font-if">Institution/Industry Name<span class="ms-2 text-danger">*</span></label>
+                            <input ng-focus="removeClass2('inst')" id="inst" type="text" ng-model="addressDetails.Name" class="form-control" ng-disabled="proposalStage" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="font-if">HomePage URL</label>
+                            <input ng-focus="removeClass2('home')" id="home" type="text" ng-model="addressDetails.Homepage_URL__c" class="form-control" ng-disabled="proposalStage" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="font-if">Country Type</label>
+                            <select class="form-control" aria-label="Default select example" ng-focus="removeClass2('ct')" id="ct" ng-change="setSaveStatus($index)" ng-model="addressDetails.BillingCountry" ng-disabled="true">
+                                <option ng-repeat="staff in countrytype">{{staff}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5" ng-if="addressDetails.Industry__c == true && account.BillingCountry == 'India'">
+                        <div class="col-md-4">
+                            <label class="font-if">DSIR</label>
+                            <span class="required-asterisk" style="color:red;">*</span>
+                            <input ng-focus="removeClass2('dsir')" id="FName" type="dsir" ng-model="addressDetails.DSIR_Recoginition_Details__c" maxlength="255" ng-keyup="setSaveStatus($index)" ng-disabled="proposalStage" class="form-control" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="font-if">Only PDF File</label>
+                            <input type="file" accept=".pdf" class="form-control" ng-disabled="proposalStage" id="attachmentFiles"/>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5">
+                        <div class="col-md-4"><label class="color-theme"><b>Project Head Details</b></label></div>
+                    </div>
+
+                    <div class="row mt-5">
+                        <div class="col-md-4">
+                            <label class="font-if">Head Of Project<span class="ms-2 text-danger">*</span></label>
+                            <input ng-focus="removeClass2('head')" id="head" type="text" ng-model="addressDetails.Contacts[0].Name" class="form-control" ng-disabled="proposalStage" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="font-if">Email<span class="ms-2 text-danger">*</span></label>
+                            <input ng-focus="removeClass2('email')" id="email" type="email" ng-model="addressDetails.Contacts[0].Email" class="form-control" ng-disabled="true" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="font-if">Phone<span class="ms-2 text-danger">*</span></label>
+                            <input ng-focus="removeClass2('phone')" id="phone" type="text" number="addressDetails.Phone" ng-model="addressDetails.Contacts[0].Phone" class="form-control" ng-disabled="proposalStage" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-5 mb-5">
+                        <div class="col-md-4">
+                            <label class="font-if">Department/Division<span class="ms-2 text-danger">*</span></label>
+                            <input ng-focus="removeClass2('dept')" id="dept" type="text" ng-model="addressDetails.Contacts[0].Department" class="form-control" ng-disabled="proposalStage" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="row box-shadow-2 mt-5 mx-5 mb-5" ng-if="addressDetails.Industry__c == true">
+                    <div class="row ms-3">
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <label class="font-if">Street<span class="ms-2 text-danger">*</span></label>
+                                <input ng-focus="removeClass2('IStreet')" id="IStreet" type="text" ng-model="addressDetails.BillingStreet" class="form-control" ng-disabled="proposalStage" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="font-if">City<span class="ms-2 text-danger">*</span></label>
+                                <input ng-focus="removeClass2('ICity')" id="ICity" type="text" ng-model="addressDetails.BillingCity" class="form-control" ng-disabled="proposalStage" />
+                            </div>
+                        </div>
+    
+                        <div class="row mt-5">
+    
+                            <div class="col-md-6">
+                                <label class="font-if">Country<span class="ms-2 text-danger">*</span></label>
+                                <select ng-focus="removeClass2('ICountry')" id="ICountry" class="form-control" aria-label="Default select example" ng-model="addressDetails.BillingCountry" required="true" ng-disabled="true" ng-change="onCountryChange()">
+                                    <option ng-repeat="staff in countrytype">{{staff}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="font-if">State<span class="ms-2 text-danger">*</span></label>
+                                <select aria-label="Default select example" ng-focus="removeClass2('IState')" id="IState" type="text" ng-model="addressDetails.BillingState" class="form-control" ng-disabled="proposalStage">
+                                    <option ng-repeat="staff in addressDetails.stateList">{{staff}}</option>
+                                   </select>
+                                <!-- <input ng-focus="removeClass2('IState')" id="IState" type="text" ng-model="addressDetails.BillingState" class="form-control" ng-disabled="proposalStage" /> -->
+                            </div>
+                        </div>
+    
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <label class="font-if">Post Code<span class="ms-2 text-danger">*</span></label>
+                                <input ng-focus="removeClass2('IPcode')" id="IPcode" type="text" ng-model="addressDetails.BillingPostalCode" class="form-control" ng-disabled="proposalStage" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="font-if">Year Of Establishment<span class="ms-2 text-danger">*</span></label>
+                                <input ng-focus="removeClass2('establish')" id="establish" type="text" number="addressDetails.Year_Of_Establishment__c" min="1000" max="9999" maxlength="4" minlength="4" ng-model="addressDetails.Year_Of_Establishment__c" class="form-control" ng-disabled="proposalStage" />
+                            </div>
+                        </div>
+    
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <label class="font-if">Main Business Area<span class="ms-2 text-danger">*</span></label>
+                                <input ng-focus="removeClass2('business')" id="business" type="text" ng-model="addressDetails.Main_Business_Area__c" class="form-control" ng-disabled="proposalStage" />
+                            </div>
+    
+                            <div class="col-md-6">
+                                <label class="font-if">Number Of Permanent Employees<span class="ms-2 text-danger">*</span></label>
+                                <input ng-focus="removeClass2('employees')" id="employees" type="text" number="addressDetails.NumberOfEmployees" ng-model="addressDetails.NumberOfEmployees" class="form-control" ng-disabled="proposalStage" />
+                            </div>
+                        </div>
+    
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <label class="font-if">Infrastructural Facilities<span class="ms-2 text-danger">*</span></label>
+                                <input ng-focus="removeClass2('facility')" id="facility" type="text" ng-model="addressDetails.Infrastructural_Facilities__c" class="form-control" ng-disabled="proposalStage" />
+                            </div>
+    
+                            <div class="col-md-6">
+                                <label class="font-if">Domain Expertise Available/Existing<span class="ms-2 text-danger">*</span></label>
+                                <input ng-focus="removeClass2('domain')" id="domain" type="text" ng-model="addressDetails.Domain_Expertise_Available__c" class="form-control" ng-disabled="proposalStage" />
+                            </div>
+                        </div>
+    
+                        <div class="row mt-5 mb-5">
+                            <div class="col-md-6">
+                                <label class="font-if">Ownership Profile<span class="ms-2 text-danger">*</span></label>
+                                <input ng-focus="removeClass2('ownership')" id="ownership" type="text" ng-model="addressDetails.Ownership_Profile__c" class="form-control" ng-disabled="proposalStage" />
+                            </div>
+    
+                            <div class="col-md-6">
+                                <label class="font-if">Last Year's Balance<span class="ms-2 text-danger">*</span></label>
+                                <input ng-focus="removeClass2('balance')" id="balance" type="text" number="addressDetails.Last_Year_s_Balance__c" ng-model="addressDetails.Last_Year_s_Balance__c" class="form-control" ng-disabled="proposalStage" />
+                            </div>
+                        </div>
+    
+                        <div class="row mt-3 mb-5" ng-if="!proposalStage">
+                            <div class="col-md-12">
+                                <button class="blue-btn float-end" ng-click="saveAddressDetails()" type="button">
+                                    <i class="fa-solid fa-check me-2"></i>Save and Next</button>
+                                    <button class="btn btn-secondary float-end me-2" style="padding: 8px 20px !important;font-size: 16px !important;" ng-click="redirectPageURL('Consortia')" type="button">
+                                        <i class="fa-solid fa-arrow-left me-2"></i>Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row box-shadow-2 mt-5 mb-5 mx-5" ng-if="addressDetails.Academia__c == true">
+                    <div class="row ms-3">
+                        <div class="row mt-5">    
+                            <div class="col-md-6">
+                                <label class="font-if">Street<span class="ms-2 text-danger">*</span></label>
+                                <input ng-focus="removeClass2('IStreet')" id="IStreet" type="text" ng-model="addressDetails.BillingStreet" class="form-control" ng-disabled="proposalStage" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="font-if">City<span class="ms-2 text-danger">*</span></label>
+                                <input ng-focus="removeClass2('ICity')" id="ICity" type="text" ng-model="addressDetails.BillingCity" class="form-control" ng-disabled="proposalStage" />
+                            </div>
+                        </div>
+    
+                        <div class="row mt-5">
+    
+                            <div class="col-md-6">
+                                <label class="font-if">Country<span class="ms-2 text-danger">*</span></label>
+                                <select class="form-control" aria-label="Default select example" ng-focus="removeClass2('ICountry')" id="ICountry" ng-model="addressDetails.BillingCountry" required="true" ng-disabled="true" ng-change="onCountryChange()">
+                                    <option ng-repeat="staff in countrytype">{{staff}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="font-if">State<span class="ms-2 text-danger">*</span></label>
+                                <select aria-label="Default select example" ng-focus="removeClass2('IState')" id="IState" type="text" ng-model="addressDetails.BillingState" class="form-control" ng-disabled="proposalStage">
+                                    <option ng-repeat="staff in stateList">{{staff}}</option>
+                                   </select>
+                                <!-- <input ng-focus="removeClass2('IState')" id="IState" type="text" ng-model="addressDetails.BillingState" class="form-control" ng-disabled="proposalStage" /> -->
+                            </div>
+                        </div>
+    
+                        <div class="row mt-5">
+    
+                            <div class="col-md-6">
+                                <label class="font-if">Post Code<span class="ms-2 text-danger">*</span></label>
+                                <input ng-focus="removeClass2('IPcode')" id="IPcode" type="text" ng-model="addressDetails.BillingPostalCode" class="form-control" ng-disabled="proposalStage" />
+                            </div>
+                        </div>
+    
+                        <div class="row mt-5 mb-5">
+                            <div class="col-md-6">
+                            </div>
+
+                            <div class="col-md-6 mt-5">
+                                <button class="blue-btn float-end" ng-click="saveAddressDetails()" type="button">
+                                    <i class="fa-solid fa-check me-2"></i>Save and Next</button>
+                                    <button class="btn btn-secondary float-end me-2" style="padding: 8px 20px !important;font-size: 16px !important;" ng-click="redirectPageURL('Consortia')" type="button">
+                                        <i class="fa-solid fa-arrow-left me-2"></i>Back</button>
+                            </div>
+                        </div>
+    
+                        <!-- <div class="row mt-5" ng-if="!proposalStage">
+                            <div class="col-md-12">
+                                <button class="blue-btn float-end" ng-click="saveAddressDetails()" type="button">
+                                    <i class="fa-solid fa-check me-2"></i>Save and Next</button>
+                                    <button class="btn btn-secondary float-end me-2" style="padding: 8px 20px !important;font-size: 16px !important;" ng-click="redirectPageURL('Consortia')" type="button">
+                                        <i class="fa-solid fa-arrow-left me-2"></i>Back</button>
+                            </div>
+                        </div> -->
+                    </div>
+
+                </div>
+            </div>
+        </body>
+    </div>
+</html>
+</apex:page>

@@ -1,0 +1,31 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" controller="ApplicantPortal_Contoller">
+    <html >
+
+  <head>
+    <meta charset="utf-8" />
+    <title>AngularJS Plunker</title>
+    <script>document.write('<base href="' + document.location + '" />');</script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://code.angularjs.org/1.2.25/angular.js"></script>
+    <script src="https://code.angularjs.org/1.2.25/angular-sanitize.js"></script>
+    <script >
+         var app=  angular.module('app', ['ngSanitize']);
+  app.controller('testController', function($scope, $sanitize){
+      $scope.firstname = 'R &amp; D';
+    
+  });
+ 
+
+    </script>
+  </head>
+
+  <body ng-app="app" ng-controller="testController">
+  {{firstname}}
+     
+    <div ng-bind-html="firstname">
+    
+    </div>
+    Enter Name <input type="text" ng-model="firstname"  />
+  </body>
+</html>
+</apex:page>
