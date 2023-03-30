@@ -166,7 +166,7 @@ system.debug('candidateId---'+candidateId);
         system.debug('conRec.Proposals__c---'+conRec.Proposals__c);
         if(!string.isBlank(conRec.Proposals__c)){
             List<account> accountContactList = [select Name,Id, Homepage_URL__c,Country_Type__c,Academia__c,BillingStreet,BillingCity,BillingState,BillingPostalCode,BillingCountry,Department__c,Industry__c,
-                                                (select Name,FirstName,Id,LastName,Email,Phone,Department from contacts order By createdDate ASC) from account where Proposals__c =:conRec.Proposals__c order By createdDate ASC]; 
+                                                (select Salutation,Name,FirstName,Id,LastName,Email,Phone,Department from contacts order By createdDate ASC) from account where Proposals__c =:conRec.Proposals__c order By createdDate ASC]; 
             system.debug('accountContactList---'+accountContactList);
             return accountContactList;
         }
@@ -307,11 +307,10 @@ system.debug('candidateId---'+candidateId);
     
     public static string insertProjectDetails(Application_Proposal__c proposalDetails){
         try{
-            system.debug('Research_Approach_Objectives__c ::'+proposalDetails.Research_Approach_Objectives__c);            
             upsert proposalDetails;
             return 'Success';
         }catch(Exception e){
-            return 'Error';
+            return e.getMessage()+e.getLineNumber();
         }
     }
     
@@ -772,7 +771,7 @@ system.debug('candidateId---'+candidateId);
     
     public static MyProposalWapper fetchProjectDetails(String projectId){
         try{
-            Application_Proposal__c ProposalRec = [SELECT Id,Name,Project_Description__c,Reasons_For_And_Benefits_Of_Cooperation__c,Research_Approach_Objectives__c,
+            Application_Proposal__c ProposalRec = [SELECT Id,Name,Document_generated__c,(select id,name from attachments order by createdDate desc limit 1)Project_Description__c,Reasons_For_And_Benefits_Of_Cooperation__c,Research_Approach_Objectives__c,
                                                    Necessity_Of_Funding__c,Research_Scholars__c,Summary__c,Title_Of__c,Campaign__r.Name,Campaign__r.RedirectPage__c
                                                    FROM Application_Proposal__c WHERE Id =: projectId];
 
@@ -873,6 +872,42 @@ system.debug('candidateId---'+candidateId);
             
             for(Account acc : accList){
                 system.debug('acc::'+acc.BillingState);
+                //acc.BillingState = acc.Shipping_State__c;
+            }
+            Map<String,String> accMap = New Map<String,String>();
+            for(Account accRecord : accList){
+                accMap.put(accRecord.Name,''); 
+            }
+            upsert accList;
+            for(Account acc : accList){
+                accMap.containsKey(acc.Name);
+                accMap.put(acc.Name, acc.Id);
+            }
+            for(Contact conRecord : conList){
+                system.debug('conRecord.Lastname  ::'+conRecord.Lastname);
+                if(conRecord.LastName == null || conRecord.LastName == ''){
+                    conRecord.LastName = conRecord.FirstName;
+                }
+                if(accMap.containsKey(conRecord.AccountId)){
+                    conRecord.AccountId = accMap.get(conRecord.AccountId);
+                 }
+            }
+            system.debug('conList::'+conList);
+            upsert accList;
+            upsert conList;
+            return 'SUCCESS';
+        }catch(Exception e){
+            return e.getMessage() + e.getLineNumber();
+        }
+    }
+
+    public static String insertCoordinatorsInformation2(List<Account> accList,List<Contact> conList){
+        try{
+            
+            system.debug('conList::'+conList);
+            
+            for(Account acc : accList){
+                system.debug('acc::'+acc.BillingState);
                 acc.BillingState = acc.Shipping_State__c;
             }
             Map<String,String> accMap = New Map<String,String>();
@@ -886,7 +921,7 @@ system.debug('candidateId---'+candidateId);
             }
             for(Contact conRecord : conList){
                 system.debug('conRecord.Lastname  ::'+conRecord.Lastname);
-                if(conRecord.LastName == null | conRecord.LastName == ''){
+                if(conRecord.LastName == null || conRecord.LastName == ''){
                     conRecord.LastName = conRecord.FirstName;
                 }
                 if(accMap.containsKey(conRecord.AccountId)){
@@ -1117,8 +1152,13 @@ system.debug('candidateId---'+candidateId);
         return workPackageList;
     }
     public static List<Account> getProposalAccounts(String ProposalId){
-        List<Account> acc=[SELECT id,name,Country_Type__c from Account where proposals__c=:ProposalId];
-        return acc;
+        try{
+            List<Account> acc=[SELECT id,name,Country_Type__c from Account where proposals__c=:ProposalId];
+            return acc;
+        }catch(Exception e){
+            return null;
+        }
+        
     } 
     public static String LogoutApplicant(String loginHasgCode){
         try{
@@ -1453,7 +1493,7 @@ system.debug('candidateId---'+candidateId);
                 if(!expenseHeadTobeInsert.isEmpty()){
                     upsert expenseHeadTobeInsert;
                 }
-                if(exheadList.isEmpty()){
+                if(!yearSet.isEmpty()){
                     exheadList = [select id,Yearly_Expense__c,Name from Expense_Head__c where Yearly_Expense__c in: yearSet];
                 }
                 system.debug('exheadList::'+exheadList);
@@ -1594,15 +1634,25 @@ system.debug('candidateId---'+candidateId);
         
         list<Expense_Line_Item__c> expenseListTobeReturn  =new list<Expense_Line_Item__c>();
         Map<String,List<Expense_Line_Item__c>> mapofExpenseHeadByLineItems = new Map<String,List<Expense_Line_Item__c>>();
-        Map<String,Map<Id,List<Expense_Line_Item__c>>> mapOfExpenseHeadByAccLineItems = new Map<String,Map<Id,List<Expense_Line_Item__c>>>();
+        Map<String,Map<String,List<Expense_Line_Item__c>>> mapOfExpenseHeadByAccLineItems = new Map<String,Map<String,List<Expense_Line_Item__c>>>();
         
         if(!listOfExpense.isEmpty()){
             for(Expense_Line_Item__c exLine : listOfExpense){
-                if(mapofExpenseHeadByLineItems.containsKey(exLine.Expense_Head__r.Name)){
+                if(mapOfExpenseHeadByAccLineItems.containsKey(exLine.Expense_Head__r.Yearly_Expense__r.Expense_Master__r.Account__c)){
+                    if(mapOfExpenseHeadByAccLineItems.get(exLine.Expense_Head__r.Yearly_Expense__r.Expense_Master__r.Account__c).containsKey(exLine.Expense_Head__r.Name)){
+                        mapOfExpenseHeadByAccLineItems.get(exLine.Expense_Head__r.Yearly_Expense__r.Expense_Master__r.Account__c).get(exLine.Expense_Head__r.Name).add(exLine);
+                    }else{
+                        mapOfExpenseHeadByAccLineItems.get(exLine.Expense_Head__r.Yearly_Expense__r.Expense_Master__r.Account__c).put(exLine.Expense_Head__r.Name,new List<Expense_Line_Item__c>{exLine});
+                    }
+                }else{
+					//mapofExpenseHeadByLineItems.put(exLine.Expense_Head__r.Name,new List<Expense_Line_Item__c>{exLine});                    
+                    mapOfExpenseHeadByAccLineItems.put(exLine.Expense_Head__r.Yearly_Expense__r.Expense_Master__r.Account__c,new Map<String,List<Expense_Line_Item__c>>{exLine.Expense_Head__r.Name =>new List<Expense_Line_Item__c>{exLine}});
+                }
+                /*if(mapofExpenseHeadByLineItems.containsKey(exLine.Expense_Head__r.Name)){
                     mapofExpenseHeadByLineItems.get(exLine.Expense_Head__r.Name).add(exLine);
                 }else{
-                    mapofExpenseHeadByLineItems.put(exLine.Expense_Head__r.Name,new List<Expense_Line_Item__c>{exLine});
-                }
+                    
+                }*/
             }
             Map<Decimal,List<Expense_Line_Item__c>> mapofIndexByListofExpense = new Map<Decimal,List<Expense_Line_Item__c>>();
             /*for(String mapKey : mapofExpenseHeadByLineItems.keySet()){
@@ -1615,13 +1665,16 @@ mapofIndexByListofExpense.put(exl.Index__c,new list<Expense_Line_Item__c>{exl});
 }
 }
 }*/
-            
-            
-            for(String  mapKey : mapofExpenseHeadByLineItems.keySet()){
-                system.debug('mapKey::'+mapKey);
-                Expense_Line_Item__c ex;
-                for(Expense_Line_Item__c exl : mapofExpenseHeadByLineItems.get(mapKey)){
-                    system.debug('exl.Index__c::'+exl.Index__c);
+            for(String accId : mapOfExpenseHeadByAccLineItems.KeySet()){
+                List<Expense_Line_Item__c> exLineItem = new List<Expense_Line_Item__c>();
+                system.debug('mapOfExpenseHeadByAccLineItems.get(accId).Values()::'+mapOfExpenseHeadByAccLineItems.get(accId).Values());
+                system.debug('mapOfExpenseHeadByAccLineItems.get(accId).Values()::'+mapOfExpenseHeadByAccLineItems.get(accId).Values().size());
+                //exLineItem.add(mapOfExpenseHeadByAccLineItems.get(accId).Values());
+                for(List<Expense_Line_Item__c> mapKey : mapOfExpenseHeadByAccLineItems.get(accId).Values()){
+                    
+                    Expense_Line_Item__c ex;
+                    for(Expense_Line_Item__c exl : mapKey){
+                        system.debug('exl.Index__c::'+exl.Index__c);
                     if(ex != null && ex.Expense_Head__r.Name == exl.Expense_Head__r.Name && ex.Index__c == exl.Index__c){
                         if(exl.Year1_Expense__c != null && exl.Year1_Expense__c != 0){
                             ex.Year1_Expense__c = exl.Year1_Expense__c;
@@ -1647,13 +1700,28 @@ mapofIndexByListofExpense.put(exl.Index__c,new list<Expense_Line_Item__c>{exl});
                         system.debug('ex::'+ex.Index__c);
                         expenseListTobeReturn.add(ex);
                     }
+                    }
                 }
             }
-            system.debug('expenseListTobeReturn::'+expenseListTobeReturn.size());
+            
+            /*for(String  mapKey : mapofExpenseHeadByLineItems.keySet()){
+                system.debug('mapKey::'+mapKey);
+                Expense_Line_Item__c ex;
+                for(Expense_Line_Item__c exl : mapofExpenseHeadByLineItems.get(mapKey)){
+                    
+                }
+            }*/
+            
         }
         
-        
+        system.debug('expenseListTobeReturn::'+expenseListTobeReturn.size());
         return expenseListTobeReturn;
+    }
+    
+    public static void deleteExpenseLineItem(Id expenseLineItemId){
+        if(expenseLineItemId != null && expenseLineItemId != ''){
+            delete [select id from Expense_Line_Item__c where Id =: expenseLineItemId];
+        }
     }
     
     public static Application_Proposal__c getConsentCheckbox(string proposalId){
@@ -1711,6 +1779,16 @@ mapofIndexByListofExpense.put(exl.Index__c,new list<Expense_Line_Item__c>{exl});
 
     //     }
     // }
+
+    public static List<Expense_Head__c> getExpenseFromProposal(string proposalId){
+        try{
+            List<Expense_Head__c> expensehead = [SELECT Id,Name,Proposals__r.Total_funding_requested_from_IGSTC__c,Proposals__r.Funding_from_other_sources_own_contrib__c,(SELECT Id,Name,Expense_Head__c,Multiplier__c,Total_Expense__c,Unit_Price__c,Description__c,Currency_Type2__c From Expense_Line_Items__r) FROM Expense_Head__c WHERE Proposals__c =: proposalId];
+                return expensehead;
+
+        }catch(Exception e){
+            return null;
+        }
+    }
     
     public static List<accWrapper> getExpenseDetailsOfAccount(string proposalId){
         try{
@@ -1761,8 +1839,11 @@ mapofIndexByListofExpense.put(exl.Index__c,new list<Expense_Line_Item__c>{exl});
     }
     
     
-    public static string saveExpenseDetails(List<Expense_Line_Item__c> listOfLineItem){
+    public static string saveExpenseDetails(List<Expense_Line_Item__c> listOfLineItem, Application_Proposal__c appRecord){
         try{
+            appRecord.Total_funding_requested_from_IGSTC__c = string.valueOf(appRecord.Total_funding_requested_from_IGSTC__c);
+            appRecord.Funding_from_other_sources_own_contrib__c = string.valueOf(appRecord.Funding_from_other_sources_own_contrib__c);
+            upsert appRecord;
             upsert listOfLineItem;
             // Map<String,List<Expense_Line_Item__c>> mapOfExpenseHeadwithLineItems = New Map<String,List<Expense_Line_Item__c>>();
             // Map<String,Id> indexOfExHeadById = New Map<String,Id>();
@@ -2075,6 +2156,7 @@ mapofIndexByListofExpense.put(exl.Index__c,new list<Expense_Line_Item__c>{exl});
         }
     }
 
+    
     public static string upsertSign(Contact conDetails,integer year,integer month,integer day){
         try{
             if(year == 0 && month == 0 && day == 0){
@@ -2172,7 +2254,7 @@ mapofIndexByListofExpense.put(exl.Index__c,new list<Expense_Line_Item__c>{exl});
             map<string,ContentDocumentLink> udIdXcdLink = New Map<string,ContentDocumentLink>();
             list<User_Document__c> getUserDoc;
             if(parentId.getSObjectType().getDescribe().getName() == 'Contact'){
-                getUserDoc = [select name,id,Status__c from User_Document__c where Contact__c =:parentId];
+                getUserDoc = [select name,id,Status__c,(select id from attachments) from User_Document__c where Contact__c =:parentId];
             }
             // if(parentId.getSObjectType().getDescribe().getName() == 'Application_Proposal__c'){
             //     getUserDoc = [select name,id,Status__c from User_Document__c where Proposals__c =:parentId];
@@ -2236,6 +2318,77 @@ mapofIndexByListofExpense.put(exl.Index__c,new list<Expense_Line_Item__c>{exl});
     }
     }
       public static list<UserDocumentWrapper> getAllUserDoc(string parentId) {
+        try{
+            list<UserDocumentWrapper> udWrapperList = New List<UserDocumentWrapper>();
+            map<string,ContentDocumentLink> userDocIdXcdLink = New map<string,ContentDocumentLink>();
+            map<string,ContentDistribution> userDocIdXcDistrbtn = New map<string,ContentDistribution>();
+            
+            map<string,User_Document__c> idXUserDoc = New Map<string,User_Document__c>();
+            map<string,ContentDocumentLink> udIdXcdLink = New Map<string,ContentDocumentLink>();
+            list<User_Document__c> getUserDoc = [select name,id,Status__c,(select id from attachments) from User_Document__c where Proposals__c =:parentId];
+            system.debug('getUserDoc----'+getUserDoc);
+            set<string> userDocIdSet = New set<string>();
+            for(User_Document__c userDoc:getUserDoc){
+                userDocIdSet.add(userDoc.id);
+                idXUserDoc.put(userDoc.Id,userDoc);
+            }
+            
+            list<ContentDocumentLink> allDocuments = [SELECT Id, LinkedEntityId, ContentDocumentId, Visibility, IsDeleted, ShareType,
+                                                      ContentDocument.Title, ContentDocument.createdDate, ContentDocument.FileType FROM ContentDocumentLink WHERE LinkedEntityId =:userDocIdSet];
+            List<ContentDistribution> ContentDistrbtn = [SELECT DistributionPublicUrl,PdfDownloadUrl,RelatedRecordId FROM ContentDistribution where RelatedRecordId IN :userDocIdSet];
+            system.debug('ContentDistrbtn---'+ContentDistrbtn);
+            system.debug('allDocuments---'+allDocuments);
+            set<string> allDocId = New set<string>();     
+            for(ContentDocumentLink doc:allDocuments){
+                system.debug('doc--'+doc.Id);
+                userDocIdXcdLink.put(doc.LinkedEntityId,doc);
+                allDocId.add(doc.ContentDocumentId);  
+            }
+            for(ContentDistribution doc:ContentDistrbtn){
+                userDocIdXcDistrbtn.put(doc.RelatedRecordId,doc);
+            }
+            for(string userDocId:userDocIdSet){
+                udIdXcdLink.put(userDocId,userDocIdXcdLink.get(userDocId));
+            }
+            Map<string,ContentDocumentLink> docNameXcVersion = New Map<string,ContentDocumentLink>();
+            
+            Map<string,ContentVersion> cdocIdXcVersion = New Map<string,ContentVersion>();
+            ContentVersion[] cvs = [SELECT Id, Title, ContentDocumentId from  contentversion where isLatest=true and ContentDocumentId IN :allDocId order by CreatedDate desc];
+            system.debug('cvs--'+cvs);
+            for(ContentVersion doc :cvs){
+                cdocIdXcVersion.put(doc.ContentDocumentId,doc);
+            }
+            
+            
+            
+            
+            system.debug('cdocIdXcVersion--'+cdocIdXcVersion);
+            for(string udId: userDocIdSet){
+                system.debug('udId----------'+udId);
+                UserDocumentWrapper udWrapper = New UserDocumentWrapper();
+                udWrapper.userDocument = idXUserDoc.get(udId);
+                System.debug('@@@@@'+userDocIdXcdLink.get(udId) );
+                
+                if(userDocIdXcdLink.get(udId) != null){
+                    System.debug('@@@@@-----------'+cdocIdXcVersion.get(userDocIdXcdLink.get(udId).ContentDocumentId));
+                    udWrapper.contentVersion = cdocIdXcVersion.get(userDocIdXcdLink.get(udId).ContentDocumentId) ;
+                }
+                if(userDocIdXcDistrbtn.get(udId) != null){
+                    System.debug('@@@@@-----------'+userDocIdXcDistrbtn.get(udId));
+                    udWrapper.ContentDistribution = userDocIdXcDistrbtn.get(udId) ;
+                }
+                system.debug('udWrapper---'+udWrapper);
+                udWrapperList.add(udWrapper);
+            }
+            return udWrapperList;
+        }catch(Exception e){
+            //HandleBusinessException.captureError('CandidateDashboard_Helper', 'getAllUserDoc', e);
+            system.debug(e.getLineNumber()+'-----get Message----'+e.getMessage());
+            return null;
+        }
+    }
+
+    public static list<UserDocumentWrapper> getAllUserDocSignature(string parentId) {
         try{
             list<UserDocumentWrapper> udWrapperList = New List<UserDocumentWrapper>();
             map<string,ContentDocumentLink> userDocIdXcdLink = New map<string,ContentDocumentLink>();
@@ -2553,10 +2706,23 @@ mapofIndexByListofExpense.put(exl.Index__c,new list<Expense_Line_Item__c>{exl});
 
         public static Contact getCoodinatorDetList(string hashcode){
             Contact ContactRecord = [SELECT Id,FirstName,LastName,Email,Actual_Position__c,MailingStreet,MailingCity,MailingState,MailingCountry,MailingPostalCode,Country__c,States__c,Account.Name,Publications_Patents__c,
-            Account.ShippingCountry,(SELECT Name,Degree__c,Start_Year__c,End_Year__c,CGPA__c,End_Date__c,Start_Date__c,Institution_Name__c,Area_of_specialization__c,Percentage__c,Percentage_cgpa__c 
+            Account.BillingCountry,(SELECT Name,Degree__c,Start_Year__c,End_Year__c,CGPA__c,End_Date__c,Start_Date__c,Institution_Name__c,Area_of_specialization__c,Percentage__c,Percentage_cgpa__c 
             FROM Education_Details__r),(SELECT Id,Organization_Name__c,Position__c,Start_Year__c,End_Year__c FROM Employment_Details__r)
             FROM Contact WHERE Login_Hash_Code__c=: hashcode];
             return ContactRecord;
+        }
+
+        public static List<Contact> getCoordCVDetails(string proposalid){
+            try{
+                List<Contact> conList = [SELECT Id,Name,FirstName,LastName,Is_Primary__c,Email,Actual_Position__c,MailingStreet,MailingCity,MailingState,MailingCountry,MailingPostalCode,Country__c,States__c,Account.Name,Publications_Patents__c,
+                Account.BillingCountry,(SELECT Name,Degree__c,Start_Year__c,End_Year__c,CGPA__c,End_Date__c,Start_Date__c,Institution_Name__c,Area_of_specialization__c,Percentage__c,Percentage_cgpa__c 
+                FROM Education_Details__r),(SELECT Id,Organization_Name__c,Position__c,Start_Year__c,End_Year__c FROM Employment_Details__r)
+                FROM Contact WHERE Proposals__c=: proposalid];
+
+                return conList;
+            }catch(Exception e){
+                return null;
+            }
         }
 
         public static void deleteEducationWorkshop(string eduId){
@@ -2567,9 +2733,11 @@ mapofIndexByListofExpense.put(exl.Index__c,new list<Expense_Line_Item__c>{exl});
             delete new Employment_Details__c(id=empId);
         }
 
-        public static string SaveWorkshopContactDetails(Contact conDataList, List<Education_Details__c> eduDetails, List<Employment_Details__c> empDetails){
+        public static string SaveWorkshopContactDetails(List<Contact> conDataList, List<Education_Details__c> eduDetails, List<Employment_Details__c> empDetails){
             try{
-                conDataList.MailingState = conDataList.State__c;
+                for(Contact con : conDataList){
+                    con.MailingState = con.State__c;
+                }
                 upsert conDataList;
                 upsert eduDetails;
                 upsert empDetails;

@@ -260,6 +260,9 @@ angular.module('cp_app').controller('IFDocUploads_Ctrl', function($scope,$rootSc
                 if(result.Tentative_Start_Date__c != null || result.Tentative_Start_Date__c != undefined){
                     $scope.tentitiveStartDate = new Date(result.Tentative_Start_Date__c); 
                 }
+                if(result.Tentative_End_Date__c != null || result.Tentative_End_Date__c != undefined){
+                    $scope.tentitiveEndDate = new Date(result.Tentative_End_Date__c); 
+                }
                 $scope.applicantDetails = result;
                 $scope.$apply();
             }
@@ -272,6 +275,9 @@ angular.module('cp_app').controller('IFDocUploads_Ctrl', function($scope,$rootSc
         var day = 0;
         var month = 0;
         var year = 0;
+        var endday = 0;
+        var endmonth = 0;
+        var endyear = 0;
 
         if($scope.tentitiveStartDate != undefined || $scope.tentitiveStartDate != ""){
             year = $scope.tentitiveStartDate.getUTCFullYear();
@@ -279,7 +285,13 @@ angular.module('cp_app').controller('IFDocUploads_Ctrl', function($scope,$rootSc
             day = $scope.tentitiveStartDate.getDate();
         }
 
-        ApplicantPortal_Contoller.saveTentativeDate($scope.applicantDetails,day,month,year, function(result,event){
+        if($scope.tentitiveEndDate != undefined || $scope.tentitiveEndDate != ""){
+            endyear = $scope.tentitiveEndDate.getUTCFullYear();
+            endmonth = $scope.tentitiveEndDate.getUTCMonth()+1;
+            endday = $scope.tentitiveEndDate.getDate();
+        }
+
+        ApplicantPortal_Contoller.saveTentativeDate($scope.applicantDetails,day,month,year,endday,endmonth,endyear, function(result,event){
             debugger;
             if(event.status && result != null){
                 swal({

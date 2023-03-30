@@ -26,7 +26,7 @@ public class IndustrialFellowshipModel {
                 From Contact WHERE Login_Hash_Code__c=: loginHashCode Limit 1];
     }
     public Contact getProposalDet(String loginHashCode){
-        return [SELECT Id,Name,Proposals__r.Id,Proposals__r.Brief_Statement_of_Purpose__c,Proposals__r.Title_Of__c,Proposals__r.Proposed_area__c,Proposals__r.Purpose_for_applying__c,Proposals__r.KeyWords__c,Proposals__r.Summary__c,Proposals__r.Research_Approach_Objectives__c,Proposals__r.Abstract_of_proposed__c
+        return [SELECT Id,Name,Proposals__r.Id,Proposals__r.Purpose_for_Applying_Other__c,Proposals__r.Brief_Statement_of_Purpose__c,Proposals__r.Title_Of__c,Proposals__r.Proposed_area__c,Proposals__r.Purpose_for_applying__c,Proposals__r.KeyWords__c,Proposals__r.Summary__c,Proposals__r.Research_Approach_Objectives__c,Proposals__r.Abstract_of_proposed__c
                 From Contact WHERE Login_Hash_Code__c=: loginHashCode Limit 1];
     }
     public Account getAccountBankDetails(String accountId){
@@ -168,7 +168,7 @@ public class IndustrialFellowshipModel {
     }
     public Contact getDocUploadDet(String loginHashCode){
         // List<Education_Details__c> lEduDet=        
-        return [SELECT Id,Name,Proposals__r.Id,Proposals__r.Name,Proposals__r.Invitation_Letter_Form_Status__c,Proposals__r.Proposal_Stages__c,Proposals__r.Decision_Letter_Sent__c,Proposals__r.Travel_Form_Status__c,Proposals__r.Visa_Stages__c,Proposals__r.Undertaking_Status__c From Contact WHERE Login_Hash_Code__c=: loginHashCode Limit 1];
+        return [SELECT Id,Name,Proposals__r.Id,Proposals__r.Name,(select id,name,Bank_Account_Number__c,Bank_Address__c,Bank_Branch_Name__c,Bank_Name__c,Bank_IFSC_Code__c,Bank_SWIFT_Code__c,Bank_Type__c from Bank_Details__r),Proposals__r.Invitation_Letter_Form_Status__c,Proposals__r.Proposal_Stages__c,Proposals__r.Decision_Letter_Sent__c,Proposals__r.Travel_Form_Status__c,Proposals__r.Visa_Stages__c,Proposals__r.Undertaking_Status__c From Contact WHERE Login_Hash_Code__c=: loginHashCode Limit 1];
         // return lEduDet;
     }
     public list<UserDocumentWrapper> getAllUserDoc(string contactId) {

@@ -28,6 +28,11 @@
                             <h1 if:false={isAllocated} onclick={allocated}>Allocation Engine</h1>
                             <h2 if:true={isAllocated}>Allocation Engine</h2>
                         </div>
+                        <br>
+                         <div class="slds-col" style="cursor: pointer;">
+                            <h1 if:false={isReviwer} onclick={reviewerData}>Reviewer Details</h1>
+                            <h2 if:true={isReviwer}>Reviewer Details</h2>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -64,6 +69,9 @@
 
                             <template if:true={isAllocated}>
                                 <c-reviwer-portal-bulk></c-reviwer-portal-bulk>
+                            </template>
+                            <template if:true={isReviwer}>
+                                <c-reviwer-data></c-reviwer-data>
                             </template>
         </lightning-layout-item>
     </lightning-layout>

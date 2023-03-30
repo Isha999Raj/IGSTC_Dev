@@ -22,15 +22,22 @@ angular.module('cp_app').controller('PECFARDocUpload_Ctrl', function($scope,$roo
     $scope.showTravellerCheck=false;
     $scope.showVisaCheck=false;
     $scope.showUndertakingCheck=false;
+    $scope.objBank={};
+    $("#spnBankName,#spnAccNo,#spnIFSC,#spnSWIFTCode").hide();
     $scope.getOnLoad=function(){
         debugger
         IndustrialFellowshipController.getDocUploadDet($rootScope.userHashId, function (result, event) {
-            
+            console.log('Bank Details');
             console.log(result);
             console.log(event);    
             debugger  
             $scope.objContact=result;
             $scope.objProposal=result.Proposals__r;
+            if(result.Bank_Details__r==undefined){
+                $scope.objBank={Contact__c:result.Id};
+            }else{
+                $scope.objBank=result.Bank_Details__r[0];
+            }
                   $scope.$apply();
                   if($scope.objProposal.Decision_Letter_Sent__c!=undefined){                    
                     if($scope.objProposal.Decision_Letter_Sent__c==true && $scope.objProposal.Invitation_Letter_Form_Status__c=="Approved"){
@@ -91,6 +98,44 @@ angular.module('cp_app').controller('PECFARDocUpload_Ctrl', function($scope,$roo
                   }
         });   
     }
+    $scope.removeClass=function(ctrlId){
+        $("#txt"+ctrlId+"").removeClass('border-theme');
+            $("#spn"+ctrlId+"").hide();
+    }
+    $scope.saveBankDetails=function(){
+        if($scope.objBank.Bank_Name__c==undefined || $scope.objBank.Bank_Name__c==''){
+            $("#txtBankName").addClass('border-theme');
+            $("#spnBankName").show();
+            return
+        }
+        if($scope.objBank.Bank_Account_Number__c==undefined || $scope.objBank.Bank_Account_Number__c==''){
+            $("#txtAccNo").addClass('border-theme');
+            $("#spnAccNo").show();
+            return
+        }
+        if($scope.objBank.Bank_IFSC_Code__c==undefined || $scope.objBank.Bank_IFSC_Code__c==''){
+            $("#txtIFSC").addClass('border-theme');
+            $("#spnIFSC").show();
+            return
+        }
+        if($scope.objBank.Bank_SWIFT_Code__c==undefined || $scope.objBank.Bank_SWIFT_Code__c==''){
+            $("#txtSWIFTCode").addClass('border-theme');
+            $("#spnspnSWIFTCode").show();
+            return
+        }
+        IndustrialFellowshipController.saveBankDet($scope.objBank, function (result, event) {
+            debugger
+            console.log(result);
+            console.log(event);
+            if(result==null||result=='exception'||result==undefined){
+                swal('Error','An exception occurred, please try again or contact support.','error');
+            }else{
+                $scope.objBank.Id=result;
+                $scope.$apply();
+                swal('success','Bank details have been saved successfully.','success');
+            }
+        });
+    }
     $scope.getProjectdetils = function () {
         debugger;
         IndustrialFellowshipController.getAllUserDoc($rootScope.contactId, function (result, event) {
@@ -118,6 +163,12 @@ angular.module('cp_app').controller('PECFARDocUpload_Ctrl', function($scope,$roo
                     }
                     else if($scope.allDocs[i].userDocument.Name == 'Upload SC / UC'){
                         $scope.SEUCUpload=$scope.allDocs[i];
+                    }
+                    else if($scope.allDocs[i].userDocument.Name == 'Upload Bank Details'){
+                        $scope.BankDetUpload=$scope.allDocs[i];
+                    }
+                    else if($scope.allDocs[i].userDocument.Name == 'Upload Visit Letter'){
+                        $scope.VisitLetterUpload=$scope.allDocs[i];
                     }
                 }
                 $scope.$apply();
@@ -242,7 +293,13 @@ angular.module('cp_app').controller('PECFARDocUpload_Ctrl', function($scope,$roo
         else if(type == 'Upload Undertaking'){
             $scope.objProposal.Undertaking_Status__c="Submitted";
         }
+        else if(type == 'Upload Visit Letter'){
+            return
+        }
         else if(type == 'Upload Attendance'){
+            return
+        }
+        else if(type == 'Upload Bank Details'){
             return
         }
         else if(type == 'SC / UC Upload'){

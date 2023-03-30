@@ -1,4 +1,4 @@
-angular.module('cp_app').controller('sign_Ctrl', function($scope,$rootScope) {
+angular.module('cp_app').controller('sign_Ctrl', function($scope,$sce,$rootScope) {
     debugger;
     $scope.siteURL = siteURL;
     $rootScope.projectId;
@@ -29,16 +29,18 @@ angular.module('cp_app').controller('sign_Ctrl', function($scope,$rootScope) {
 
     $scope.getProjectdetils = function () {
         debugger;
-        ApplicantPortal_Contoller.getContactUserDoc($rootScope.contactId, function (result, event) {
+        ApplicantPortal_Contoller.getAllUserDoc($rootScope.projectId, function (result, event) {
             debugger
             console.log('result return onload :: ');
             console.log(result);
             if (event.status) {
                 $scope.allDocs = result;
-                var uploadCount=0;
                 for(var i=0;i<$scope.allDocs.length;i++){
-                    if($scope.allDocs[i].userDocument.Name == 'Signature'){
+                    if($scope.allDocs[i].userDocument.Name == 'Coordinator 1 Signature'){
                         $scope.doc=$scope.allDocs[i];
+                    }
+                    if($scope.allDocs[i].userDocument.Name == 'Coordinator 2 Signature'){
+                        $scope.doc2=$scope.allDocs[i];
                     }
                 }
                 $scope.$apply();
@@ -46,34 +48,22 @@ angular.module('cp_app').controller('sign_Ctrl', function($scope,$rootScope) {
         }, {
             escape: true
         })
-        // ApplicantPortal_Contoller.getAllUserDoc($rootScope.projectId, function (result, event) {
-        //     debugger
-        //     console.log('result return onload :: ');
-        //     console.log(result);
-        //     if (event.status) {
-        //         $scope.allDocs = result;
-        //         for(var i=0;i<$scope.allDocs.length;i++){
-        //             if($scope.allDocs[i].userDocument.Name == 'Signature'){
-        //                 $scope.doc=$scope.allDocs[i];
-        //             }
-        //         }
-        //         $scope.$apply();
-        //     }
-        // }, {
-        //     escape: true
-        // })
-      }
-      $scope.getProjectdetils();
+    }
+    $scope.getProjectdetils();
 
       $scope.selectedFile;
 
-    $scope.filePreviewHandler = function(fileContent){
+      $scope.filePreviewHandler = function(fileContent){
         debugger;
         $scope.selectedFile = fileContent;
     
         console.log('selectedFile---', $scope.selectedFile);
-    
-        $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
+        var jhj=$scope.selectedFile.userDocument.Attachments[0].Id;
+        console.log(jhj);
+        $scope.filesrec = $sce.trustAsResourceUrl(window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.selectedFile.userDocument.Attachments[0].Id);
+        //$scope.filesrec = window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.selectedFile.userDocument.Attachments[0].Id;
+        // $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
+        $('#file_frame').attr('src', $scope.filesrec);
     
         var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
         myModal.show('slow') ;
@@ -117,7 +107,7 @@ angular.module('cp_app').controller('sign_Ctrl', function($scope,$rootScope) {
                 doneUploading = false;
                 debugger;
                 if (fileSize < maxStringSize) {
-                    $scope.uploadAttachment(type , userDocId, fileId);
+                    $scope.uploadAttachment(type , userDocId, null);
                 } else {
                   swal("info", "Base 64 Encoded file is too large.  Maximum size is " + maxStringSize + " your file is " + fileSize + ".","info");
                         return;
@@ -153,9 +143,9 @@ angular.module('cp_app').controller('sign_Ctrl', function($scope,$rootScope) {
         $scope.uploadAttachment = function (type, userDocId, fileId) {
             debugger;
             var attachmentBody = "";
-            if (fileId == undefined) {
-                fileId = " ";
-            }
+            // if (fileId == undefined) {
+            //     fileId = " ";
+            // }
             if (fileSize <= positionIndex + chunkSize) {
                 debugger;
                 attachmentBody = attachment.substring(positionIndex);

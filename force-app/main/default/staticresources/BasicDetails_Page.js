@@ -132,28 +132,28 @@ angular.module('cp_app').controller('basicDetails_ctrl',function($scope, $rootSc
             var endmonth = 0;
             var endday = 0;
         }
-        if($scope.proposedDate < $scope.announcementDate){
-            swal("Basic Details", "Workshop proposed Date should not be previous to result announcement date.");
-            $("#proposedDate").addClass('border-theme');
-            return;  
-        }
-        if($scope.endDate < $scope.announcementDate){
-            swal("Basic Details", "Workshop End Date should not be previous to result announcement date.");
-            $("#endDate").addClass('border-theme');
-            return;  
-        }
-        if($scope.proposedDate > $scope.endDate){
-            swal("Basic Details", "Workshop End Date should not be previous to Workshop proposed Date.");
-            $("#proposedDate").addClass('border-theme');
-            $("#endDate").addClass('border-theme');
-            return;   
-        }
-        if($scope.proposedDate == $scope.endDate){
-            swal("Basic Details", "Workshop End Date should not be same to Workshop proposed Date.");
-            $("#proposedDate").addClass('border-theme');
-            $("#endDate").addClass('border-theme');
-            return;   
-        }
+        // if($scope.proposedDate < $scope.announcementDate){
+        //     swal("Basic Details", "Workshop proposed Date should not be previous to result announcement date.");
+        //     $("#proposedDate").addClass('border-theme');
+        //     return;  
+        // }
+        // if($scope.endDate < $scope.announcementDate){
+        //     swal("Basic Details", "Workshop End Date should not be previous to result announcement date.");
+        //     $("#endDate").addClass('border-theme');
+        //     return;  
+        // }
+        // if($scope.proposedDate > $scope.endDate){
+        //     swal("Basic Details", "Workshop End Date should not be previous to Workshop proposed Date.");
+        //     $("#proposedDate").addClass('border-theme');
+        //     $("#endDate").addClass('border-theme');
+        //     return;   
+        // }
+        // if($scope.proposedDate == $scope.endDate){
+        //     swal("Basic Details", "Workshop End Date should not be same to Workshop proposed Date.");
+        //     $("#proposedDate").addClass('border-theme');
+        //     $("#endDate").addClass('border-theme');
+        //     return;   
+        // }
 
         // if($scope.proposedDate.getDate() < dd && $scope.proposedDate.getUTCMonth()+1 <= mm && $scope.proposedDate.getUTCFullYear() <= yyyy){
         //     swal("info", "Workshop proposed Date should not be previous date.");
@@ -181,7 +181,7 @@ angular.module('cp_app').controller('basicDetails_ctrl',function($scope, $rootSc
                 debugger;
                 Swal.fire(
                     'SUCCESS',
-                    'Your Basic detail of Proposal has been saved successfully.',
+                    'Your Basic detail of Proposal have been saved successfully.',
                     'success'
                 );
                 $scope.saveChanges = true;

@@ -119,7 +119,7 @@ public with sharing class CongaHelperToolLightning {
                     attachId = attachId.substring(attachId.indexOf('/')+1);
                 }
             } catch (Exception e) {
-                attachId = 'Result: There is an error when the attachament id was generated';
+                attachId = null;
                 System.debug(':: [CongaHelperToolLightning] attachId :: ' + attachId 
                              + '----> ' + e +e.getMessage()+' AT '+e.getLineNumber());
             }

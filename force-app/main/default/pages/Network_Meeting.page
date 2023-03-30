@@ -23,7 +23,7 @@
                                         <div class="icon-circle">
                                             <i class="fa fa-home"></i>
                                         </div>
-                                        <span>Project Details</span>
+                                        <span>Basic Details</span>
                                     </a>
                                 </li>
                                 <li class="active pb-cursor">
@@ -58,7 +58,7 @@
                                         <span>Project Details</span>
                                     </a>
                                 </li>
-                                <li class="active pb-cursor">
+                                <li class="active pb-cursor" ng-hide="secondStage">
                                     <a ng-click="redirectPageURL('WorkPackages')">
                                         <div class="icon-circle">
                                             <i class="fa-solid fa-box"></i>
@@ -68,6 +68,58 @@
                                 </li>
                             </ul>
                         </div>
+
+                        <div ng-show="proposalStage">
+                            <div class="tab-link" ng-show="secondStage">
+                                <div class="progress">
+                                    <div class="progress-success w-100"></div>
+                                </div>
+                                <ul>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('WorkPackages')">
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-box"></i>
+                                            </div>
+                                            <span>Work Package</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('PIDeliverables')">
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-business-time"></i>
+                                            </div>
+                                            <span>PI Deliverables</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('Network_Meeting')">
+                                            <div class="icon-circle">
+                                                <i class="fa fa-group"></i>
+                                            </div>
+                                            <span>Network Meeting</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('ExpenseDeclaration')">
+                                            <div class="icon-circle">
+                                                <i class="fa fa-money"></i>
+                                            </div>
+                                            <span>Expense Details</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('GrantApplication')">
+                                            <div class="icon-circle">
+                                                <i class="fas fa-donate"></i>
+                                            </div>
+                                            <span>Grant Application</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
                         <div class="tab-link" ng-hide="proposalStage">
                             <div class="progress">
                                 <div class="progress-success w-100"></div>
@@ -78,7 +130,7 @@
                                         <div class="icon-circle">
                                             <i class="fa fa-home"></i>
                                         </div>
-                                        <span>Project Details</span>
+                                        <span>Basic Details</span>
                                     </a>
                                 </li>
                                 <li class="active">
@@ -113,7 +165,7 @@
                                         <span>Project Details</span>
                                     </a>
                                 </li>
-                                <li class="active">
+                                <li ng-hide="secondStage" class="active">
                                     <a>
                                         <div class="icon-circle">
                                             <i class="fa-solid fa-box"></i>
@@ -122,6 +174,56 @@
                                     </a>
                                 </li>
                             </ul>
+                        </div>
+
+                        <div ng-hide="proposalStage">
+                            <div class="tab-link" ng-show="secondStage">
+                                <div class="progress">
+                                    <div class="progress-success wp-5"></div>
+                                </div>
+                                <ul>
+                                    <li class="active pb-cursor">
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-box"></i>
+                                            </div>
+                                            <span>Work Packages</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-business-time"></i>
+                                            </div>
+                                            <span>PI Deliverables</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa fa-group"></i>
+                                            </div>
+                                            <span>Network Meeting</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa fa-money"></i>
+                                            </div>
+                                            <span>Expense Details</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fas fa-donate"></i>
+                                            </div>
+                                            <span>Grant Details</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -137,9 +239,7 @@
                         <table class="table" cellpadding="4">
                             <thead>
                                 <tr>
-                                    <th style="width:4%" nowrap="true">Sr.No.
-                                        <span class="required-asterisk" style="color:red;">*</span>
-                                    </th>
+                                    <th style="width:4%" nowrap="true">Sr.No. </th>
                                     <th style="width:20%">Partner
                                         <span class="required-asterisk" style="color:red;">*</span>
                                     </th>
@@ -170,7 +270,7 @@
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                       <li class="dropdown-item" ng-repeat="x in applicnt.AccountList">
                                         <label for="{{$parent.$index}}{{$index}}"  class="form-control scrollV ng-valid ng-dirty ng-touched" style="height: 10%;"> 
-                                            <input type="checkbox" name="chkFields" ng-model="x.selected" class="ng-pristine ng-untouched ng-valid" ng-disabled="proposalStage" required="true" ng-required="x.selected" /> 
+                                            <input ng-focus="removeClass('partner',$index)" id="partner{{$index}}" type="checkbox" name="chkFields" ng-model="x.selected" class="ng-pristine ng-untouched ng-valid" ng-disabled="proposalStage" /> 
                                             <span class="ng-binding ng-scope" style="width:15px;"> {{x.Name}} </span>
                                         </label>
                                       </li>
@@ -178,10 +278,12 @@
                                   </div>
                                
                                 </td>
-                                <td><input type="text" class="form-control" ng-model="applicnt.meetingAgenda" ng-disabled="proposalStage" required="true" ng-required="applicnt.meetingAgenda" /></td>
-                                <td><input type="text" class="form-control" ng-model="applicnt.meetingVenue" ng-disabled="proposalStage" required="true" ng-required="applicnt.meetingVenue" /></td>
-                                <td><input type="date" class="form-control" ng-model="applicnt.Tentative_Date__c" ng-change="validateDate($index,'t')" ng-disabled="proposalStage" /></td>
-                                <td><input type="date" class="form-control" ng-model="applicnt.Actual_Date__c" ng-change="validateDate($index,'a')" ng-disabled="proposalStage" /></td>
+                                <td><input ng-focus="removeClass('agenda',$index)" id="agenda{{$index}}" type="text" class="form-control" ng-model="applicnt.meetingAgenda" ng-disabled="proposalStage" required="true" ng-required="applicnt.meetingAgenda" /></td>
+                                <td><input ng-focus="removeClass('venue',$index)" id="venue{{$index}}" type="text" class="form-control" ng-model="applicnt.meetingVenue" ng-disabled="proposalStage" required="true" ng-required="applicnt.meetingVenue" /></td>
+                                <!-- <td><input ng-focus="removeClass('tentative',$index)" id="tentative{{$index}}" type="date" class="form-control" ng-model="applicnt.Tentative_Date__c" ng-change="validateDate($index,'t')" ng-disabled="proposalStage" /></td> -->
+                                <td><input ng-focus="removeClass('tentative',$index)" id="tentative{{$index}}" type="date" class="form-control" ng-model="applicnt.Tentative_Date__c" ng-disabled="proposalStage" /></td>
+                                <!-- <td><input ng-focus="removeClass('actual',$index)" id="actual{{$index}}" type="date" class="form-control" ng-model="applicnt.Actual_Date__c" ng-change="validateDate($index,'a')" ng-disabled="proposalStage" /></td> -->
+                                <td><input ng-focus="removeClass('actual',$index)" id="actual{{$index}}" type="date" class="form-control" ng-model="applicnt.Actual_Date__c" ng-disabled="proposalStage" /></td>
                                     <td ng-hide="proposalStage"><i class="fas fa-times-circle icon ps-3" ng-click="removeRow($index)"></i></td>
                                 </tr>
                             </tbody>
@@ -191,7 +293,7 @@
 
                 <div class="row m-5" ng-if="!proposalStage">
                     <div class="col-md-12">
-                        <button class="blue-btn float-end" ng-click="submitMeetingDetails()" type="button">
+                        <button class="blue-btn float-end" ng-click="saveMeetingDetails()" type="button">
                             <i class="fa-solid fa-check me-2"></i>Save and Next</button>
                         <button class="blue-bordered-btn float-end me-2" ng-click="redirectPageURL('PIDeliverables')" type="button">
                             <i class="fa-solid fa-arrow-left me-2"></i>Previous</button>

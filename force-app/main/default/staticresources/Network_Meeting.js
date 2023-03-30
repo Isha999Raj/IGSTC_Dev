@@ -111,22 +111,7 @@ $scope.siteURL = siteURL;
         debugger
         var objData = $scope.MeetingList;
         for (var i = 0; i < objData.length; i++) {
-            if(objData[i].meetingAgenda == undefined || objData[i].meetingAgenda == ""){
-                swal("Meeting Details", "Please Enter your Meeting Agenda.");
-                return;
-            }
-            if(objData[i].meetingVenue == undefined || objData[i].meetingVenue == ""){
-                swal("Meeting Details", "Please Enter Meeting Venue.");
-                return;
-            }
-            if(objData[i].Tentative_Date__c == undefined || objData[i].Tentative_Date__c == ""){
-                swal("Meeting Details", "Please Enter Tentative Date.");
-                return;
-            }
-            if(objData[i].Actual_Date__c == undefined || objData[i].Actual_Date__c == ""){
-                swal("Meeting Details", "Please Enter Actual Date.");
-                return;
-            }
+
             var count = 0;
             if(objData[i].AccountList != undefined){
                 for(var k = 0; k < objData[i].AccountList.length; k++){
@@ -137,7 +122,29 @@ $scope.siteURL = siteURL;
             }
             if(count <= 0){
                 swal("Meeting Details", "Please Select Partners.");
+                $("#partner"+i+"").addClass('border-theme');
                 return; 
+            }
+
+            if(objData[i].meetingAgenda == undefined || objData[i].meetingAgenda == ""){
+                swal("Meeting Details", "Please Enter your Meeting Agenda.");
+                $("#agenda"+i+"").addClass('border-theme');
+                return;
+            }
+            if(objData[i].meetingVenue == undefined || objData[i].meetingVenue == ""){
+                swal("Meeting Details", "Please Enter Meeting Venue.");
+                $("#venue"+i+"").addClass('border-theme');
+                return;
+            }
+            if(objData[i].Tentative_Date__c == undefined || objData[i].Tentative_Date__c == ""){
+                swal("Meeting Details", "Please Enter Tentative Date.");
+                $("#tentative"+i+"").addClass('border-theme');
+                return;
+            }
+            if(objData[i].Actual_Date__c == undefined || objData[i].Actual_Date__c == ""){
+                swal("Meeting Details", "Please Enter Actual Date.");
+                $("#actual"+i+"").addClass('border-theme');
+                return;
             }
         }
 
@@ -183,7 +190,13 @@ $scope.siteURL = siteURL;
         ApplicantPortal_Contoller.saveMeetingDetailss(objData, $rootScope.projectId, function (result, event) {
             debugger;
             if (event.status) {
-                swal("Network Meeting", "Your Network Meeting detail has been saved successfully.");
+                Swal.fire(
+                    'Success',
+                    'Your Network Meeting detail has been saved successfully.',
+                    'success'
+                );
+                // swal("Network Meeting", "Your Network Meeting detail has been saved successfully.");
+                // return;
             }
                 debugger;
                 $scope.redirectPageURL('ExpenseDeclaration');    
@@ -427,4 +440,10 @@ $scope.redirectPageURL = function(pageName){
     link.href="#/"+pageName;
     link.click();
 }
+
+$scope.removeClass=function(controlid,index){
+    debugger;
+    var controlIdfor=controlid+""+index;
+    $("#"+controlIdfor+"").removeClass('border-theme');
+  }
 });

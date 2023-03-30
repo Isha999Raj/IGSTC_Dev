@@ -282,5 +282,7 @@ angular.module('textarea', [])
            <script src="{!$Resource.WORKSHOPDocUpload2}" />
            <script src="{!$Resource.WORKSHOPDocUpload3}" />
            <script src="{!$Resource.ConnectAllDocUpload}" />
-           <script src="{!$Resource.SingHostDetails}" />       
+           <script src="{!$Resource.SingHostDetails}" />
+           <script src="{!$Resource.BudgetDetails}" />
+           <script src="{!$Resource.CallReviewerDetails}" />        
 </apex:component>

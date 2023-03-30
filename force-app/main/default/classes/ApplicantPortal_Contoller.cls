@@ -11,6 +11,7 @@ public withOut sharing class ApplicantPortal_Contoller {
     // public string degree  {get;set;}
     public string specialization  {get;set;}
     public string presentingWorkshop  {get;set;}
+    public string currencyType2  {get;set;}
     public string stage  {get;set;}
     public String ApplicantPortalSiteURL {get;set;}
     public string secondstage  {get;set;}
@@ -50,7 +51,7 @@ public withOut sharing class ApplicantPortal_Contoller {
         countryCode = JSON.serialize(Utility.getPicklistValues('Contact' , 'Country_Code__c'));
         natureOfThesisWork = JSON.serialize(Utility.getPicklistValues('Education_Details__c' , 'Nature_of_Thesis_Work__c'));
         natureOfPhDWork = JSON.serialize(Utility.getPicklistValues('Education_Details__c' , 'Nature_of_PhD_Work__c'));
-        
+        currencyType2 = JSON.serialize(Utility.getPicklistValues('Expense_Line_Item__c' , 'Currency_Type2__c'));
         availingFellowship = JSON.serialize(Utility.getPicklistValues('Application_Proposal__c' , 'Availing_any_other_fellowship_currently__c'));
         pairedApplicant = JSON.serialize(Utility.getPicklistValues('Application_Proposal__c' , 'Paired_Applicant_associated_with_IGSTC__c'));
         participantType = JSON.serialize(Utility.getPicklistValues('Participants__c' , 'Participant_Type__c'));
@@ -600,8 +601,8 @@ public withOut sharing class ApplicantPortal_Contoller {
     }
 
     @RemoteAction
-    public static string saveExpenseDetails(List<Expense_Line_Item__c> listOfLineItem){
-        return Proposal_Controller.saveExpenseDetails(listOfLineItem);
+    public static string saveExpenseDetails(List<Expense_Line_Item__c> listOfLineItem, Application_Proposal__c app){
+        return Proposal_Controller.saveExpenseDetails(listOfLineItem,app);
     }
 
     @RemoteAction
@@ -875,6 +876,16 @@ public withOut sharing class ApplicantPortal_Contoller {
     }
 
     @RemoteAction
+    public static String insertCoordinatorsInformation2(List<Account> accList,List<Contact> conList){
+        return Proposal_Controller.insertCoordinatorsInformation2(accList, conList);
+    }
+
+    @RemoteAction
+    public static list<Proposal_Controller.UserDocumentWrapper> getAllUserDocSignature(string parentId) {
+        return Proposal_Controller.getAllUserDocSignature(parentId);
+    }
+
+    @RemoteAction
     public static string saveAsDraftPecfar(Application_Proposal__c proposalDetails){
         return Proposal_Controller.saveAsDraftPecfar(proposalDetails);
     }
@@ -1003,6 +1014,18 @@ public withOut sharing class ApplicantPortal_Contoller {
     //     }
     //     return 'Success';
     // }
+    private static Attachment getAttachment(String attId) {
+        list<Attachment> attachments = [SELECT Id, Body
+                                        FROM Attachment 
+                                        WHERE Id =: attId];
+        if(attachments.isEmpty()) {
+            Attachment a = new Attachment();
+            return a;
+        } else {
+            return attachments[0];
+        }
+    }
+    
     @RemoteAction
     public static String doCUploadAttachmentAa(String attachmentBody, String attachmentName, string cvId, String udId) {
         system.debug('attachmentBody---'+attachmentName+'---attachmentId---'+cvId+'---cvId---'+udId);
@@ -1012,6 +1035,103 @@ public withOut sharing class ApplicantPortal_Contoller {
         userDocc.Status__c = 'Uploaded';
         system.debug('status ::'+userDocc);
         upsert userDocc;
+        
+                    if(cvId == null) {
+                        // Attachment att = new Attachment(parentId = udId, name=attachmentName, body = EncodingUtil.base64Decode(attachmentBody));
+                        // upsert att;
+                        Attachment aatt = new Attachment(parentId = udId, name=attachmentName, body = EncodingUtil.base64Decode(attachmentBody));
+                        aatt.OwnerId = getOwnerIdOfRecord(udId);
+                        insert aatt;
+                        return aatt.Id;
+                    }else{
+                        Attachment att = getAttachment(cvId);
+                        String newBody = '';
+                        if(att.Body != null) {
+                            newBody = EncodingUtil.base64Encode(att.Body);
+                        }
+                        newBody += attachmentBody;
+                        att.Body = EncodingUtil.base64Decode(newBody);
+                        att.OwnerId = getOwnerIdOfRecord(udId);
+                        upsert att;
+                    return att.Id;
+                    }
+                    
+        // Attachment a = new Attachment(parentId = udId, name=attachmentName, body = Blob.valueOf(attachmentBody));
+        // insert a;
+        // if(String.isBlank(attachmentBody) || String.isBlank(udId))
+        //     return 'ERROR';
+        // if(String.isBlank(cvId)) {
+        //     ContentVersion conVer = new ContentVersion();
+        //     conVer.ContentLocation = 'S';
+        //     conVer.PathOnClient = '/'+System.now()+attachmentName;//'attachmentName';
+        //     conVer.Title = attachmentName;
+        //     conVer.VersionData = EncodingUtil.base64Decode(attachmentBody);
+        //     conVer.isMajorVersion = false;
+        //     insert conVer;  
+           
+        //     ContentDistribution cdl = new ContentDistribution();
+        //     cdl.ContentVersionId = conVer.Id;
+        //     cdl.Name = 'PublicShare';
+        //     cdl.RelatedRecordId = udId;
+        //     insert cdl;
+        //     system.debug('ContentDistribution----'+cdl);
+        //     Id conDoc = [SELECT ContentDocumentId FROM ContentVersion WHERE Id =:conVer.Id].ContentDocumentId;
+        //     ContentDocumentLink conDocLink = New ContentDocumentLink();
+        //     conDocLink.LinkedEntityId = udId;
+        //     conDocLink.ContentDocumentId = conDoc;
+        //     conDocLink.shareType = 'V';
+        //     insert conDocLink;
+
+        //     return conVer.Id;
+
+        // }else {
+        //     List<ContentVersion> cvList = [SELECT Id, VersionData FROM ContentVersion WHERE Id = :cvId];
+        //     if(!cvList.isEmpty()) {
+        //         ContentVersion cVersion = cvList[0];
+        //         if(cVersion.VersionData != null) {
+        //             String newBody = EncodingUtil.base64Encode(cVersion.VersionData);
+        //             newBody += attachmentBody;
+        //             cVersion.VersionData = EncodingUtil.base64Decode(newBody);
+        //             update cVersion;
+        //             return cVersion.Id;
+        //         }  
+        //     }
+        // }
+       // return 'Success';
+    }
+
+    @RemoteAction
+    public static String doCUploadAttachmentSignature(String attachmentBody, String attachmentName, string cvId, String udId) {
+        system.debug('attachmentBody---'+attachmentName+'---attachmentId---'+cvId+'---cvId---'+udId);
+        system.debug('cvId---'+cvId+'---udId---'+udId);
+        User_Document__c userDocc = New User_Document__c();
+        userDocc.Id = udId;
+        userDocc.Status__c = 'Uploaded';
+        system.debug('status ::'+userDocc);
+        upsert userDocc;
+        
+                    // if(cvId == null) {
+                    //     // Attachment att = new Attachment(parentId = udId, name=attachmentName, body = EncodingUtil.base64Decode(attachmentBody));
+                    //     // upsert att;
+                    //     Attachment aatt = new Attachment(parentId = udId, name=attachmentName, body = EncodingUtil.base64Decode(attachmentBody));
+                    //     aatt.OwnerId = getOwnerIdOfRecord(udId);
+                    //     insert aatt;
+                    //     return aatt.Id;
+                    // }else{
+                    //     Attachment att = getAttachment(cvId);
+                    //     String newBody = '';
+                    //     if(att.Body != null) {
+                    //         newBody = EncodingUtil.base64Encode(att.Body);
+                    //     }
+                    //     newBody += attachmentBody;
+                    //     att.Body = EncodingUtil.base64Decode(newBody);
+                    //     att.OwnerId = getOwnerIdOfRecord(udId);
+                    //     upsert att;
+                    // return att.Id;
+                    // }
+                    
+        Attachment a = new Attachment(parentId = udId, name=attachmentName, body = Blob.valueOf(attachmentBody));
+        insert a;
         if(String.isBlank(attachmentBody) || String.isBlank(udId))
             return 'ERROR';
         if(String.isBlank(cvId)) {
@@ -1051,7 +1171,22 @@ public withOut sharing class ApplicantPortal_Contoller {
                 }  
             }
         }
-        return 'Success';
+       return 'Success';
+    }
+    public static Id getOwnerIdOfRecord(Id recordId){
+       
+        String objectName = recordId.getSObjectType().getDescribe().getName();
+        String ownerIdFieldName = 'OwnerId';
+
+        // Build the dynamic SOQL query
+        String queryString = 'SELECT ' + ownerIdFieldName + ' FROM ' + objectName + ' WHERE Id = \'' + recordId + '\' LIMIT 1';
+
+        // Execute the dynamic SOQL query
+        SObject[] queryResult = Database.query(queryString);
+
+        // Get the OwnerId value from the query result
+        Id ownerId = (Id)queryResult[0].get(ownerIdFieldName);
+        return ownerId;
     }
 
     @RemoteAction
@@ -1080,7 +1215,7 @@ public withOut sharing class ApplicantPortal_Contoller {
     }
 
     @RemoteAction
-    public static string SaveWorkshopContactDetails(Contact conDataList, List<Education_Details__c> eduDetails, List<Employment_Details__c> empDetails){
+    public static string SaveWorkshopContactDetails(List<Contact> conDataList, List<Education_Details__c> eduDetails, List<Employment_Details__c> empDetails){
         return Proposal_Controller.SaveWorkshopContactDetails(conDataList, eduDetails, empDetails);
     }
 
@@ -1292,7 +1427,7 @@ public withOut sharing class ApplicantPortal_Contoller {
             Application_Proposal__c appProposal = New Application_Proposal__c();
             Contact conRec = [SELECT Id,Proposals__c FROM Contact Where Id =: contactId];
             if(!string.isBlank(conRec.Proposals__c)){
-                appProposal = [SELECT Id,Tentative_Start_Date__c FROM Application_Proposal__c WHERE Id=: conRec.Proposals__c];
+                appProposal = [SELECT Id,Tentative_Start_Date__c,Tentative_End_Date__c FROM Application_Proposal__c WHERE Id=: conRec.Proposals__c];
             }
             return appProposal;
         }catch(Exception e){
@@ -1301,7 +1436,7 @@ public withOut sharing class ApplicantPortal_Contoller {
     }
 
     @RemoteAction
-    public static string saveTentativeDate(Application_Proposal__c applicantDetails, integer day, integer month, integer year){
+    public static string saveTentativeDate(Application_Proposal__c applicantDetails, integer day, integer month, integer year, integer endday, integer endmonth, integer endyear){
         try{
             Application_Proposal__c app = New Application_Proposal__c(); 
             if(day==0 && month==0 && year==0){
@@ -1309,6 +1444,13 @@ public withOut sharing class ApplicantPortal_Contoller {
             }else{
                 app.Id = applicantDetails.Id;
                 app.Tentative_Start_Date__c = Date.newInstance(year, month, day);
+                
+            }
+            if(endday==0 && endmonth==0 && endyear==0){
+                
+            }else{
+                app.Id = applicantDetails.Id;
+                app.Tentative_End_Date__c = Date.newInstance(endyear, endmonth, endday);
                 
             }
             upsert app;
@@ -1386,8 +1528,18 @@ public withOut sharing class ApplicantPortal_Contoller {
     public static Account getHostSing(string projectId){
         try{
             Account acc = [SELECT Id,Name,Email__c,BillingStreet,BillingCity,BillingState,BillingCountry,BillingPostalCode,Phone,(SELECT Id,FirstName,LastName,Name,Designation__c,Email,
-            MobilePhone,MailingStreet,MailingCity,MailingState,MailingCountry,MailingPostalCode,Department FROM Contacts) From Account WHERE Proposals__c=: projectId AND Host__c = true];
+            MobilePhone,MailingStreet,MailingCity,MailingState,MailingCountry,MailingPostalCode,Nationality__c,Department FROM Contacts) From Account WHERE Proposals__c=: projectId AND Host__c = true];
             return acc;
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    @RemoteAction
+    public static contact getConSing(string hashCode){
+        try{
+            Contact conRec = [SELECT Id,Name,MailingCountry FROM Contact WHERE Login_Hash_Code__c =: hashCode];
+            return conRec;
         }catch(Exception e){
             return null;
         }
@@ -1406,5 +1558,15 @@ public withOut sharing class ApplicantPortal_Contoller {
         }catch(Exception e){
             return e.getMessage()+e.getLineNumber();
         }
+    }
+
+    @RemoteAction
+    public static List<Expense_Head__c> getExpenseFromProposal(string proposalId){
+        return Proposal_Controller.getExpenseFromProposal(proposalId);
+    }
+
+    @RemoteAction
+    public static List<Contact> getCoordCVDetails(string proposalid){
+        return Proposal_Controller.getCoordCVDetails(proposalid);
     }
 }

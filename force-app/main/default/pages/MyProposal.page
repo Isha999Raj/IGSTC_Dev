@@ -145,8 +145,8 @@
             <td>{{project.Campaign__r.Name}}</td>
             <td>{{propStage}}</td>
             <td>
-              <button type="button" class="blue-btn" ng-click="viewProposal()">
-                {{buttonText}}</button>
+              <button type="button" class="blue-btn" ng-click="viewProposal()">{{buttonText}}</button>
+                <a ng-show="project.Document_generated__c" href="{{fileURL}}" target="_blank" class="blue-btn">Download</a>
             </td>
           </tr>
         </tbody>

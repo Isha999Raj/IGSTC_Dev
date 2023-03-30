@@ -313,6 +313,11 @@ public withOut sharing class IndustrialFellowshipController {
         return instanceIFH.getCongaDoc(proID);
     }
     @RemoteAction
+    public static String saveBankDet(Bank_Details__c instanceBank){
+        IndustrialFellowshipHelper instanceIFH=new IndustrialFellowshipHelper();
+        return instanceIFH.saveBankDet(instanceBank);
+    }
+    @RemoteAction
     public static String doCUploadAttachmentA(String attachmentBody, String attachmentName, string cvId, String udId,string projectid,string CreateTask,string TaskSubject) {
         system.debug('attachmentBody---'+attachmentName+'---attachmentId---'+cvId+'---cvId---'+udId);
         system.debug('cvId---'+cvId+'---udId---'+udId);

@@ -22,7 +22,7 @@ angular.module('cp_app').controller('revSubmit_ctrl', function($scope,$sce,$root
                                                  )
     }
 
-    $scope.getProjectdetils();
+    
     $scope.getPECFARProposalDetails=function(){
         ApplicantPortal_Contoller.getPECFARProposalDetails($rootScope.projectId, function(result,event){
             console.log('project data');
@@ -40,6 +40,7 @@ angular.module('cp_app').controller('revSubmit_ctrl', function($scope,$sce,$root
         });
     }
     $scope.getPECFARProposalDetails();
+    $scope.getProjectdetils();
     $scope.saveDetails = function(){
         debugger;
         ApplicantPortal_Contoller.saveAsDraftPecfar($scope.proposalDetails, function(result,event){
@@ -61,6 +62,9 @@ angular.module('cp_app').controller('revSubmit_ctrl', function($scope,$sce,$root
 
     $scope.saveFinal = function(){
         debugger;
+        if($scope.projectData.length==0){
+            location.reload();
+        }
         if($scope.projectData.length<2){
          swal('Review and Submit','Before submit the proposal, please add second contact.');
          return;   
@@ -274,11 +278,11 @@ angular.module('cp_app').controller('revSubmit_ctrl', function($scope,$sce,$root
             console.log(result);
             setTimeout(
                 function(){
-                    $("#btnPreview").html('<i class="fa-solid fa-eye me-2"></i>Preview');
+                    $("#btnPreview").html('<i class="fa-solid fa-eye me-2"></i>Review');
                     $scope.getDoc();
                     $scope.$digest();
                 }, 
-                20000);
+                37000);
         });
     }
     $scope.getDoc=function(){

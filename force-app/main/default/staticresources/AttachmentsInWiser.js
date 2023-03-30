@@ -1,4 +1,4 @@
-angular.module('cp_app').controller('attachmentWiser_ctrl', function($scope,$rootScope) {
+angular.module('cp_app').controller('attachmentWiser_ctrl', function($scope,$sce,$rootScope) {
 
     $scope.objContact={};
     $scope.disableSubmit = true;
@@ -20,11 +20,15 @@ $scope.filePreviewHandler = function(fileContent){
     $scope.selectedFile = fileContent;
 
     console.log('selectedFile---', $scope.selectedFile);
+    var jhj=$scope.selectedFile.userDocument.Attachments[0].Id;
+    console.log(jhj);
+    $scope.filesrec = $sce.trustAsResourceUrl(window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.selectedFile.userDocument.Attachments[0].Id);
+    //$scope.filesrec = window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.selectedFile.userDocument.Attachments[0].Id;
+    // $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
+    $('#file_frame').attr('src', $scope.filesrec);
 
-    $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
-
-    var myModal = new bootstrap.Modal(document.getElementById('filePreview'))
-    myModal.show('slow');
+    var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
+    myModal.show('slow') ;
     $scope.$apply();
 
     //.ContentDistribution.DistributionPublicUrl
@@ -106,7 +110,7 @@ $scope.uploadFile = function (type, userDocId, fileId,maxSize,minFileSize) {
                 doneUploading = false;
                 debugger;
                 if (fileSize < maxStringSize) {
-                    $scope.uploadAttachment(type , userDocId, fileId);
+                    $scope.uploadAttachment(type , userDocId, null);
                 } else {
                     swal('info','Base 64 Encoded file is too large.  Maximum size is " + maxStringSize + " your file is " + fileSize + ".','info');
                     return;
@@ -178,7 +182,7 @@ $scope.uploadFile1 = function (type, userDocId, fileId,maxSize,minFileSize) {
                 doneUploading = false;
                 debugger;
                 if (fileSize < maxStringSize) {
-                    $scope.uploadAttachment(type , userDocId, fileId);
+                    $scope.uploadAttachment(type , userDocId, null);
                 } else {
                     swal('info','Base 64 Encoded file is too large.  Maximum size is " + maxStringSize + " your file is " + fileSize + ".','info');
                     return;
@@ -216,9 +220,9 @@ $scope.uploadFile1 = function (type, userDocId, fileId,maxSize,minFileSize) {
 $scope.uploadAttachment = function (type, userDocId, fileId) {
     debugger;
     var attachmentBody = "";
-    if (fileId == undefined) {
-        fileId = " ";
-    }
+    // if (fileId == undefined) {
+    //     fileId = " ";
+    // }
     if (fileSize <= positionIndex + chunkSize) {
         debugger;
         attachmentBody = attachment.substring(positionIndex);

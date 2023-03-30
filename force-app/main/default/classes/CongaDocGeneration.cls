@@ -96,6 +96,7 @@ public class CongaDocGeneration {
     //This is asynchronous method which will be used to generate template for the proided URL.
     @future (callout=true)
     Public static void generateCongaTemplate(String var){
+        system.debug('var ::'+var);
         String TemplateId = CongaHelperToolLightning.generateReport(var,null,null,null,null);
         system.debug('TemplateId'+TemplateId);
     }

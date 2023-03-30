@@ -165,7 +165,8 @@ angular.module('cp_app').controller('ExpenseDeclaration', function ($scope, $roo
     $scope.disableExpenseModule = function(index){
         debugger;
         // console.log($scope.accList[index].Id);
-        $scope.expenseDetails = false;
+        // $scope.expenseDetails = false;
+        location.reload();
     }
     $scope.addRow = function (param1, param2) {
         debugger;
@@ -297,6 +298,7 @@ angular.module('cp_app').controller('ExpenseDeclaration', function ($scope, $roo
     }
     $scope.deleteRowOther = function (param1, param2,Id) {
         debugger;
+        
         if ($scope.other.length > 1){
             $scope.other.splice(param2, 1);
         }

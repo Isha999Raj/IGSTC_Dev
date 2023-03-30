@@ -1,0 +1,137 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" 
+                access="global" controller="UtilityMethodsForDocGeneration" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="contactList" type="List"/>
+    <aura:attribute name="currentContactId" type="String"/>
+    <aura:attribute name="showSpinner" type="boolean" default = "true"/>   
+    <aura:attribute name="previewClicked" type="boolean" default = "false"/>   
+    <aura:attribute name="recordId" type="string" default=""/>   
+    <aura:attribute name="fileId" type="String"/>
+    <aura:attribute name="pdfLink" type="string" default="{!$Label.c.AwardLetterLink}" />
+    
+    <aura:if isTrue="{!AND(v.showSpinner, NOT(v.previewClicked))}"> 
+        <aura:html tag="style">             
+            .slds-modal__container{        
+            width: 100% !important;
+            max-width: 80rem !important;
+            height : 100%; !important;
+            }        
+        </aura:html>
+        
+        <div class="slds-modal__container">
+            <h2 style=" text-align: center;font-size: 25px;font-family: math;">
+                Choose Contact</h2>
+            <br />
+            
+            <!--lightning:datatable class="table" columns="{! v.columns }" data="{! v.data }" keyField="id" onrowselection="{! c.updateSelectedText}" /-->
+            
+            <!--contacts table part--> 
+            <table class="slds-table slds-table--bordered ">
+                <thead class="dinesh">
+                    <tr class="slds-text-title--caps">
+                        <th>
+                        </th>
+                        <th>
+                            <span class="slds-truncate" title="Name">Name</span>      
+                        </th>
+                        <th>
+                            <span class="slds-truncate" title="Name">Email</span>      
+                        </th>
+                        
+                        <th>
+                            <span class="slds-truncate" title="Name">Fellowship Duration</span>      
+                        </th>
+                        <th>
+                            <span class="slds-truncate" title="Name">Action</span>      
+                        </th>
+                        <!--th>
+                        <span class="slds-truncate" title="Name">Quantity</span>      
+                    </th-->
+                        <th>
+                            
+                        </th>
+                        
+                    </tr>
+                </thead>
+                <!--table body start, 
+         Iterate contact list as a <tr>
+         -->
+                <tbody>
+                    <aura:iteration items="{!v.contactList}" var="con" indexVar="i">
+                        <tr>
+                            
+                            <td scope="row">
+                                <input type="radio" id="{!con.Id}" name="options"  onclick="{!c.checkboxSelect}"  />
+                                <!--lightning:radioGroup  aura:id="mygroup"   keyField="id"  onchange="{!c.selectAccountRadioGroupOnChange}" options="{! v.contactList }" value="{!con.Id }" type="radio"/-->
+                            </td>
+                            <td scope="row">
+                                <div class="slds-truncate" title="{!con.Name}">{!con.Name}</div>
+                            </td>
+                            <td scope="row">
+                                <div class="slds-truncate" title="{!con.Email}">{!con.Email}</div>
+                            </td>
+                            <td scope="row">
+                                <div class="slds-truncate" title="{!con.Phone}">{!con.Fellowship_Duration__c}</div>
+                            </td>
+                            
+                            <td scope="row">
+                                <lightning:button variant="brand" label="Preview Document" title="Brand action" onclick="{! c.handleClick }" />
+                            </td>
+                            
+                            <!--td scope="row" ondblclick="{!c.inlineEditDescription}" class="{! v.showErrorClass == true ? 'slds-cell-edit slds-has-error' : 'slds-cell-edit'}">
+                        <div class="slds-truncate" title="{!con.Stadium__r.Sport_Board__r.Name}"><a>{!con.Product_Available_Quantity__c}</a></div>
+                    </td-->
+                            
+                        </tr>
+                    </aura:iteration>
+                </tbody> 
+            </table>        
+        </div>
+    </aura:if>
+    
+    <aura:if isTrue="{!AND(v.showSpinner, v.previewClicked)}"> 
+        <div class="slds-spinner slds-spinner_medium slds-spinner_brand">
+            <lightning:spinner alternativeText="Loading" size="medium" />
+            Loading...
+        </div>
+    </aura:if> 
+    <aura:if isTrue="{!AND(NOT(v.showSpinner), v.previewClicked)}">
+        <aura:html tag="style">
+            .slds-modal__container{
+            max-width: 80% !important;
+            width:100% !important;
+            height:100% !important;
+            }
+            .slds-modal__footer{
+            display:none !important;
+            }   
+            .slds-modal__container>.modal-body>.baseDefault.forceChatterBasePublisher.forceChatterLightningComponent,
+            .slds-modal__container>.modal-body>.baseDefault.forceChatterBasePublisher.forceChatterLightningComponent>.forceChatterPublisherPresentationPanel,
+            .slds-modal__container>.modal-body>.baseDefault.forceChatterBasePublisher.forceChatterLightningComponent>.forceChatterPublisherPresentationPanel>.container.activeState,
+            .slds-modal__container>.modal-body>.baseDefault.forceChatterBasePublisher.forceChatterLightningComponent>.forceChatterPublisherPresentationPanel>.container.activeState>.cuf-content
+            {
+            height:100%;
+            }
+            
+            .content{
+            min-height: 100vh;
+            color:#1b1b1b;
+            font-size: 1.1em;
+            background-color:#f2f0ea;
+            padding:1%;
+            border-radius:5px;
+            }
+            
+        </aura:html>
+        <div class="content">
+            <iframe src="{!v.pdfLink+ v.fileId }" scrolling="no" height="auto" width="auto" style="height:100%;width:100%; display:block;  min-height: 100vh;  background-color: #f2f0ea; border: none;"/>
+        </div>     
+        <div class="slds-align_absolute-center">
+            <lightning:button variant="brand" label="Send" title="Send" onclick="{! c.handleSend }" />
+            <lightning:button variant="brand" label="Cancel" title="Cancel" onclick="{! c.handleCancel }" />
+        </div>
+    </aura:if>
+    <br />
+    
+</aura:component>

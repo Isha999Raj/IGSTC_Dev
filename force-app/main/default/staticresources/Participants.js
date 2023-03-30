@@ -121,13 +121,13 @@ angular.module('cp_app').controller('participant_ctrl', function($scope,$rootSco
                 $("#email"+i+"").addClass('border-theme');
                 return;
             }
-            if($scope.indianList[i].Phone__c == undefined || $scope.indianList[i].Phone__c == ""){
-                swal("Participant Details", "Please Enter Phone Number.");
-                $("#phone"+i+"").addClass('border-theme');
-                return;
-            }
+            // if($scope.indianList[i].Phone__c == undefined || $scope.indianList[i].Phone__c == ""){
+            //     swal("Participant Details", "Please Enter Phone Number.");
+            //     $("#phone"+i+"").addClass('border-theme');
+            //     return;
+            // }
             if($scope.indianList[i].Whether_Participant_is_presenting__c == undefined || $scope.indianList[i].Whether_Participant_is_presenting__c == ""){
-                swal("Participant Details", "Please select whether participant is presenting workshop or not.");
+                swal("Participant Details", "Please select Whether the participant is a speaker or not.");
                 $("#nature"+i+"").addClass('border-theme');
                 return;
             }
@@ -162,13 +162,13 @@ angular.module('cp_app').controller('participant_ctrl', function($scope,$rootSco
                 $("#email2"+i+"").addClass('border-theme');
                 return;
             }
-            if($scope.germanList[i].Phone__c == undefined || $scope.germanList[i].Phone__c == ""){
-                swal("Participant Details", "Please Enter Phone Number.");
-                $("#phone2"+i+"").addClass('border-theme');
-                return;
-            }
+            // if($scope.germanList[i].Phone__c == undefined || $scope.germanList[i].Phone__c == ""){
+            //     swal("Participant Details", "Please Enter Phone Number.");
+            //     $("#phone2"+i+"").addClass('border-theme');
+            //     return;
+            // }
             if($scope.germanList[i].Whether_Participant_is_presenting__c == undefined || $scope.germanList[i].Whether_Participant_is_presenting__c == ""){
-                swal("Participant Details", "Please select whether participant is presenting workshop or not.");
+                swal("Participant Details", "Please select Whether the participant is a speaker or not.");
                 $("#nature2"+i+"").addClass('border-theme');
                 return;
             }
@@ -183,11 +183,11 @@ angular.module('cp_app').controller('participant_ctrl', function($scope,$rootSco
              debugger;
              Swal.fire(
                  'Success',
-                 'Participant detail has been saved successfully.',
+                 'Participant details have been saved successfully.',
                  'success'
              );
             //  
-            $scope.redirectPageURL('Meeting_Theme');
+            $scope.redirectPageURL('Financial_Details');
              $scope.accList = result;
              $scope.$apply();  
          }

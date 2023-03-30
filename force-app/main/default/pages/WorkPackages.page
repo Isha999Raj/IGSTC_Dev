@@ -51,7 +51,7 @@
                                         <div class="icon-circle">
                                             <i class="fa fa-home"></i>
                                         </div>
-                                        <span>Project Details</span>
+                                        <span>Basic Details</span>
                                     </a>
                                 </li>
                                 <li class="active pb-cursor">
@@ -86,7 +86,7 @@
                                         <span>Project Details</span>
                                     </a>
                                 </li>
-                                <li class="active pb-cursor">
+                                <li class="active pb-cursor" ng-hide="secondStage">
                                     <a ng-click="redirectPageURL('WorkPackages')">
                                         <div class="icon-circle">
                                             <i class="fa-solid fa-box"></i>
@@ -96,6 +96,58 @@
                                 </li>
                             </ul>
                         </div>
+
+                        <div ng-show="proposalStage">
+                            <div class="tab-link" ng-show="secondStage">
+                                <div class="progress">
+                                    <div class="progress-success w-100"></div>
+                                </div>
+                                <ul>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('WorkPackages')">
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-box"></i>
+                                            </div>
+                                            <span>Work Package</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('PIDeliverables')">
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-business-time"></i>
+                                            </div>
+                                            <span>PI Deliverables</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('Network_Meeting')">
+                                            <div class="icon-circle">
+                                                <i class="fa fa-group"></i>
+                                            </div>
+                                            <span>Network Meeting</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('ExpenseDeclaration')">
+                                            <div class="icon-circle">
+                                                <i class="fa fa-money"></i>
+                                            </div>
+                                            <span>Expense Details</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('GrantApplication')">
+                                            <div class="icon-circle">
+                                                <i class="fas fa-donate"></i>
+                                            </div>
+                                            <span>Grant Application</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
                         <div class="tab-link" ng-hide="proposalStage">
                             <div class="progress">
                                 <div class="progress-success w-100"></div>
@@ -106,7 +158,7 @@
                                         <div class="icon-circle">
                                             <i class="fa fa-home"></i>
                                         </div>
-                                        <span>Project Details</span>
+                                        <span>Basic Details</span>
                                     </a>
                                 </li>
                                 <li class="active">
@@ -141,7 +193,7 @@
                                         <span>Project Details</span>
                                     </a>
                                 </li>
-                                <li class="active">
+                                <li ng-hide="secondStage" class="active">
                                     <a>
                                         <div class="icon-circle">
                                             <i class="fa-solid fa-box"></i>
@@ -150,6 +202,56 @@
                                     </a>
                                 </li>
                             </ul>
+                        </div>
+
+                        <div ng-hide="proposalStage">
+                            <div class="tab-link" ng-show="secondStage">
+                                <div class="progress">
+                                    <div class="progress-success wp-1"></div>
+                                </div>
+                                <ul>
+                                    <li class="active pb-cursor">
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-box"></i>
+                                            </div>
+                                            <span>Work Packages</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-business-time"></i>
+                                            </div>
+                                            <span>PI Deliverables</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa fa-group"></i>
+                                            </div>
+                                            <span>Network Meeting</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa fa-money"></i>
+                                            </div>
+                                            <span>Expense Details</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fas fa-donate"></i>
+                                            </div>
+                                            <span>Grant Details</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

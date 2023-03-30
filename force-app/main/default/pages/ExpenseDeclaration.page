@@ -6,133 +6,223 @@
         </head>
         <body>
 
-            <div class="container-fluid px-4 mt-5">
-                <div class="row mx-4">
+            <div class="container mt-5">
+                <div class="row mx-5">
                     <div class="col-md-12">
-                        <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-white border rounded-5 shadow-sm" ng-show="proposalStage" ng-if="!secondStage" id="pillNav2" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('ProjectDetailPage')" class="nav-link rounded-5" id="basic_tab" data-bs-toggle="tab"
-                                    type="button" role="tab" aria-selected="true">
-                                    <i class="fa fa-home i-padding"></i>Project Details</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('Consortia')" class="nav-link rounded-5" id="consortia_tab" data-bs-toggle="tab"
-                                    type="button" role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-people-group i-padding"></i>Consortia Details</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('ConsortiaContacts')" class="nav-link rounded-5" id="consortia_tab" data-bs-toggle="tab"
-                                    type="button" role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-people-group i-padding"></i>Consortia Partner Details</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('Financial_Overview')" class="nav-link rounded-5" id="finance_tab" data-bs-toggle="tab"
-                                    type="button" role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-money-bill-trend-up i-padding"></i>Finance Contribution</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('ProjectDetail')" class="nav-link rounded-5" id="project_tab" data-bs-toggle="tab"
-                                    type="button" role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-arrows-to-dot i-padding"></i>Project Details</a>
-                            </li>
-                            <li class="nav-item" role="presentation" ng-hide="secondStage">
-                                <a href="#" ng-click="redirectPageURL('WorkPackages')" class="nav-link rounded-5" id="packge_tab" data-bs-toggle="tab" type="button"
-                                    role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-box i-padding"></i>Work Package</a>
-                            </li>
+                        <div class="tab-link" ng-show="proposalStage">
+                            <div class="progress">
+                                <div class="progress-success w-100"></div>
+                            </div>
+                            <ul>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('ProjectDetailPage')">
+                                        <div class="icon-circle">
+                                            <i class="fa fa-home"></i>
+                                        </div>
+                                        <span>Basic Details</span>
+                                    </a>
+                                </li>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('Consortia')">
+                                        <div class="icon-circle">
+                                            <i class="fa fa-user"></i>
+                                        </div>
+                                        <span>Consortia Details</span>
+                                    </a>
+                                </li>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('ConsortiaContacts')">
+                                        <div class="icon-circle">
+                                            <i class="fas fa-file-invoice"></i>
+                                        </div>
+                                        <span>Consortia Partner Details</span>
+                                    </a>
+                                </li>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('Financial_Overview')">
+                                        <div class="icon-circle">
+                                            <i class="fas fa-chart-line"></i>
+                                        </div>
+                                        <span>Financial Contribution</span>
+                                    </a>
+                                </li>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('ProjectDetail')">
+                                        <div class="icon-circle">
+                                            <i class="far fa-address-card"></i>
+                                        </div>
+                                        <span>Project Details</span>
+                                    </a>
+                                </li>
+                                <li class="active pb-cursor" ng-hide="secondStage">
+                                    <a ng-click="redirectPageURL('WorkPackages')">
+                                        <div class="icon-circle">
+                                            <i class="fa-solid fa-box"></i>
+                                        </div>
+                                        <span>Work Package</span>
+                                    </a>
+                                </li>
                             </ul>
-                        <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-white border rounded-5 shadow-sm" ng-if="secondStage" id="pillNav2" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('ProjectDetailPage')" class="nav-link rounded-5" id="basic_tab" data-bs-toggle="tab"
-                                    type="button" role="tab" aria-selected="true">
-                                    <i class="fa fa-home i-padding"></i>Project Details</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('Consortia')" class="nav-link rounded-5" id="consortia_tab" data-bs-toggle="tab"
-                                    type="button" role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-people-group i-padding"></i>Consortia Details</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('ConsortiaContacts')" class="nav-link rounded-5" id="consortia_tab" data-bs-toggle="tab"
-                                    type="button" role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-people-group i-padding"></i>Consortia Partner Details</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('Financial_Overview')" class="nav-link rounded-5" id="finance_tab" data-bs-toggle="tab"
-                                    type="button" role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-money-bill-trend-up i-padding"></i>Finance Contribution</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('ProjectDetail')" class="nav-link rounded-5" id="project_tab" data-bs-toggle="tab"
-                                    type="button" role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-arrows-to-dot i-padding"></i>Project Details</a>
-                            </li>
-                            <li class="nav-item" role="presentation" ng-hide="secondStage">
-                                <a href="#" ng-click="redirectPageURL('WorkPackages')" class="nav-link rounded-5" id="packge_tab" data-bs-toggle="tab" type="button"
-                                    role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-box i-padding"></i>Work Package</a>
-                            </li>
+                        </div>
+
+                        <div ng-show="proposalStage">
+                            <div class="tab-link" ng-show="secondStage">
+                                <div class="progress">
+                                    <div class="progress-success w-100"></div>
+                                </div>
+                                <ul>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('WorkPackages')">
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-box"></i>
+                                            </div>
+                                            <span>Work Package</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('PIDeliverables')">
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-business-time"></i>
+                                            </div>
+                                            <span>PI Deliverables</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('Network_Meeting')">
+                                            <div class="icon-circle">
+                                                <i class="fa fa-group"></i>
+                                            </div>
+                                            <span>Network Meeting</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('ExpenseDeclaration')">
+                                            <div class="icon-circle">
+                                                <i class="fa fa-money"></i>
+                                            </div>
+                                            <span>Expense Details</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('GrantApplication')">
+                                            <div class="icon-circle">
+                                                <i class="fas fa-donate"></i>
+                                            </div>
+                                            <span>Grant Application</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <div class="tab-link" ng-hide="proposalStage">
+                            <div class="progress">
+                                <div class="progress-success w-100"></div>
+                            </div>
+                            <ul>
+                                <li class="active">
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fa fa-home"></i>
+                                        </div>
+                                        <span>Basic Details</span>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fas fa-user-alt"></i>
+                                        </div>
+                                        <span>Consortia Details</span>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fas fa-file-invoice"></i>
+                                        </div>
+                                        <span>Consortia Partner Details</span>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fas fa-chart-line"></i>
+                                        </div>
+                                        <span>Financial Contribution</span>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="far fa-address-card"></i>
+                                        </div>
+                                        <span>Project Details</span>
+                                    </a>
+                                </li>
+                                <li ng-hide="secondStage" class="active">
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fa-solid fa-box"></i>
+                                        </div>
+                                        <span>Work Package</span>
+                                    </a>
+                                </li>
                             </ul>
-                            <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-white border rounded-5 shadow-sm mt-3" ng-show="secondStage" id="pillNav3" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('WorkPackages')" class="nav-link rounded-5" id="packge_tab" data-bs-toggle="tab" type="button"
-                                    role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-box i-padding"></i>Work Package</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('PIDeliverables')" class="nav-link rounded-5" id="packge_tab" data-bs-toggle="tab" type="button"
-                                    role="tab" aria-selected="false">
-                                    <i class="fas fa-shipping-fast i-padding"></i>PI Deliverables</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('Network_Meeting')" class="nav-link rounded-5" id="packge_tab" data-bs-toggle="tab" type="button"
-                                    role="tab" aria-selected="false">
-                                    <i class="fa fa-group i-padding"></i>Network Meeting</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('ExpenseDeclaration')" class="nav-link active rounded-5" id="packge_tab" data-bs-toggle="tab" type="button"
-                                    role="tab" aria-selected="false">
-                                    <i class="fa fa-money i-padding"></i>Expense Details</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('GrantApplication')" class="nav-linkrounded-5" id="packge_tab" data-bs-toggle="tab" type="button"
-                                    role="tab" aria-selected="false">
-                                    <i class="fas fa-award i-padding"></i>Grant Application</a>
-                            </li>
-                        </ul>
-                        <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-white border rounded-5 shadow-sm mt-3" ng-if="!secondStage" ng-hide="proposalStage" id="pillNav2" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <span class="nav-link rounded-5" id="basic_tab" >
-                                    <i class="fa fa-home fa-2x i-padding"></i>Project Details</span>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <span class="nav-link rounded-5" id="consortia_tab"
-                                    role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-people-group fa-2x i-padding"></i>Consortia Details</span>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <span class="nav-link rounded-5" id="consortia_tab"
-                                    role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-people-group fa-2x i-padding"></i>Consortia Partner Details</span>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <span class="nav-link rounded-5" id="finance_tab"
-                                    role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-money-bill-trend-up fa-2x i-padding"></i>Finance Contribution</span>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <span class="nav-link rounded-5" id="project_tab"
-                                    role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-arrows-to-dot fa-2x i-padding"></i>Project Details</span>
-                            </li>
-                            <li class="nav-item" role="presentation" ng-hide="secondStage">
-                                <span class="nav-link rounded-5" id="packge_tab" role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-box fa-2x i-padding"></i>Work Package</span>
-                            </li>
-                            </ul>
+                        </div>
+
+                        <div ng-hide="proposalStage">
+                            <div class="tab-link" ng-show="secondStage">
+                                <div class="progress">
+                                    <div class="progress-success wp-7"></div>
+                                </div>
+                                <ul>
+                                    <li class="active pb-cursor">
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-box"></i>
+                                            </div>
+                                            <span>Work Packages</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-business-time"></i>
+                                            </div>
+                                            <span>PI Deliverables</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa fa-group"></i>
+                                            </div>
+                                            <span>Network Meeting</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa fa-money"></i>
+                                            </div>
+                                            <span>Expense Details</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fas fa-donate"></i>
+                                            </div>
+                                            <span>Grant Details</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
             <div class="container-fluid mt-5">
                 <div class="row px-5">
                     <div class="col-md-12">
@@ -146,7 +236,7 @@
                         </h2>
                         <div id="acc.Name" class="accordion-collapse collapse show" aria-labelledby="acc.Id" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <button type="button" class="btn btn-primary background-theme border-theme" ng-click="enableExpenseModule(acc.Id);">Expense Details</button>                                 
+                                <button type="button" class="btn btn-primary background-theme" ng-click="enableExpenseModule(acc.Id);">Expense Details</button>                                 
                             </div>
                         </div>
                     </div>
@@ -235,8 +325,8 @@
                                                     </a>
                                                 </td>
                                                 <div class="mb-3">
-                                                    <button type="button" class="btn btn-primary background-theme border-theme" ng-click="submitExpense('Man_Power');">Submit</button>
-                                                    <button type="button" class="btn btn-primary background-theme border-theme" ng-click="disableExpenseModule($index)">Back</button>
+                                                    <button type="button" class="btn btn-primary background-theme" ng-click="submitExpense('Man_Power');">Submit</button>
+                                                    <button type="button" class="btn btn-primary background-theme" ng-click="disableExpenseModule($index)">Back</button>
                                                 </div>
                                             </tr>
                                         </tbody>
@@ -329,7 +419,7 @@
                                         </tbody>
                                     </table>
                                     <div>
-                                        <button type="button" class="btn btn-primary background-theme border-theme" ng-click="submitExpense('consumables');">Submit</button>
+                                        <button type="button" class="btn btn-primary background-theme" ng-click="submitExpense('consumables');">Submit</button>
                                     </div>
                                 </div>
                                 
@@ -420,7 +510,7 @@
                                         </tbody>
                                     </table>
                                     <div>                                    
-                                        <button type="button" class="btn btn-primary background-theme border-theme" ng-click="submitExpense('quipment');">Submit</button>
+                                        <button type="button" class="btn btn-primary background-theme" ng-click="submitExpense('quipment');">Submit</button>
                                     </div>
                                 </div>
                                 
@@ -511,7 +601,7 @@
                                         </tbody>
                                     </table>
                                     <div>
-                                        <button type="button" class="btn btn-primary background-theme border-theme" ng-click="submitExpense('travel');">Submit</button>
+                                        <button type="button" class="btn btn-primary background-theme" ng-click="submitExpense('travel');">Submit</button>
                                     </div>
                                 </div>
                                 
@@ -602,7 +692,7 @@
                                         </tbody>
                                     </table>
                                     <div>
-                                        <button type="button" class="btn btn-primary background-theme border-theme" ng-click="submitExpense('other');">Submit</button>
+                                        <button type="button" class="btn btn-primary background-theme" ng-click="submitExpense('other');">Submit</button>
                                     </div>
                                 </div>
                                
@@ -620,7 +710,9 @@
         </div>
     </div>
         </div>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js">
+                </script>
+        </div>
         </body>
         </div>
     </html>

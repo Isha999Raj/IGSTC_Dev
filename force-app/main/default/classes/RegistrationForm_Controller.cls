@@ -625,6 +625,8 @@ public without sharing class RegistrationForm_Controller {
                 emailTempName = 'Reset password - SING';
             }else if(conList[0].Campaign__c == 'workshop'){
                 emailTempName = 'Reset password - WORKSHOP';
+            }else if(conList[0].Campaign__c == '2plus2'){
+                emailTempName = 'Email to Primary Contact for Reset Password 2+2';
             }
             else{
                 emailTempName = 'Application Forget Password'; 

@@ -252,14 +252,17 @@ angular.module('cp_app').controller('workPackageCtrl', function ($scope, $rootSc
             console.log(result);
             console.log(event);
             if (event.status) {
-                swal("Work Package", "your Work Package detail has been saved successfully.");
-                // return;
-                debugger;
+                Swal.fire(
+                    'Success',
+                    'your Work Package details have been saved successfully..',
+                    'success'
+                );
             if($rootScope.secondStage){
                 $scope.redirectPageURL('PIDeliverables');     
             }else{
                 $scope.redirectPageURL('PrivacyPolicyAcceptance');     
             }
+            $scope.$apply();
             }
 
         });

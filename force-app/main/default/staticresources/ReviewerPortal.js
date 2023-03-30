@@ -63,4 +63,7 @@ console.log(result);
 
    $rootScope.candidateId = candidateId;
     $rootScope.reviewersIdd = reviewersIdd;
+    if($rootScope.reviewersIdd==undefined || $rootScope.reviewersIdd=='' ||$rootScope.reviewersIdd==null){
+        window.location.replace(window.location.origin+'/Reviewer');
+    }
 });  

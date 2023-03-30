@@ -1165,7 +1165,7 @@ public String upsertConsortiaAccountDet(Account instanceAcc, String projectId){
     }
        
     public static List<Expense_Head__c> getExpenseRecords(String ProposalId){
-        list<Expense_Head__c> allExpHead = [select name,id,(select name,Description__c,Expense_Head__c,Expense_Type__c,Year1_Expense__c,Year2_Expense__c,Year3_Expense__c from Expense_Line_Items__r) from Expense_Head__c where Proposals__c =:ProposalId];
+        list<Expense_Head__c> allExpHead = [select name,id,(select name,Description__c,Currency_Type__c,Expense_Head__c,Expense_Type__c,Year1_Expense__c,Year2_Expense__c,Year3_Expense__c from Expense_Line_Items__r) from Expense_Head__c where Proposals__c =:ProposalId];
           
           return allExpHead;
       }
@@ -1260,6 +1260,17 @@ public String upsertConsortiaAccountDet(Account instanceAcc, String projectId){
             }
         }
         return 'Success';
+    }
+    public String saveBankDet(Bank_Details__c instanceBank){
+        try{
+            upsert instanceBank;
+            return instanceBank.Id;
+        }
+        catch(Exception e){
+            system.debug('Error Message::=>'+e.getMessage());
+            system.debug('Error Line Number::=>'+e.getLineNumber());
+            return 'exception';
+        }
     }
 
    public class AccountListWrapper{

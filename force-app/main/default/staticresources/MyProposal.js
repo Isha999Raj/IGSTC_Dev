@@ -21,7 +21,12 @@ angular.module('cp_app').controller('myProp_ctrl', function($scope,$rootScope) {
             if(event.status & result != null){
                 debugger;
                 $scope.project = result.proposalWrap;
+                $scope.fileURL="";
                 $scope.redirectPage = result.proposalWrap.Campaign__r.RedirectPage__c;
+                if($scope.project.Attachments!=undefined){
+                    let baseUrl = window.location.origin;
+                    $scope.fileURL=baseUrl+'/servlet/servlet.FileDownload?file='+$scope.project.Attachments[0].Id;
+                }
                 if(result.proposalWrap.Campaign__r.Name=="PECFAR"){
                     $scope.showContactNames-=true;
                     for(var i=0;i<result.contactWrap.length;i++){

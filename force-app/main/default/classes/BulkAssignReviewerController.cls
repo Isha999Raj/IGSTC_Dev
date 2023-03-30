@@ -73,7 +73,18 @@ global class BulkAssignReviewerController {
         finalWrapInstance.allReviewer = reviewerList;
         return finalWrapInstance;
     }
+    @RemoteAction
+    global static List<Reviewer__c> getCampaignReviewerData(){
+        try{
+            List<Reviewer__c> listReviewer=[select id,name,Birthdate__c,Email__c,Skills__c,campaign__r.name from Reviewer__c];
 
+            return listReviewer;
+        }catch(Exception e){
+            system.debug('Error Message::=>'+e.getMessage());
+            system.debug('Error Line No.::=>'+e.getLineNumber());
+            return null;
+        }
+    }
     global class finalWrapper{
         public List<reviewerWrapper> allAppWithRM;
         public List<Reviewer__c> allReviewer;

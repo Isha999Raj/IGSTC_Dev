@@ -32,7 +32,7 @@
                                         <div class="icon-circle">
                                             <i class="fa fa-home"></i>
                                         </div>
-                                        <span>Project Details</span>
+                                        <span>Basic Details</span>
                                     </a>
                                 </li>
                                 <li class="active pb-cursor">
@@ -67,7 +67,7 @@
                                         <span>Project Details</span>
                                     </a>
                                 </li>
-                                <li class="active pb-cursor">
+                                <li class="active pb-cursor" ng-hide="secondStage">
                                     <a ng-click="redirectPageURL('WorkPackages')">
                                         <div class="icon-circle">
                                             <i class="fa-solid fa-box"></i>
@@ -77,6 +77,58 @@
                                 </li>
                             </ul>
                         </div>
+
+                        <div ng-show="proposalStage">
+                            <div class="tab-link" ng-show="secondStage">
+                                <div class="progress">
+                                    <div class="progress-success w-100"></div>
+                                </div>
+                                <ul>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('WorkPackages')">
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-box"></i>
+                                            </div>
+                                            <span>Work Package</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('PIDeliverables')">
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-business-time"></i>
+                                            </div>
+                                            <span>PI Deliverables</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('Network_Meeting')">
+                                            <div class="icon-circle">
+                                                <i class="fa fa-group"></i>
+                                            </div>
+                                            <span>Network Meeting</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('ExpenseDeclaration')">
+                                            <div class="icon-circle">
+                                                <i class="fa fa-money"></i>
+                                            </div>
+                                            <span>Expense Details</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('GrantApplication')">
+                                            <div class="icon-circle">
+                                                <i class="fas fa-donate"></i>
+                                            </div>
+                                            <span>Grant Application</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
                         <div class="tab-link" ng-hide="proposalStage">
                             <div class="progress">
                                 <div class="progress-success wp-3"></div>
@@ -87,7 +139,7 @@
                                         <div class="icon-circle">
                                             <i class="fa fa-home"></i>
                                         </div>
-                                        <span>Project Details</span>
+                                        <span>Basic Details</span>
                                     </a>
                                 </li>
                                 <li class="active">
@@ -122,7 +174,7 @@
                                         <span>Project Details</span>
                                     </a>
                                 </li>
-                                <li>
+                                <li ng-hide="secondStage">
                                     <a>
                                         <div class="icon-circle">
                                             <i class="fa-solid fa-box"></i>
@@ -131,6 +183,74 @@
                                     </a>
                                 </li>
                             </ul>
+                        </div>
+
+                        <div ng-hide="proposalStage">
+                            <div class="tab-link" ng-show="secondStage">
+                                <div class="progress">
+                                    <div class=""></div>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa fa-home"></i>
+                                            </div>
+                                            <span>Work Packages</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-business-time"></i>
+                                            </div>
+                                            <span>PI Deliverables</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa fa-group"></i>
+                                            </div>
+                                            <span>Network Meeting</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa fa-money"></i>
+                                            </div>
+                                            <span>Expense Details</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fas fa-donate"></i>
+                                            </div>
+                                            <span>Grant Details</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal" id="filePreview">
+                    <div class="modal-dialog" style="min-width:120rem">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">
+                                    <div class="d-flex" style="background:unset;">
+                                        <h3 style="text-align: center"><b>{{selectedFile.userDocument.Name}}</b></h3>
+                                    </div>
+                                </h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <iframe style="width:100%;height:75vh;border: 0px;border-radius: 10px;" id="file_frame" title="File"></iframe>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -167,15 +287,23 @@
                         </div>
                     </div>
 
-                    <div class="row mt-5" ng-if="addressDetails.Industry__c == true && account.BillingCountry == 'India'">
+                    <div class="row mt-5" ng-if="addressDetails.Industry__c == true && addressDetails.BillingCountry == 'India'">
                         <div class="col-md-4">
                             <label class="font-if">DSIR</label>
                             <span class="required-asterisk" style="color:red;">*</span>
-                            <input ng-focus="removeClass2('dsir')" id="FName" type="dsir" ng-model="addressDetails.DSIR_Recoginition_Details__c" maxlength="255" ng-keyup="setSaveStatus($index)" ng-disabled="proposalStage" class="form-control" />
+                            <input type="text" ng-focus="removeClass('dsir')" id="dsir" ng-model="addressDetails.DSIR_Recoginition_Details__c" ng-keyup="setSaveStatus($index)" ng-disabled="proposalStage" class="form-control" />
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 input-group ms-4">
                             <label class="font-if">Only PDF File</label>
-                            <input type="file" accept=".pdf" class="form-control" ng-disabled="proposalStage" id="attachmentFiles"/>
+                            <input type="file" accept=".pdf" class="form-control" ng-disabled="proposalStage" id="{{doc.userDocument.Name}}"/>
+                            <span class="input-group-btn pt-3" ng-hide="proposalStage">
+                                <button class="btn btn-success mt-4 py-3" ng-click="uploadFile(doc.userDocument.Name,doc.userDocument.Id,'','1048576','1048576')" type="button">Upload</button>
+                                </span>
+                        </div>
+                        <div class="col-md-3">
+                            <div ng-show="doc.userDocument.Status__c=='Uploaded'">
+                                <a class="blue-btn float-end mt-5 py-3"  ng-click="filePreviewHandler(doc)">View</a>
+                            </div>
                         </div>
                     </div>
 
@@ -233,7 +361,7 @@
                             <div class="col-md-6">
                                 <label class="font-if">State<span class="ms-2 text-danger">*</span></label>
                                 <select aria-label="Default select example" ng-focus="removeClass2('IState')" id="IState" type="text" ng-model="addressDetails.BillingState" class="form-control" ng-disabled="proposalStage">
-                                    <option ng-repeat="staff in addressDetails.stateList">{{staff}}</option>
+                                    <option ng-repeat="staff in stateList">{{staff}}</option>
                                    </select>
                                 <!-- <input ng-focus="removeClass2('IState')" id="IState" type="text" ng-model="addressDetails.BillingState" class="form-control" ng-disabled="proposalStage" /> -->
                             </div>

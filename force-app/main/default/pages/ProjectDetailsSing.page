@@ -22,136 +22,118 @@
 
         <body>
             <div class="container px-5 mt-5">
-                <div class="row">
+                <div class="row mx-4">
                     <div class="col-md-12">
-                        <!-- <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-white border rounded-5 shadow-sm" ng-show="proposalStage" id="pillNav2" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('ProjectDetailsSing')" class="nav-link active rounded-5" id="basic_tab" data-bs-toggle="tab"
-                                    type="button" role="tab" aria-selected="true">
-                                    <i class="fa fa-home i-padding"></i>Project Details</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('ApplicantInformationSing')" class="nav-link rounded-5" id="consortia_tab" data-bs-toggle="tab"
-                                    type="button" role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-people-group i-padding"></i>Personal information</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a href="#" ng-click="redirectPageURL('SignatureSealsSing')" class="nav-link rounded-5" id="consortia_tab" data-bs-toggle="tab"
-                                    type="button" role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-people-group i-padding"></i>Signature and Seals</a>
-                            </li>                            
+                        <div class="tab-link" ng-show="proposalStage">
+                            <div class="progress">
+                                <div class="progress-success w-100"></div>
+                            </div>
+                            <ul>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('ApplicantInformationSing')">
+                                        <div class="icon-circle">
+                                            <i class="fa-regular fa-user"></i>
+                                        </div>
+                                        <span>Personal Information</span>
+                                    </a>
+                                </li>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('SingHostDetails')">
+                                        <div class="icon-circle">
+                                            <i class="fas fa-file-invoice"></i>
+                                        </div>
+                                        <span>Host Details</span>
+                                    </a>
+                                </li>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('ProjectDetailsSing')">
+                                        <div class="icon-circle">
+                                            <i class="fa-regular fa-address-card"></i>
+                                        </div>
+                                        <span>Proposed Work</span>
+                                    </a>
+                                </li>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('BudgetDetails')">
+                                        <div class="icon-circle">
+                                            <i class="fa fa-money"></i>
+                                        </div>
+                                        <span>Budget Details</span>
+                                    </a>
+                                </li>                               
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('AttachmentsSing')">
+                                        <div class="icon-circle">
+                                            <i class="fas fa-file-invoice"></i>
+                                        </div>
+                                        <span>Attachments</span>
+                                    </a>
+                                </li>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('SignatureSealsSing')">
+                                        <div class="icon-circle">
+                                            <i class="fas fa-graduation-cap"></i>
+                                        </div>
+                                        <span>Review and Submit</span>
+                                    </a>
+                                </li>
                             </ul>
-                        <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-white border rounded-5 shadow-sm mt-3" ng-hide="proposalStage" id="pillNav2" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <span class="nav-link active rounded-5" id="basic_tab" >
-                                    <i class="fa fa-home fa-2x i-padding"></i>Project Details</span>
-                            </li>                            
-                            <li class="nav-item" role="presentation">
-                                <span class="nav-link rounded-5" id="consortia_tab"
-                                    role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-people-group fa-2x i-padding"></i>Personal information</span>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <span class="nav-link rounded-5" id="consortia_tab"
-                                    role="tab" aria-selected="false">
-                                    <i class="fa-solid fa-people-group fa-2x i-padding"></i>Signature and Seals</span>
-                            </li>
-                            </ul> -->
-                             
-                            <div class="tab-link" ng-show="proposalStage">
-                                <div class="progress">
-                                    <div class="progress-success w-100"></div>
-                                </div>
-                                <ul>
-                                    <li class="active pb-cursor">
-                                        <a ng-click="redirectPageURL('ApplicantInformationSing')">
-                                            <div class="icon-circle">
-                                                <i class="fa-regular fa-user"></i>
-                                            </div>
-                                            <span>Personal Information</span>
-                                        </a>
-                                    </li>
-                                    <li class="active pb-cursor">
-                                        <a ng-click="redirectPageURL('SingHostDetails')">
-                                            <div class="icon-circle">
-                                                <i class="fas fa-file-invoice"></i>
-                                            </div>
-                                            <span>Host Details</span>
-                                        </a>
-                                    </li>
-                                    <li class="active pb-cursor">
-                                        <a ng-click="redirectPageURL('ProjectDetailsSing')">
-                                            <div class="icon-circle">
-                                                <i class="fa-regular fa-address-card"></i>
-                                            </div>
-                                            <span>Proposed Work</span>
-                                        </a>
-                                    </li>                                    
-                                    <li class="active pb-cursor">
-                                        <a ng-click="redirectPageURL('AttachmentsSing')">
-                                            <div class="icon-circle">
-                                                <i class="fas fa-file-invoice"></i>
-                                            </div>
-                                            <span>Attachments</span>
-                                        </a>
-                                    </li>
-                                    <li class="active pb-cursor">
-                                        <a ng-click="redirectPageURL('SignatureSealsSing')">
-                                            <div class="icon-circle">
-                                                <i class="fas fa-graduation-cap"></i>
-                                            </div>
-                                            <span>Review and Submit</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                        </div>
+                        <div class="tab-link" ng-hide="proposalStage">
+                            <div class="progress">
+                                <div class="progress-success wp-5"></div>
                             </div>
-                            <div class="tab-link" ng-hide="proposalStage">
-                                <div class="progress">
-                                    <div class="progress-success wp-5"></div>
-                                </div>
-                                <ul>
-                                    <li class="active">
-                                        <a>
-                                            <div class="icon-circle">
-                                                <i class="fa-regular fa-user"></i>
-                                            </div>
-                                            <span>Personal Information</span>
-                                        </a>
-                                    </li>
-                                    <li class="active">
-                                        <a>
-                                            <div class="icon-circle">
-                                                <i class="fas fa-file-invoice"></i>
-                                            </div>
-                                            <span>Host Details</span>
-                                        </a>
-                                    </li>
-                                    <li class="active">
-                                        <a>
-                                            <div class="icon-circle">
-                                                <i class="fa-regular fa-address-card"></i>
-                                            </div>
-                                            <span>Proposed Work</span>
-                                        </a>
-                                    </li>                                    
-                                    <li>
-                                        <a>
-                                            <div class="icon-circle">
-                                                <i class="fas fa-file-invoice"></i>
-                                            </div>
-                                            <span>Attachments</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a>
-                                            <div class="icon-circle">
-                                                <i class="fas fa-graduation-cap"></i>
-                                            </div>
-                                            <span>Review and Submit</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <ul>
+                                <li class="active">
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fa-regular fa-user"></i>
+                                        </div>
+                                        <span>Personal Information</span>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fas fa-file-invoice"></i>
+                                        </div>
+                                        <span>Host Details</span>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fa-regular fa-address-card"></i>
+                                        </div>
+                                        <span>Proposed Work</span>
+                                    </a>
+                                </li> 
+                                <li>
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fa fa-money"></i>
+                                        </div>
+                                        <span>Budget Details</span>
+                                    </a>
+                                </li>                               
+                                <li>
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fas fa-file-invoice"></i>
+                                        </div>
+                                        <span>Attachments</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fas fa-graduation-cap"></i>
+                                        </div>
+                                        <span>Review and Submit</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -244,11 +226,18 @@
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" ng-disabled="proposalStage" value="Partial support towards organization of" name="radioPurpose" ng-model="objProposal.Purpose_for_applying__c"
+                                    <input class="form-check-input" type="radio" ng-disabled="proposalStage" value="Other" name="radioPurpose" ng-model="objProposal.Purpose_for_applying__c"
                                     />
                                     <label class="font-if ps-3">
                                         Other
                                     </label>
+                                </div>
+
+                                <div class="row mt-2 mb-3" ng-show="objProposal.Purpose_for_applying__c == 'Other'">
+                                    <div class="col-md-6">
+                                        <label class="font-if">Please specify<span class="text-danger me-2">*</span></label>
+                                        <input type="text" id="other" ng-disabled="proposalStage" ng-focus="removeClass()" ng-model="objProposal.Purpose_for_Applying_Other__c" class="form-control" />
+                                    </div>
                                 </div>
                             </div>
                             </div>
@@ -259,25 +248,17 @@
                             </div>
                         </div> -->
                         <div class="box-shadow-2 pt-3 pb-5 px-5 mt-5">
+                        
                         <div class="row mt-3">
-                            <div class="col-md-8">
-                            <form name="formPrjDet">
-                                <p class="color-theme">Brief description of the Organisation/Institution/Industry<span class="text-danger me-2">*</span></p>
-                                <input type="text" id="txtBStatement" ng-disabled="proposalStage" name="txtInputs" maxlength="255" ng-focus="removeClass()" ng-model="objProposal.Brief_Statement_of_Purpose__c" class="form-control" />
-                                <span ng-if="!formPrjDet.txtInputs.$valid" class="text-danger">Please enter a valid email address</span>
-                            </form>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <p class="color-theme pt-4">Title of the Proposed Work<span class="text-danger me-2">*</span></p>
-                                <input type="text" id="txtTitle" ng-disabled="proposalStage" name="txtInputs" ng-focus="removeClass()" maxlength="255" ng-model="objProposal.Title_Of__c" class="form-control mt-3" />
+                                <input type="text" id="txtTitle" ng-disabled="proposalStage" name="txtInputs" ng-focus="removeClass()" maxlength="255" ng-model="objProposal.Title_Of__c" class="form-control mt-3 py-5" />
                             </div>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <p class="color-theme pt-4">Broad area of work<span class="text-danger me-2">*</span></p>
-                                <input type="text" id="txtBrdAreaResearch" ng-disabled="proposalStage" name="txtInputs" ng-focus="removeClass()" maxlength="255" ng-model="objProposal.Proposed_area__c" class="form-control mt-3" />
+                                <input type="text" id="txtBrdAreaResearch" ng-disabled="proposalStage" name="txtInputs" ng-focus="removeClass()" maxlength="255" ng-model="objProposal.Proposed_area__c" class="form-control mt-3 py-5" />
                             </div>
                             <!-- <div class="col-md-4">
                                 <label class="text-danger mt-5"><span class="me-2">*</span>Mandatory Fields</p>
@@ -297,13 +278,23 @@
                             </div>
                         </div>
                         <div class="row mt-3">
-                            <div class="col-md-8">
+                            <div class="col-md-10">
                                 <form name="formPrjDet1">
                                 <p class="color-theme">Abstract of the proposed work<span class="text-danger me-2">*</span></p>
-                                <input type="text" id="txtProposedWork" ng-disabled="proposalStage" name="txtInputs" maxlength="255" ng-focus="removeClass()" ng-model="objProposal.Abstract_of_proposed__c" class="form-control" />
+                                <input type="text" id="txtProposedWork" ng-disabled="proposalStage" name="txtInputs" maxlength="255" ng-focus="removeClass()" ng-model="objProposal.Abstract_of_proposed__c" class="form-control py-5" />
                                 <span ng-if="!formPrjDet1.txtInputs.$valid" class="text-danger">Please enter a valid email address</span>
                             </form>
                             </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-10">
+                                <form name="formPrjDet">
+                                    <p class="color-theme">Brief description of the Organisation/Institution/Industry<span class="text-danger me-2">*</span></p>
+                                    <input type="text" id="txtBStatement" ng-disabled="proposalStage" name="txtInputs" maxlength="255" ng-focus="removeClass()" ng-model="objProposal.Brief_Statement_of_Purpose__c" class="form-control py-5" />
+                                    <span ng-if="!formPrjDet.txtInputs.$valid" class="text-danger">Please enter a valid email address</span>
+                                </form>
+                                </div>
                             </div>
                             
                     </div>
@@ -311,7 +302,8 @@
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <form name="formPrjDet2">
-                                <label class="font-if color-theme"><b>Details of the Proposed Work (including time schedule, Budget breakup, expected outcomes in max 2500 characters )</b></label>
+                                <label class="font-if color-theme"><b>Details of the Proposed Work (including time schedule, expected outcomes in max 2500 characters )</b></label><br/>
+                                <small class="label-rtf"><b>To use the below RTF box more efficiently, make sure you write your content in word document first and then copy paste here</b></small>
                                 <ng-ckeditor id="txtSummary" read-Only="true" ng-model="objProposal.Summary__c" ng-change="readCharacter(objProposal.Summary__c,0)" name="ckEditor" ng-config="config"></ng-ckeditor>
                                 <span>Total characters : {{objRtf[0].charCount}}</span>
                                 <span class="text-danger" ng-if="objRtf[0].errorStatus">Maximum characters limit is 2500</span>
@@ -320,7 +312,8 @@
                         </div>
                         <div class="row mt-3"> 
                             <div class="col-md-12">
-                                <p class="color-theme pt-4">How your proposal will enhance Indo-German Colloboration in max 1000 characters<span class="text-danger me-2">*</span></p>
+                                <label class="font-if color-theme"><b>How your proposal will enhance the Indo-German Collaboration ? ( in max 1000 Characters)<span class="text-danger me-2">*</span></b></label><br/>
+                                <small class="label-rtf"><b>To use the below RTF box more efficiently, make sure you write your content in word document first and then copy paste here</b></small>
                                 <ng-ckeditor id="txtSummary" read-Only="true" ng-model="objProposal.Research_Approach_Objectives__c" ng-change="readCharacter(objProposal.Research_Approach_Objectives__c,1)" name="ckEditor" ng-config="config"></ng-ckeditor>
                                 <span>Total characters : {{objRtf[1].charCount}}</span>
                                 <span class="text-danger" ng-if="objRtf[1].errorStatus">Maximum characters limit is 1000</span>

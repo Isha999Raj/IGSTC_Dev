@@ -641,7 +641,7 @@
           <h1>IGSTC Workshop - Call {{Endyear}}</h1>
           <ol>
             <li>
-              Kindly read the Call Text, Basic Guidelines and FAQs carefully before applying. The link for same is below :
+              Kindly read the Call Text carefully before applying. The link for same is below :
               <ul>
                 <li>
                   <p>Call Text</p>
@@ -649,7 +649,7 @@
                     <a href="{{LinkCallText}}" class="btn blue-btn" style="min-width: 250px;" target="_blank">Call Text</a>
                   </span>
                 </li>
-                <li>
+                <!-- <li>
                   <p>Basic Guidelines</p>
                   <span>
                     <a href="{{LinkBasicGuidelines}}" class="btn blue-btn" style="min-width: 250px;" target="_blank">Basic Guidelines</a>
@@ -660,14 +660,14 @@
                   <span>
                     <a href="{{LinkFAQs}}" class="btn blue-btn" style="min-width: 250px;" target="_blank">FAQs</a>
                   </span>
-                </li>
+                </li> -->
               </ul>
             </li>
             <li>Please ensure your eligibility before filling the application.</li>
             <li>Queries, if any, should be addressed to
-              <a href="mailto:industrial.fellowship@igstc.org">industrial.fellowship@igstc.org</a>
+              <a href="mailto:industrial.fellowship@igstc.org">info.igstc@igstc.org</a>
             </li>
-            <li>Application Deadline: {{dealLinedate}}</li>
+            <li>Cut-off dates: <b>{{cutOffSD}} and {{cutOffED}}</b></li>
             <li>You may note that any false information given in the application can lead to disqualification of your candidature
               at any stage of the process.</li>
           </ol>

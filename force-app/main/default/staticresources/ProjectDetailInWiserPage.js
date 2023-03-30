@@ -7,7 +7,7 @@
  */
 
 
-angular.module('cp_app').controller('ProjectDetailInWiserCtrl', function ($scope, $rootScope) {
+angular.module('cp_app').controller('ProjectDetailInWiserCtrl', function ($scope,$sce,$rootScope) {
      debugger;
      $rootScope.userHashId;
      $rootScope.userId;
@@ -18,6 +18,25 @@ angular.module('cp_app').controller('ProjectDetailInWiserCtrl', function ($scope
      $scope.objRtf=[{charCount:0,maxCharLimit:600,errorStatus:false}];
      $scope.objRtf.push({charCount:0,maxCharLimit:4500,errorStatus:false});
      debugger;
+
+     $scope.filePreviewHandler = function(fileContent){
+        debugger;
+        $scope.selectedFile = fileContent;
+    
+        console.log('selectedFile---', $scope.selectedFile);
+        var jhj=$scope.selectedFile.userDocument.Attachments[0].Id;
+        console.log(jhj);
+        $scope.filesrec = $sce.trustAsResourceUrl(window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.selectedFile.userDocument.Attachments[0].Id);
+        //$scope.filesrec = window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.selectedFile.userDocument.Attachments[0].Id;
+        // $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
+        $('#file_frame').attr('src', $scope.filesrec);
+    
+        var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
+        myModal.show('slow') ;
+        $scope.$apply();
+    
+        //.ContentDistribution.DistributionPublicUrl
+    }
 
      $scope.getProjectdetils = function () {
           debugger;
@@ -95,7 +114,7 @@ angular.module('cp_app').controller('ProjectDetailInWiserCtrl', function ($scope
                       debugger;
                       
                       if (fileSize < maxStringSize) {
-                          $scope.uploadAttachment(type , userDocId, fileId);
+                          $scope.uploadAttachment(type , userDocId, null);
                       } else {
                         swal("info", "Base 64 Encoded file is too large.  Maximum size is " + maxStringSize + " your file is " + fileSize + ".","info");
                         return;
@@ -133,9 +152,9 @@ angular.module('cp_app').controller('ProjectDetailInWiserCtrl', function ($scope
       $scope.uploadAttachment = function (type, userDocId, fileId) {
           debugger;
           var attachmentBody = "";
-          if (fileId == undefined) {
-              fileId = " ";
-          }
+        //   if (fileId == undefined) {
+        //       fileId = " ";
+        //   }
           if (fileSize <= positionIndex + chunkSize) {
               debugger;
               attachmentBody = attachment.substring(positionIndex);

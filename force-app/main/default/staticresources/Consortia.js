@@ -12,26 +12,178 @@ angular.module('cp_app').controller('Consortia_Ctrl', function($scope,$rootScope
         $scope.listOfIds = [];
         $scope.arrySaveStatus=[{status:true},{status:true},{status:true},{status:true},{status:true},{status:true}];
 
-        $scope.checkEmail = function(email,contId){
-            debugger;
-            $scope.emailCheck = false;
-            if(contId == undefined){
-              contId = "";
-            }
-            ApplicantPortal_Contoller.checkEmail(email,contId,function(result,event){
-              debugger;
-              if(event.status){
+        $scope.selectedFile;
+
+$scope.filePreviewHandler = function(fileContent){
+    $scope.selectedFile = fileContent;
+
+    console.log('selectedFile---', $scope.selectedFile);
+
+    $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
+
+    var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
+    myModal.show('slow') ;
+    $scope.$apply();
+
+    //.ContentDistribution.DistributionPublicUrl
+}
+
+$scope.getProjectdetils = function () {
+    debugger;
+    $scope.selectedFile = '';
+    $('#file_frame').attr('src', '');
+    ApplicantPortal_Contoller.getContactUserDoc($rootScope.contactId, function (result, event) {
+        debugger
+        console.log('result return onload :: ');
+        console.log(result);
+        if (event.status) {
+            $scope.allDocs = result;
+            var uploadCount=0;
+            for(var i=0;i<$scope.allDocs.length;i++){
                 debugger;
-                if(result.length > 0){
-                  $scope.emailCheck = true;
-                }else{
-                  $scope.emailCheck = false;
+                if($scope.allDocs[i].userDocument.Name == 'DSIR'){
+                    $scope.doc=$scope.allDocs[i];
+                    if($scope.allDocs[i].userDocument.Status__c == 'Uploaded'){
+                        uploadCount=uploadCount+1;
+                    }
                 }
-                $scope.$apply();
-              }
-            })
+            }
+            $scope.$apply();
+        }
+    }, {
+        escape: true
+    })
+}
+$scope.getProjectdetils();
+
+$scope.uploadFile = function (type, userDocId, fileId,maxSize,minFileSize) {
+    debugger;
+    $scope.showSpinnereditProf = true;
+    var file;
+
+        file = document.getElementById(type).files[0];
+        fileName = file.name;
+        var typeOfFile = fileName.split(".");
+        lengthOfType =  typeOfFile.length;
+        if(typeOfFile[lengthOfType-1] != "pdf"){
+            swal('info','Please choose pdf file only.','info');
+            return;
+        }
+    console.log(file);
+    maxFileSize=maxSize;
+    if (file != undefined) {
+        if (file.size <= maxFileSize) {
+            
+            attachmentName = file.name;
+            const myArr = attachmentName.split(".");
+            var fileReader = new FileReader();
+            fileReader.onloadend = function (e) {
+                attachment = window.btoa(this.result);  //Base 64 encode the file before sending it
+                positionIndex = 0;
+                fileSize = attachment.length;
+                $scope.showSpinnereditProf = false;
+                console.log("Total Attachment Length: " + fileSize);
+                doneUploading = false;
+                debugger;
+                if (fileSize < maxStringSize) {
+                    $scope.uploadAttachment(type , userDocId, fileId);
+                } else {
+                    swal('info','Base 64 Encoded file is too large.  Maximum size is " + maxStringSize + " your file is " + fileSize + ".','info');
+                    return;
+                }
+
+            }
+            fileReader.onerror = function (e) {
+                swal('info','There was an error reading the file.  Please try again.','info');
+                return;
+            }
+            fileReader.onabort = function (e) {
+                swal('info','There was an error reading the file.  Please try again.','info');
+                return;
+            }
+
+            fileReader.readAsBinaryString(file);  //Read the body of the file
+
+        } else {
+            swal('info','Your file is too large.  Please try again.','info');
+            return;
+            $scope.showSpinnereditProf = false;
+        }
+    } else {
+        swal('info','You must choose a file before trying to upload it','info');
+        return;
+        $scope.showSpinnereditProf = false;
+    }
+}
+
+$scope.uploadAttachment = function (type, userDocId, fileId) {
+    debugger;
+    var attachmentBody = "";
+    if (fileId == undefined) {
+        fileId = " ";
+    }
+    if (fileSize <= positionIndex + chunkSize) {
+        debugger;
+        attachmentBody = attachment.substring(positionIndex);
+        doneUploading = true;
+    } else {
+        attachmentBody = attachment.substring(positionIndex, positionIndex + chunkSize);
+    }
+    console.log("Uploading " + attachmentBody.length + " chars of " + fileSize);
+    ApplicantPortal_Contoller.doCUploadAttachmentAa(
+        attachmentBody, attachmentName,fileId, userDocId, 
+        function (result, event) {
+            console.log(result);
+            if (event.type === 'exception') {
+                console.log("exception");
+                console.log(event);
+            } else if (event.status) {
+                if (doneUploading == true) {
+                    $scope.getProjectdetils();
+                    
+                    swal(
+                        'success',
+                        'Uploaded Successfully!',
+                        'success'
+                    )
+                    $scope.getProjectdetils();
+                    // $scope.disableSubmit = false;
+                        
+                    }
+                   // $scope.getCandidateDetails();\
+                   else {
+                    debugger;
+                    positionIndex += chunkSize;
+                    $scope.uploadAttachment(type,userDocId,result);
+                }
+                $scope.showUplaodUserDoc = false;
+                } 
+        },
+
+
+        { buffer: true, escape: true, timeout: 120000 }
+    );
+}
+        // $scope.checkEmail = function(email,contId){
+        //     debugger;
+        //     $scope.emailCheck = false;
+        //     if(contId == undefined){
+        //       contId = "";
+        //     }
+        //     ApplicantPortal_Contoller.checkEmail(email,contId,function(result,event){
+        //       debugger;
+        //       if(event.status){
+        //         debugger;
+        //         if(result.length > 0){
+        //           $scope.emailCheck = true;
+        //         }else{
+        //           $scope.emailCheck = false;
+        //         }
+        //         $scope.$apply();
+        //       }
+        //     })
       
-          }
+        //   }
         
         // $scope.NextIns=function(index,divid){  
             
@@ -342,7 +494,7 @@ angular.module('cp_app').controller('Consortia_Ctrl', function($scope,$rootScope
                     "Phone": "",
                     "Academia__c":true,
                     "Industry__c":false,
-                    "Contacts":[{"LastName":"","Campaign__c":$scope.campaigntype}],
+                    "Contacts":[{"FirstName":"","Campaign__c":$scope.campaigntype}],
                     "Proposals__c":$rootScope.projectId,
                 });
             }
@@ -642,121 +794,6 @@ angular.module('cp_app').controller('Consortia_Ctrl', function($scope,$rootScope
 //             $scope.arrySaveStatus[index].status=false;
 //           }
 
-          var maxStringSize = 6000000;    //Maximum String size is 6,000,000 characters
-          var maxFileSize = 4350000;      //After Base64 Encoding, this is the max file size
-          var chunkSize = 950000;         //Maximum Javascript Remoting message size is 1,000,000 characters
-          var attachment;
-          var attachmentName;
-          var fileSize;
-          var positionIndex;
-          var doneUploading;
-          var appId = "{!$CurrentPage.parameters.id}";
-          var conId = "{!contactId}"
-          $scope.uploadFile = function (type, userDocId, fileId) {
-            debugger;
-            $scope.showSpinnereditProf = true;
-            var file;
-            if (type == 'profilePic') {
-                file = document.getElementById('profilePic').files[0];
-            } else if (type == 'attachment') {
-                file = document.getElementById('attachmentFiles').files[0];
-            }
-           
-            console.log(file);
-            if (file != undefined) {
-                if (file.size <= maxFileSize) {
-                    
-                    attachmentName = file.name;
-                    const myArr = attachmentName.split(".");
-                    if (myArr[1] != "pdf" && type != 'profilePic') {
-                        alert("Please upload in PDF format only");
-                        return;
-                    }
-                    var fileReader = new FileReader();
-                    fileReader.onloadend = function (e) {
-                        attachment = window.btoa(this.result);  //Base 64 encode the file before sending it
-                        positionIndex = 0;
-                        fileSize = attachment.length;
-                        $scope.showSpinnereditProf = false;
-                        console.log("Total Attachment Length: " + fileSize);
-                        doneUploading = false;
-                        debugger;
-                        if (fileSize < maxStringSize) {
-                            $scope.uploadAttachment(type , userDocId, fileId);
-                        } else {
-                            alert("Base 64 Encoded file is too large.  Maximum size is " + maxStringSize + " your file is " + fileSize + ".");
-                        }
-    
-                    }
-                    fileReader.onerror = function (e) {
-                        alert("There was an error reading the file.  Please try again.");
-                    }
-                    fileReader.onabort = function (e) {
-                        alert("There was an error reading the file.  Please try again.");
-                    }
-    
-                    fileReader.readAsBinaryString(file);  //Read the body of the file
-    
-                } else {
-                    alert("File must be under 4.3 MB in size.  Your file is too large.  Please try again.");
-                    $scope.showSpinnereditProf = false;
-                }
-            } else {
-                $scope.showSpinnereditProf = false;
-            }
-        }
-        $scope.uploadAttachment = function (type, userDocId, fileId) {
-            var attachmentBody = "";
-            if (fileId == undefined) {
-                fileId = " ";
-            }
-            if (fileSize <= positionIndex + chunkSize) {
-                debugger;
-                attachmentBody = attachment.substring(positionIndex);
-                doneUploading = true;
-            } else {
-                attachmentBody = attachment.substring(positionIndex, positionIndex + chunkSize);
-            }
-            console.log("Uploading " + attachmentBody.length + " chars of " + fileSize);
-            IndustrialFellowshipController.doUploadAttachment(
-                type, attachmentBody, attachmentName, " ", fileId, userDocId, 
-                function (result, event) {
-                    console.log(result);
-                    if (event.type === 'exception') {
-                        console.log("exception");
-                        console.log(event);
-                    } else if (event.status) {
-                        if (doneUploading == true) {
-                            if (type == 'profilePic') {
-                                
-                            }else{
-                                Swal.fire(
-                                    '',
-                                    'Uploaded Successfully!',
-                                    'success'
-                                )
-                                
-                                
-                            }
-    
-                        } else {
-                            debugger;
-                            positionIndex += chunkSize;
-                            $scope.uploadAttachment(type,userDocId,result);
-                        }
-                    } else {
-                        console.log(event.message);
-                    }
-                },
-    
-    
-                { buffer: true, escape: true, timeout: 120000 }
-            );
-        }
-
-
-        // $scope.getPatnerDetails();
-
         var inputQuantity = [];
     $(function() {     
       $(".zipcode-number").on("keyup", function (e) {
@@ -788,22 +825,29 @@ angular.module('cp_app').controller('Consortia_Ctrl', function($scope,$rootScope
                     $scope.allCoordinatorDetails.push({
                         "Name": "",
                         "Phone": "",
-                        "Contacts": [{"LastName":"","Proposals__c":$rootScope.projectId}],
+                        "Contacts": [{"FirstName":"","Proposals__c":$rootScope.projectId}],
                         "Proposals__c": $rootScope.projectId
                     });
                 } else {
                     for(var i=0;i<result.length;i++){
                         
                     }
-                    $scope.allCoordinatorDetails = result;                        
+                    $scope.allCoordinatorDetails = result; 
+                    for(var i=0;i<$scope.allCoordinatorDetails.length;i++){
+                        if($scope.allCoordinatorDetails[i].Contacts[0].Department!=undefined){
+                            console.log("before replace=>"+$scope.allCoordinatorDetails[i].Contacts[0].Department);
+                            $scope.allCoordinatorDetails[i].Contacts[0].Department=$scope.allCoordinatorDetails[i].Contacts[0].Department.replaceAll('&amp;','&');
+                            console.log("after replace=>"+$scope.allCoordinatorDetails[i].Contacts[0].Department);
+                        }
+                    }                         
                 }
-                for(var i=0;i<$scope.allCoordinatorDetails.length;i++){
-                    if($scope.allCoordinatorDetails[i].ShippingCountry == 'India'){
-                        $scope.allCoordinatorDetails[i].stateList = $scope.indianStates;
-                    }else if($scope.allCoordinatorDetails[i].ShippingCountry == 'Germany'){
-                        $scope.allCoordinatorDetails[i].stateList = $scope.germanStates; 
-                    }
-                }
+                // for(var i=0;i<$scope.allCoordinatorDetails.length;i++){
+                //     if($scope.allCoordinatorDetails[i].ShippingCountry == 'India'){
+                //         //$scope.allCoordinatorDetails[i].stateList = $scope.indianStates;
+                //     }else if($scope.allCoordinatorDetails[i].ShippingCountry == 'Germany'){
+                //        // $scope.allCoordinatorDetails[i].stateList = $scope.germanStates; 
+                //     }
+                // }
                 $scope.$apply();                    
                 $("#panelsStayOpencollapse1,#panelsStayOpencollapse2,#panelsStayOpencollapse3,#panelsStayOpencollapse4,#panelsStayOpencollapse5").removeClass();
                 $("#panelsStayOpencollapse1,#panelsStayOpencollapse2,#panelsStayOpencollapse3,#panelsStayOpencollapse4,#panelsStayOpencollapse5").addClass('accordion-collapse collapse');
@@ -827,10 +871,6 @@ angular.module('cp_app').controller('Consortia_Ctrl', function($scope,$rootScope
         for(let i=0; i<$scope.allCoordinatorDetails.length; i++){
             delete ($scope.allCoordinatorDetails[i]['$$hashKey']);
         }
-        // if(GermanIndustryCount==0 || GermanAcademiaCount==0){
-        //     swal("Consortia!", "One industry and one academia is mandatory", "info");
-        //     return;
-        // }
 
         for(i=0;i<$scope.allCoordinatorDetails.length;i++){
 
@@ -849,18 +889,18 @@ angular.module('cp_app').controller('Consortia_Ctrl', function($scope,$rootScope
                 $("#country"+i+"").addClass('border-theme');
                 return;  
             }
-            if($scope.allCoordinatorDetails[i].BillingCountry == 'India' && $scope.allCoordinatorDetails[i].Industry__c == true && $scope.allCoordinatorDetails[i].DSIR_Recoginition_Details__c == undefined){
-                swal("Coordinator Details", "Please Enter DSIR Number.");
-                $("#dsir"+i+"").addClass('border-theme');
-                return;
-            }
+            // if($scope.allCoordinatorDetails[i].BillingCountry == 'India' && $scope.allCoordinatorDetails[i].Industry__c == true && $scope.allCoordinatorDetails[i].DSIR_Recoginition_Details__c == undefined){
+            //     swal("Coordinator Details", "Please Enter DSIR Number.");
+            //     $("#dsir"+i+"").addClass('border-theme');
+            //     return;
+            // }
             if($scope.allCoordinatorDetails[i].Academia__c == false && $scope.allCoordinatorDetails[i].Industry__c == false){
                 swal("Coordinator Details", "Please Select either Academia or Industry.");
                 return; 
             }
             if($scope.allCoordinatorDetails[i].Contacts != undefined){
                 for(var j=0;j<$scope.allCoordinatorDetails[i].Contacts.length;j++){
-                    if($scope.allCoordinatorDetails[i].Contacts[j].LastName == undefined || $scope.allCoordinatorDetails[i].Contacts[j].LastName == ""){
+                    if($scope.allCoordinatorDetails[i].Contacts[j].FirstName == undefined || $scope.allCoordinatorDetails[i].Contacts[j].FirstName == ""){
                         swal("Coordinator Details", "Please Enter Head of project.");
                         $("#head"+i+"").addClass('border-theme');
                         return;
@@ -946,6 +986,10 @@ angular.module('cp_app').controller('Consortia_Ctrl', function($scope,$rootScope
             swal("Consortia!", "One industry and one academia is mandatory", "info");
             return;
         }
+        if(GermanIndustryCount==0 || GermanAcademiaCount==0){
+            swal("Consortia!", "One industry and one academia is mandatory", "info");
+            return;
+        }
             $scope.contactList = [];
             for(var i=0;i<$scope.allCoordinatorDetails.length;i++){
                 if($scope.allCoordinatorDetails[i].Contacts != undefined){
@@ -962,7 +1006,7 @@ angular.module('cp_app').controller('Consortia_Ctrl', function($scope,$rootScope
 
             for(let i=0; i<$scope.allCoordinatorDetails.length; i++){
                 delete ($scope.allCoordinatorDetails[i]['Contacts']);
-                delete ($scope.allCoordinatorDetails[i]['stateList']);
+                // delete ($scope.allCoordinatorDetails[i]['stateList']);
             }
 
         ApplicantPortal_Contoller.insertCoordinatorsInformation($scope.allCoordinatorDetails,$scope.contactList, function(result, event){
@@ -1009,16 +1053,18 @@ angular.module('cp_app').controller('Consortia_Ctrl', function($scope,$rootScope
 
 
         for(var i=0;i<$scope.allCoordinatorDetails.length;i++){
-             if($scope.emailList.indexOf($scope.allCoordinatorDetails[i].Contacts[0].Email) != -1){
-                  swal("info", "DUPLICATE Email, Please check.","info");
-                  return;
-             }
-             else{
-                  $scope.emailList.push($scope.allCoordinatorDetails[i].Contacts[0].Email);
-             }
-             if($scope.allCoordinatorDetails[i].Contacts[0].Id != undefined){
-                  $scope.listOfIds.push($scope.allCoordinatorDetails[i].Contacts[0].Id);
-             }
+            if($scope.allCoordinatorDetails[i].Contacts[0].Email != undefined){
+                if($scope.emailList.indexOf($scope.allCoordinatorDetails[i].Contacts[0].Email) != -1){
+                    swal("info", "DUPLICATE Email, Please check.","info");
+                    return;
+               }
+               else{
+                    $scope.emailList.push($scope.allCoordinatorDetails[i].Contacts[0].Email);
+               }
+               if($scope.allCoordinatorDetails[i].Contacts[0].Id != undefined){
+                    $scope.listOfIds.push($scope.allCoordinatorDetails[i].Contacts[0].Id);
+               }
+            }
           }
         ApplicantPortal_Contoller.checkBulkEmail($scope.emailList,$scope.listOfIds,function(result,event){
           debugger;

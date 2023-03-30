@@ -59,22 +59,42 @@ angular.module('cp_app').controller('CV_Ctrl', function($scope,$rootScope) {
 
     $scope.addEducationRow=function(){
         debugger;
-        $scope.allDetailList.Education_Details__r.push({
+        $scope.pairingDetails.Education_Details__r.push({
             Institution_Name__c:"",
-            Contact__c: $scope.allDetailList.Id
+            Contact__c: $scope.pairingDetails.Id
+        });
+        $scope.$apply();
+        debugger;
+    }
+    $scope.addEducationRow2=function(){
+        debugger;
+        $scope.pairList.Education_Details__r.push({
+            Institution_Name__c:"",
+            Contact__c: $scope.pairList.Id
         });
         $scope.$apply();
         debugger;
     }
     $scope.removeEducationRow=function(index){
         debugger;
-        if($scope.allDetailList.Education_Details__r.length != 1){
-            if($scope.allDetailList.Education_Details__r[index].Id != undefined && $scope.allDetailList.Education_Details__r[index].Id != ""){
-                $scope.deleteEducationRow($scope.allDetailList.Education_Details__r[index].Id);
+        if($scope.pairingDetails.Education_Details__r.length != 1){
+            if($scope.pairingDetails.Education_Details__r[index].Id != undefined && $scope.pairingDetails.Education_Details__r[index].Id != ""){
+                $scope.deleteEducationRow($scope.pairingDetails.Education_Details__r[index].Id);
             }else{
-                $scope.allDetailList.Education_Details__r.splice(index,1);
+                $scope.pairingDetails.Education_Details__r.splice(index,1);
         }
     }
+}
+
+$scope.removeEducationRow2=function(index){
+    debugger;
+    if($scope.pairList.Education_Details__r.length != 1){
+        if($scope.pairList.Education_Details__r[index].Id != undefined && $scope.pairList.Education_Details__r[index].Id != ""){
+            $scope.deleteEducationRow($scope.pairList.Education_Details__r[index].Id);
+        }else{
+            $scope.pairList.Education_Details__r.splice(index,1);
+    }
+}
 }
 
 $scope.deleteEducationRow = function(eduId){
@@ -95,23 +115,44 @@ $scope.deleteEducationRow = function(eduId){
 
     $scope.addEmploymentRow=function(index){
         debugger;
-        $scope.allDetailList.Employment_Details__r.push({
+        $scope.pairingDetails.Employment_Details__r.push({
             Organization_Name__c:"",
-            Contact__c: $scope.allDetailList.Id
+            Contact__c: $scope.pairingDetails.Id
+        });
+        $scope.$apply();
+        debugger;
+    }
+
+    $scope.addEmploymentRow2=function(index){
+        debugger;
+        $scope.pairList.Employment_Details__r.push({
+            Organization_Name__c:"",
+            Contact__c: $scope.pairList.Id
         });
         $scope.$apply();
         debugger;
     }
     $scope.removeEmploymentRow=function(index){
         debugger;
-        if($scope.allDetailList.Employment_Details__r.length != 1){
-            if($scope.allDetailList.Employment_Details__r[index].Id != undefined && $scope.allDetailList.Employment_Details__r[index].Id != ""){
-                $scope.deleteEmploymentWorkshop($scope.allDetailList.Employment_Details__r[index].Id);
+        if($scope.pairingDetails.Employment_Details__r.length != 1){
+            if($scope.pairingDetails.Employment_Details__r[index].Id != undefined && $scope.pairingDetails.Employment_Details__r[index].Id != ""){
+                $scope.deleteEmploymentWorkshop($scope.pairingDetails.Employment_Details__r[index].Id);
             }else{
-                $scope.allDetailList.Employment_Details__r.splice(index,1);
+                $scope.pairingDetails.Employment_Details__r.splice(index,1);
         }
     }
  }
+
+ $scope.removeEmploymentRow2=function(index){
+    debugger;
+    if($scope.pairList.Employment_Details__r.length != 1){
+        if($scope.pairList.Employment_Details__r[index].Id != undefined && $scope.pairList.Employment_Details__r[index].Id != ""){
+            $scope.deleteEmploymentWorkshop($scope.pairList.Employment_Details__r[index].Id);
+        }else{
+            $scope.pairList.Employment_Details__r.splice(index,1);
+    }
+}
+}
 
  $scope.deleteEmploymentWorkshop = function(empId){
     ApplicantPortal_Contoller.deleteEmploymentWorkshop(empId, function (result, event) {
@@ -158,58 +199,488 @@ $scope.deleteEducationRow = function(eduId){
 
    
 
-    $scope.onCountryChange = function(){
+    $scope.onCountryChange1 = function(){
         debugger;
         
-                if($scope.allDetailList.MailingCountry == 'India'){
-                    $scope.allDetailList.stateList = $scope.indianStates;
-                }else if($scope.allDetailList.MailingCountry == 'Germany'){
-                    $scope.allDetailList.stateList = $scope.germanStates;
+                if($scope.pairingDetails.MailingCountry == 'India'){
+                    $scope.pairingDetails.stateList = $scope.indianStates;
+                }else if($scope.pairingDetails.MailingCountry == 'Germany'){
+                    $scope.pairingDetails.stateList = $scope.germanStates;
+                }
+                $scope.$apply();
+    }
+
+    $scope.onCountryChange2 = function(){
+        debugger;
+        
+                if($scope.pairList.MailingCountry == 'India'){
+                    $scope.pairList.stateList = $scope.indianStates;
+                }else if($scope.pairList.MailingCountry == 'Germany'){
+                    $scope.pairList.stateList = $scope.germanStates;
                 }
                 $scope.$apply();
     }
 
 /*/////////////////////////////////// After UI Code ///////////////////////////////////////////*/
 
-    $scope.allDetailList = [];
-    $scope.gerCoordDetails = function(){
+    $scope.getCoordCVDetails = function(){
         debugger;
-        ApplicantPortal_Contoller.getCoodinatorDetList($rootScope.userId, function(result,event){
+        ApplicantPortal_Contoller.getCoordCVDetails($rootScope.projectId, function(result,event){
             debugger;
-            if(event.status && result != null){
+            if (event.status) {
                 debugger;
-                $scope.allDetailList = result;
-                if($scope.allDetailList.Publications_Patents__c != undefined || $scope.allDetailList.Publications_Patents__c != ""){
-                    $scope.allDetailList.Publications_Patents__c = $scope.allDetailList.Publications_Patents__c ? $scope.allDetailList.Publications_Patents__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.allDetailList.Publications_Patents__c;
-                }
-                if($scope.allDetailList.Education_Details__r == undefined){
-                    var rec = {
-                        'Institution_Name__c':'',
-                        'Contact__c': $scope.allDetailList.Id
-                    };
-                    $scope.allDetailList.Education_Details__r = [];
-                        debugger;
-                    $scope.allDetailList.Education_Details__r.push(rec);
-                }
-                if($scope.allDetailList.Employment_Details__r == undefined){
-                    var emprec = {
-                        "Organization_Name__c":"",
-                        "Contact__c": $scope.allDetailList.Id
-                    };
-                    $scope.allDetailList.Employment_Details__r = [];
-                    debugger;
-                    $scope.allDetailList.Employment_Details__r.push(emprec);
-                }
-                if($scope.allDetailList.MailingCountry == 'India'){
-                        $scope.allDetailList.stateList = $scope.indianStates;
-                    }else if($scope.allDetailList.MailingCountry == 'Germany'){
-                        $scope.allDetailList.stateList = $scope.germanStates; 
+                if (result == null || result.length == 0) {
+                    $scope.pairingDetails.push({
+                        "FirstName": " ",
+                        "LastName": " ",
+                        "Email": " ",
+                    });
+                }else{
+                
+                    for(var i=0;i<result.length;i++){
+                        if(result[i].Publications_Patents__c != undefined || result[i].Publications_Patents__c != ""){
+                            result[i].Publications_Patents__c = result[i].Publications_Patents__c ? result[i].Publications_Patents__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result[i].Publications_Patents__c;
+                        }
+                        if(result[i].Is_Primary__c == true){
+                            $scope.pairingDetails = result[i];
+                            if($scope.pairingDetails.Education_Details__r == undefined){
+                                var rec = {
+                                    'Institution_Name__c':'',
+                                    'Contact__c': $scope.pairingDetails.Id
+                                };
+                                $scope.pairingDetails.Education_Details__r = [];
+                                    debugger;
+                                $scope.pairingDetails.Education_Details__r.push(rec);
+                            }
+                            if($scope.pairingDetails.Employment_Details__r == undefined){
+                                var emprec = {
+                                    "Organization_Name__c":"",
+                                    "Contact__c": $scope.pairingDetails.Id
+                                };
+                                $scope.pairingDetails.Employment_Details__r = [];
+                                debugger;
+                                $scope.pairingDetails.Employment_Details__r.push(emprec);
+                            }
+
+                            if($scope.pairingDetails.MailingCountry == "India"){
+                                $scope.pairingDetails.stateList = $scope.indianStates;
+                            }else{
+                                $scope.pairingDetails.stateList = $scope.germanStates;
+                            }
+                        }else{
+                            $scope.pairList = result[i];
+                            if($scope.pairList.Education_Details__r == undefined){
+                                var rec = {
+                                    'Institution_Name__c':'',
+                                    'Contact__c': $scope.pairList.Id
+                                };
+                                $scope.pairList.Education_Details__r = [];
+                                    debugger;
+                                $scope.pairList.Education_Details__r.push(rec);
+                            }
+                            if($scope.pairList.Employment_Details__r == undefined){
+                                var emprec = {
+                                    "Organization_Name__c":"",
+                                    "Contact__c": $scope.pairList.Id
+                                };
+                                $scope.pairList.Employment_Details__r = [];
+                                debugger;
+                                $scope.pairList.Employment_Details__r.push(emprec);
+                            }
+                            if($scope.pairList.MailingCountry == "India"){
+                                $scope.pairList.stateList = $scope.indianStates;
+                            }else{
+                                $scope.pairList.stateList = $scope.germanStates;
+                            }
+                        }
                     }
-                $scope.$apply();
+
+                }
+                $scope.$apply();                    
+                       
+            }
+        }, {
+            escape: true
+        })
+    }
+    $scope.getCoordCVDetails();
+
+    $scope.saveCoordCVDetails = function(){
+        debugger;
+
+        if($scope.pairingDetails.FirstName == undefined || $scope.pairingDetails.FirstName == ""){
+            swal("Contact Details", "Please Enter First Name.");
+            $("#FName").addClass('border-theme');
+                return;
+        }
+        if($scope.pairingDetails.LastName == undefined || $scope.pairingDetails.LastName == ""){
+            swal("Contact Details", "Please Enter Last Name.");
+            $("#LName").addClass('border-theme');
+                return;
+        }
+        if($scope.pairingDetails.Email == undefined || $scope.pairingDetails.Email == ""){
+            swal("Contact Details", "Please Enter Email.");
+            $("#txtEmail1").addClass('border-theme');
+                return;
+        }
+        if($scope.pairingDetails.Actual_Position__c == undefined || $scope.pairingDetails.Actual_Position__c == ""){
+            swal("Contact Details", "Please Enter Actual Position.");
+            $("#position").addClass('border-theme');
+                return;
+        }
+        if($scope.pairingDetails.MailingCountry == undefined || $scope.pairingDetails.MailingCountry == ""){
+            swal("Contact Details", "Please Enter Country.");
+            $("#country").addClass('border-theme');
+                return;
+        }
+        if($scope.pairingDetails.MailingState == undefined || $scope.pairingDetails.MailingState == ""){
+            swal("Contact Details", "Please Enter State.");
+            $("#state").addClass('border-theme');
+                return;
+        }
+        if($scope.pairingDetails.MailingPostalCode == undefined || $scope.pairingDetails.MailingPostalCode == ""){
+            swal("Contact Details", "Please Enter Post Code.");
+            $("#postCode").addClass('border-theme');
+                return;
+        }
+        if($scope.emailCheck == true){
+            swal('info','Email already exists.','info');
+            $("#txtEmail1").addClass('border-theme');
+                return;
+          }
+
+        if($scope.pairingDetails.Education_Details__r != undefined){
+            for(var j=0; j<$scope.pairingDetails.Education_Details__r.length; j++){
+                if($scope.pairingDetails.Education_Details__r[j].Degree__c == undefined || $scope.pairingDetails.Education_Details__r[j].Degree__c == ""){
+                    swal('info','Please Enter Education Degree','info');
+                    $("#degree"+j+"").addClass('border-theme');
+                    return;
+                }
+                if($scope.pairingDetails.Education_Details__r[j].Area_of_specialization__c==undefined||$scope.pairingDetails.Education_Details__r[j].Area_of_specialization__c==""){
+                    swal('info','Please enter Area of specialization','info');
+                    $("#txtSpecialization"+j+"").addClass('border-theme');
+                    return;
+                }
+                if($scope.pairingDetails.Education_Details__r[j].Institution_Name__c == undefined || $scope.pairingDetails.Education_Details__r[j].Institution_Name__c == ""){
+                    swal('info','Please Enter Institution Name','info');
+                    $("#instName"+j+"").addClass('border-theme');
+                    return;
+                }
+                if($scope.pairingDetails.Education_Details__r[j].End_Year__c == undefined || $scope.pairingDetails.Education_Details__r[j].End_Year__c == ""){
+                    swal('info','Please Enter Year of Completion','info');
+                    $("#endYear"+j+"").addClass('border-theme');
+                    return;
+                }
+                
+                // if($scope.pairingDetails.Education_Details__r[j].Percentage_cgpa__c == undefined || $scope.pairingDetails.Education_Details__r[j].Percentage_cgpa__c == ""){
+                //     swal('info','Please choose either CGPA/Percentage','info');
+                //     $("#cgpa"+j+"").addClass('border-theme');
+                //     return; 
+                // }
+                // if($scope.pairingDetails.Education_Details__r[j].Percentage_cgpa__c == "Percentage"){
+                //     if($scope.pairingDetails.Education_Details__r[j].Percentage__c==undefined||$scope.pairingDetails.Education_Details__r[j].Percentage__c==""){
+                //         swal('info','Please enter Percentage.','info');
+                //         $("#txtPer"+j+"").addClass('border-theme');
+                //         return; 
+                //     }
+    
+                //     if($scope.pairingDetails.Education_Details__r[j].Percentage__c==00){
+                //         swal('info','Please enter Percentage more than 0.','info');
+                //         $("#txtPer"+j+"").addClass('border-theme');
+                //         return;  
+                //     }
+
+                // }
+                // if($scope.pairingDetails.Education_Details__r[j].Percentage_cgpa__c == "CGPA"){
+                //     if($scope.pairingDetails.Education_Details__r[j].CGPA__c==undefined||$scope.pairingDetails.Education_Details__r[j].CGPA__c==""){
+                //         swal('info','Please enter CGPA.','info');
+                //         $("#txtPer"+j+"").addClass('border-theme');
+                //         return; 
+                //     }
+    
+                //     if($scope.pairingDetails.Education_Details__r[j].CGPA__c==00 || $scope.pairingDetails.Education_Details__r[j].CGPA__c == 0){
+                //         swal('info','Please enter CGPA more than 0.','info');
+                //         $("#txtPer"+j+"").addClass('border-theme');
+                //         return;  
+                //     }
+
+                // }
+            }
+        }
+
+        if($scope.pairingDetails.Employment_Details__r != undefined){
+            for(var k=0; k<$scope.pairingDetails.Employment_Details__r.length; k++){
+                if($scope.pairingDetails.Employment_Details__r[k].Organization_Name__c == undefined || $scope.pairingDetails.Employment_Details__r[k].Organization_Name__c == ""){
+                    swal("Employment Details", "Please Enter Organization Name.");
+                    $("#org"+k+"").addClass('border-theme');
+                    return; 
+                }
+
+                if($scope.pairingDetails.Employment_Details__r[k].Position__c == undefined || $scope.pairingDetails.Employment_Details__r[k].Position__c == ""){
+                    swal("Employment Details", "Please Enter Position.");
+                    $("#pos"+k+"").addClass('border-theme');
+                    return;  
+                }
+
+                if($scope.pairingDetails.Employment_Details__r[k].Start_Year__c == undefined || $scope.pairingDetails.Employment_Details__r[k].Start_Year__c == ""){
+                    swal("Employment Details", "Please Enter Start Year.");
+                    $("#sYear"+k+"").addClass('border-theme');
+                    return;  
+                }
+
+                if($scope.pairingDetails.Employment_Details__r[k].End_Year__c == undefined || $scope.pairingDetails.Employment_Details__r[k].End_Year__c == ""){
+                    swal("Employment Details", "Please Enter End Year.");
+                    $("#endyear"+k+"").addClass('border-theme');
+                    return;  
+                }
+            }
+
+        }
+
+
+
+        if($scope.pairList.FirstName == undefined || $scope.pairList.FirstName == ""){
+            swal("Contact Details", "Please Enter First Name.");
+            $("#FName2").addClass('border-theme');
+                return;
+        }
+        if($scope.pairList.LastName == undefined || $scope.pairList.LastName == ""){
+            swal("Contact Details", "Please Enter Last Name.");
+            $("#LName2").addClass('border-theme');
+                return;
+        }
+        if($scope.pairList.Email == undefined || $scope.pairList.Email == ""){
+            swal("Contact Details", "Please Enter Email.");
+            $("#txtEmail12").addClass('border-theme');
+                return;
+        }
+        if($scope.pairList.Actual_Position__c == undefined || $scope.pairList.Actual_Position__c == ""){
+            swal("Contact Details", "Please Enter Actual Position.");
+            $("#position2").addClass('border-theme');
+                return;
+        }
+        if($scope.pairList.MailingCountry == undefined || $scope.pairList.MailingCountry == ""){
+            swal("Contact Details", "Please Enter Country.");
+            $("#country2").addClass('border-theme');
+                return;
+        }
+        if($scope.pairList.MailingState == undefined || $scope.pairList.MailingState == ""){
+            swal("Contact Details", "Please Enter State.");
+            $("#state2").addClass('border-theme');
+                return;
+        }
+        if($scope.pairList.MailingPostalCode == undefined || $scope.pairList.MailingPostalCode == ""){
+            swal("Contact Details", "Please Enter Post Code.");
+            $("#postCode2").addClass('border-theme');
+                return;
+        }
+        if($scope.emailCheck == true){
+            swal('info','Email already exists.','info');
+            $("#txtEmail12").addClass('border-theme');
+                return;
+          }
+
+        if($scope.pairList.Education_Details__r != undefined){
+            for(var j=0; j<$scope.pairList.Education_Details__r.length; j++){
+                if($scope.pairList.Education_Details__r[j].Degree__c == undefined || $scope.pairList.Education_Details__r[j].Degree__c == ""){
+                    swal('info','Please Enter Education Degree','info');
+                    $("#degree2"+j+"").addClass('border-theme');
+                    return;
+                }
+                if($scope.pairList.Education_Details__r[j].Area_of_specialization__c==undefined||$scope.pairList.Education_Details__r[j].Area_of_specialization__c==""){
+                    swal('info','Please enter Area of specialization','info');
+                    $("#txtSpecialization2"+j+"").addClass('border-theme');
+                    return;
+                }
+                if($scope.pairList.Education_Details__r[j].Institution_Name__c == undefined || $scope.pairList.Education_Details__r[j].Institution_Name__c == ""){
+                    swal('info','Please Enter Institution Name','info');
+                    $("#instName2"+j+"").addClass('border-theme');
+                    return;
+                }
+                if($scope.pairList.Education_Details__r[j].End_Year__c == undefined || $scope.pairList.Education_Details__r[j].End_Year__c == ""){
+                    swal('info','Please Enter Year of Completion','info');
+                    $("#endYear2"+j+"").addClass('border-theme');
+                    return;
+                }
+                // if($scope.pairList.Education_Details__r[j].Percentage_cgpa__c == undefined || $scope.pairList.Education_Details__r[j].Percentage_cgpa__c == ""){
+                //     swal('info','Please choose either CGPA/Percentage','info');
+                //     $("#cgpa2"+j+"").addClass('border-theme');
+                //     return; 
+                // }
+                // if($scope.pairList.Education_Details__r[j].Percentage_cgpa__c == "Percentage"){
+                //     if($scope.pairList.Education_Details__r[j].Percentage__c==undefined||$scope.pairList.Education_Details__r[j].Percentage__c==""){
+                //         swal('info','Please enter Percentage.','info');
+                //         $("#txtPer2"+j+"").addClass('border-theme');
+                //         return; 
+                //     }
+    
+                //     if($scope.pairList.Education_Details__r[j].Percentage__c==00){
+                //         swal('info','Please enter Percentage more than 0.','info');
+                //         $("#txtPer2"+j+"").addClass('border-theme');
+                //         return;  
+                //     }
+
+                // }
+                // if($scope.pairList.Education_Details__r[j].Percentage_cgpa__c == "CGPA"){
+                //     if($scope.pairList.Education_Details__r[j].CGPA__c==undefined||$scope.pairList.Education_Details__r[j].CGPA__c==""){
+                //         swal('info','Please enter CGPA.','info');
+                //         $("#txtPer2"+j+"").addClass('border-theme');
+                //         return; 
+                //     }
+    
+                //     if($scope.pairList.Education_Details__r[j].CGPA__c==00 || $scope.pairList.Education_Details__r[j].CGPA__c == 0){
+                //         swal('info','Please enter CGPA more than 0.','info');
+                //         $("#txtPer2"+j+"").addClass('border-theme');
+                //         return;  
+                //     }
+
+                // }
+                
+            }
+        }
+
+        if($scope.pairList.Employment_Details__r != undefined){
+            for(var k=0; k<$scope.pairList.Employment_Details__r.length; k++){
+                if($scope.pairList.Employment_Details__r[k].Organization_Name__c == undefined || $scope.pairList.Employment_Details__r[k].Organization_Name__c == ""){
+                    swal("Employment Details", "Please Enter Organization Name.");
+                    $("#org2"+k+"").addClass('border-theme');
+                    return; 
+                }
+
+                if($scope.pairList.Employment_Details__r[k].Position__c == undefined || $scope.pairList.Employment_Details__r[k].Position__c == ""){
+                    swal("Employment Details", "Please Enter Position.");
+                    $("#pos2"+k+"").addClass('border-theme');
+                    return;  
+                }
+
+                if($scope.pairList.Employment_Details__r[k].Start_Year__c == undefined || $scope.pairList.Employment_Details__r[k].Start_Year__c == ""){
+                    swal("Employment Details", "Please Enter Start Year.");
+                    $("#sYear2"+k+"").addClass('border-theme');
+                    return;  
+                }
+
+                if($scope.pairList.Employment_Details__r[k].End_Year__c == undefined || $scope.pairList.Employment_Details__r[k].End_Year__c == ""){
+                    swal("Employment Details", "Please Enter End Year.");
+                    $("#endyear2"+k+"").addClass('border-theme');
+                    return;  
+                }
+            }
+
+        }
+
+
+
+        $scope.allDetailList = [];
+        $scope.allDetailList.push($scope.pairingDetails,$scope.pairList);
+
+    $scope.educationDetails = [];
+    $scope.employmentDetails = [];
+    for(var i=0;i<$scope.allDetailList.length;i++){
+        $scope.allDetailList[i]['State__c'] = $scope.allDetailList[i]['MailingState'];
+        for(var j=0;j<$scope.allDetailList[i].Education_Details__r.length;j++){
+            $scope.educationDetails.push($scope.allDetailList[i].Education_Details__r[j]);
+        }
+        for(var k=0;k<$scope.allDetailList[i].Employment_Details__r.length;k++){
+            $scope.employmentDetails.push($scope.allDetailList[i].Employment_Details__r[k]);
+        }
+    }
+
+    for(var i=0;i<$scope.allDetailList.length;i++){
+        delete ($scope.allDetailList[i]['Education_Details__r']);
+        delete ($scope.allDetailList[i]['Employment_Details__r']);
+        delete ($scope.allDetailList[i]['Education_Details__r']);
+        delete ($scope.allDetailList[i]['stateList']);
+    }
+
+    for(var i=0;i<$scope.educationDetails.length;i++){
+        delete ($scope.educationDetails[i]['$$hashKey']); 
+    }
+    for(var i=0;i<$scope.employmentDetails.length;i++){
+        delete ($scope.employmentDetails[i]['$$hashKey']); 
+    }
+
+        ApplicantPortal_Contoller.SaveWorkshopContactDetails($scope.allDetailList,$scope.educationDetails,$scope.employmentDetails, function(result,event){
+            debugger;
+            if(event.status){
+                debugger;
+                Swal.fire(
+                    'Success',
+                    'your Contact Details have been Saved successfully.',
+                    'success'
+                );
+               $scope.redirectPageURL('Meeting_Theme');
+               $scope.$apply();
             }
         })
     }
-    $scope.gerCoordDetails();
+
+    $scope.validatePerCGPA=function(index){
+        debugger
+        if($scope.pairingDetails.Education_Details__r[index].Percentage_cgpa__c=="CGPA"){
+            delete $scope.pairingDetails.Education_Details__r[index].Percentage__c;
+            delete $scope.pairingDetails.Education_Details__r[index].CGPA__c;
+            
+        }
+        else{
+            $scope.pairingDetails.Education_Details__r[index].Percentage__c=0;
+            delete $scope.pairingDetails.Education_Details__r[index].Percentage__c;
+            delete $scope.pairingDetails.Education_Details__r[index].CGPA__c;
+            $scope.removeClasses(index);
+        }
+    }
+
+    $scope.validatePerCGPA2=function(index){
+        debugger
+        if($scope.pairList.Education_Details__r[index].Percentage_cgpa__c=="CGPA"){
+            delete $scope.pairList.Education_Details__r[index].Percentage__c;
+            delete $scope.pairList.Education_Details__r[index].CGPA__c;
+            
+        }
+        else{
+            $scope.pairList.Education_Details__r[index].Percentage__c=0;
+            delete $scope.pairList.Education_Details__r[index].Percentage__c;
+            delete $scope.pairList.Education_Details__r[index].CGPA__c;
+            $scope.removeClasses(index);
+        }
+    }
+    // $scope.gerCoordDetails = function(){
+    //     debugger;
+    //     ApplicantPortal_Contoller.getCoodinatorDetList($rootScope.userId, function(result,event){
+    //         debugger;
+    //         if(event.status && result != null){
+    //             debugger;
+    //             $scope.allDetailList = result;
+    //             if($scope.allDetailList.Publications_Patents__c != undefined || $scope.allDetailList.Publications_Patents__c != ""){
+    //                 $scope.allDetailList.Publications_Patents__c = $scope.allDetailList.Publications_Patents__c ? $scope.allDetailList.Publications_Patents__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.allDetailList.Publications_Patents__c;
+    //             }
+    //             if($scope.allDetailList.Education_Details__r == undefined){
+    //                 var rec = {
+    //                     'Institution_Name__c':'',
+    //                     'Contact__c': $scope.allDetailList.Id
+    //                 };
+    //                 $scope.allDetailList.Education_Details__r = [];
+    //                     debugger;
+    //                 $scope.allDetailList.Education_Details__r.push(rec);
+    //             }
+    //             if($scope.allDetailList.Employment_Details__r == undefined){
+    //                 var emprec = {
+    //                     "Organization_Name__c":"",
+    //                     "Contact__c": $scope.allDetailList.Id
+    //                 };
+    //                 $scope.allDetailList.Employment_Details__r = [];
+    //                 debugger;
+    //                 $scope.allDetailList.Employment_Details__r.push(emprec);
+    //             }
+    //             if($scope.allDetailList.MailingCountry == 'India'){
+    //                     $scope.allDetailList.stateList = $scope.indianStates;
+    //                 }else if($scope.allDetailList.MailingCountry == 'Germany'){
+    //                     $scope.allDetailList.stateList = $scope.germanStates; 
+    //                 }
+    //             $scope.$apply();
+    //         }
+    //     })
+    // }
+    // $scope.gerCoordDetails();
 
     $scope.saveAllDetails = function(){
         debugger;
@@ -368,10 +839,10 @@ $scope.deleteEducationRow = function(eduId){
                 debugger;
                 Swal.fire(
                     'Success',
-                    'your Contact Details has been Saved successfully.',
+                    'your Contact Details have been Saved successfully.',
                     'success'
                 );
-               $scope.redirectPageURL('SignatureOfCoordinators');
+               $scope.redirectPageURL('Meeting_Theme');
                $scope.$apply();
             }
         })
@@ -380,34 +851,70 @@ $scope.deleteEducationRow = function(eduId){
     $scope.validatePercentage=function(index,event){
         debugger;
 
-        if($scope.allDetailList.Education_Details__r[index].Percentage_cgpa__c=="Percentage"){
-            stringP = $scope.allDetailList.Education_Details__r[index].Percentage__c.toString()
+        if($scope.pairingDetails.Education_Details__r[index].Percentage_cgpa__c=="Percentage"){
+            stringP = $scope.pairingDetails.Education_Details__r[index].Percentage__c.toString()
             var splitPercent = stringP.split(".");
             if(splitPercent.length > 2){
-                $scope.allDetailList.Education_Details__r[index].Percentage__c = Number(splitPercent[0]+"."+splitPercent[1]);
+                $scope.pairingDetails.Education_Details__r[index].Percentage__c = Number(splitPercent[0]+"."+splitPercent[1]);
                 swal("info", "Enter valid value for percentage.","info");
                 return;
             }
         }
         
-        if($scope.allDetailList.Education_Details__r[index].Percentage_cgpa__c!=undefined){
-            if($scope.allDetailList.Education_Details__r[index].Percentage_cgpa__c=="CGPA"){
-                if($scope.allDetailList.Education_Details__r[index].Percentage__c>10){
-                    $scope.allDetailList.Education_Details__r[index].Percentage__c=10;
+        if($scope.pairingDetails.Education_Details__r[index].Percentage_cgpa__c!=undefined){
+            if($scope.pairingDetails.Education_Details__r[index].Percentage_cgpa__c=="CGPA"){
+                if($scope.pairingDetails.Education_Details__r[index].Percentage__c>10){
+                    $scope.pairingDetails.Education_Details__r[index].Percentage__c=10;
                 }
             }
             else{
                 if((event.keyCode>=48 && event.keyCode<=57) || event.keyCode==48 || event.keyCode==8 || event.keyCode==190){
-                if($scope.allDetailList.Education_Details__r[index].Percentage__c>100){
-                    $scope.allDetailList.Education_Details__r[index].Percentage__c='100';
+                if($scope.pairingDetails.Education_Details__r[index].Percentage__c>100){
+                    $scope.pairingDetails.Education_Details__r[index].Percentage__c='100';
                 }
             }else{
-                $scope.allDetailList.Education_Details__r[index].Percentage__c=0;
+                $scope.pairingDetails.Education_Details__r[index].Percentage__c=0;
             }
             }
         }else{
-        if($scope.allDetailList.Education_Details__r[index].Percentage__c>100){
-            $scope.allDetailList.Education_Details__r[index].Percentage__c=100;
+        if($scope.pairingDetails.Education_Details__r[index].Percentage__c>100){
+            $scope.pairingDetails.Education_Details__r[index].Percentage__c=100;
+        }
+    }
+
+    }
+
+    $scope.validatePercentage2=function(index,event){
+        debugger;
+
+        if($scope.pairList.Education_Details__r[index].Percentage_cgpa__c=="Percentage"){
+            stringP = $scope.pairList.Education_Details__r[index].Percentage__c.toString()
+            var splitPercent = stringP.split(".");
+            if(splitPercent.length > 2){
+                $scope.pairList.Education_Details__r[index].Percentage__c = Number(splitPercent[0]+"."+splitPercent[1]);
+                swal("info", "Enter valid value for percentage.","info");
+                return;
+            }
+        }
+        
+        if($scope.pairList.Education_Details__r[index].Percentage_cgpa__c!=undefined){
+            if($scope.pairList.Education_Details__r[index].Percentage_cgpa__c=="CGPA"){
+                if($scope.pairList.Education_Details__r[index].Percentage__c>10){
+                    $scope.pairList.Education_Details__r[index].Percentage__c=10;
+                }
+            }
+            else{
+                if((event.keyCode>=48 && event.keyCode<=57) || event.keyCode==48 || event.keyCode==8 || event.keyCode==190){
+                if($scope.pairList.Education_Details__r[index].Percentage__c>100){
+                    $scope.pairList.Education_Details__r[index].Percentage__c='100';
+                }
+            }else{
+                $scope.pairList.Education_Details__r[index].Percentage__c=0;
+            }
+            }
+        }else{
+        if($scope.pairList.Education_Details__r[index].Percentage__c>100){
+            $scope.pairList.Education_Details__r[index].Percentage__c=100;
         }
     }
 

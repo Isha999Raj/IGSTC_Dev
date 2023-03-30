@@ -16,20 +16,20 @@ $scope.redirectPageURL=function(URL){
 
 $scope.selectedFile;
 
-    $scope.filePreviewHandler = function(fileContent){
-        debugger;
-        $scope.selectedFile = fileContent;
-    
-        console.log('selectedFile---', $scope.selectedFile);
-    
-        $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
-    
-        var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
-        myModal.show('slow') ;
-        $scope.$apply();
-    
-        //.ContentDistribution.DistributionPublicUrl
-    }
+$scope.filePreviewHandler = function(fileContent){
+    debugger;
+    $scope.selectedFile = fileContent;
+
+    console.log('selectedFile---', $scope.selectedFile);
+
+    $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
+
+    var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
+    myModal.show('slow') ;
+    $scope.$apply();
+
+    //.ContentDistribution.DistributionPublicUrl
+}
 
 $scope.getProjectdetils = function () {
     debugger;
@@ -126,11 +126,11 @@ $scope.reviewApp=function(){
         console.log(result);
         setTimeout(
             function(){
-                $("#btnPreview").html('<i class="fa-solid fa-eye me-2"></i>Preview');
+                $("#btnPreview").html('<i class="fa-solid fa-eye me-2"></i>Review');
                 $scope.getDoc();
                 $scope.$digest();
             }, 
-            15000);
+            30000);
     });
 }
 $scope.getDoc=function(){
@@ -278,7 +278,7 @@ $scope.uploadAttachment = function (type, userDocId, fileId) {
         attachmentBody = attachment.substring(positionIndex, positionIndex + chunkSize);
     }
     console.log("Uploading " + attachmentBody.length + " chars of " + fileSize);
-    ApplicantPortal_Contoller.doCUploadAttachmentAa(
+    ApplicantPortal_Contoller.doCUploadAttachmentSignature(
         attachmentBody, attachmentName,fileId, userDocId, 
         function (result, event) {
             console.log(result);

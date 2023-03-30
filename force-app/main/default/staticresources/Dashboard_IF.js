@@ -507,7 +507,7 @@ angular.module('cp_app').controller('Dashboard_iF_Ctlr', function($scope,$rootSc
                   doneUploading = false;
                   debugger;
                   if (fileSize < maxStringSize) {
-                      $scope.uploadAttachment(type , userDocId, fileId);
+                      $scope.uploadAttachment(type , userDocId, null);
                   } else {
                       alert("Base 64 Encoded file is too large.  Maximum size is " + maxStringSize + " your file is " + fileSize + ".");
                   }
@@ -535,9 +535,9 @@ angular.module('cp_app').controller('Dashboard_iF_Ctlr', function($scope,$rootSc
       $scope.uploadAttachment = function (type, userDocId, fileId) {
           debugger;
           var attachmentBody = "";
-          if (fileId == undefined) {
-              fileId = " ";
-          }
+          // if (fileId == undefined) {
+          //     fileId = " ";
+          // }
           if (fileSize <= positionIndex + chunkSize) {
               debugger;
               attachmentBody = attachment.substring(positionIndex);

@@ -1,4 +1,4 @@
-angular.module('cp_app').controller('declaration_ctrl', function($scope,$rootScope) {
+angular.module('cp_app').controller('declaration_ctrl', function($scope,$sce,$rootScope) {
     debugger;
     
     $scope.siteURL = siteURL;  
@@ -49,19 +49,19 @@ angular.module('cp_app').controller('declaration_ctrl', function($scope,$rootSco
       $scope.selectedFile;
 
       $scope.filePreviewHandler = function(fileContent){
-          debugger;
-          $scope.selectedFile = fileContent;
-      
-          console.log('selectedFile---', $scope.selectedFile);
-      
-          $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
-      
-          var myModal = new bootstrap.Modal(document.getElementById('filePreview'))
-          myModal.show('slow') ;
-          $scope.$apply();
-      
-          //.ContentDistribution.DistributionPublicUrl
-      }
+        debugger;
+        $scope.selectedFile = fileContent;
+    
+        console.log('selectedFile---', $scope.selectedFile);
+    
+        $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
+    
+        var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
+        myModal.show('slow') ;
+        $scope.$apply();
+    
+        //.ContentDistribution.DistributionPublicUrl
+    }
       $scope.uploadFile = function (type, userDocId, fileId) {
         debugger;
         $scope.showSpinnereditProf = true;
@@ -144,7 +144,7 @@ angular.module('cp_app').controller('declaration_ctrl', function($scope,$rootSco
                 attachmentBody = attachment.substring(positionIndex, positionIndex + chunkSize);
             }
             console.log("Uploading " + attachmentBody.length + " chars of " + fileSize);
-            ApplicantPortal_Contoller.doCUploadAttachmentAa(
+            ApplicantPortal_Contoller.doCUploadAttachmentSignature(
                 attachmentBody, attachmentName,fileId, userDocId, 
                 function (result, event) {
                     console.log(result);
@@ -183,7 +183,14 @@ angular.module('cp_app').controller('declaration_ctrl', function($scope,$rootSco
         var year=0;
         var month=0;
         var day=0;
-
+        for(var i=0;i<$scope.allDocs.length;i++){
+            if($scope.allDocs[i].userDocument.Name == 'Signature'){
+                if($scope.allDocs[i].userDocument.Status__c != 'Uploaded'){
+                    swal('info','Please upload Signature.','info');
+                    return;
+                }
+            }
+        }
         if($scope.SignDate!=undefined && $scope.SignDate!=''){
             year = $scope.SignDate.getUTCFullYear();
             month = $scope.SignDate.getUTCMonth()+1;
@@ -198,7 +205,7 @@ angular.module('cp_app').controller('declaration_ctrl', function($scope,$rootSco
                     'Your data has been saved successfully.',
                     'success'
                 );
-                $scope.redirectPageURL('Achievements_Pecfar');
+                $scope.redirectPageURL('ReviewSubmit_Pecfar');
                 $scope.decDetails = result;
                 $scope.$apply();
             }
@@ -217,8 +224,15 @@ angular.module('cp_app').controller('declaration_ctrl', function($scope,$rootSco
                 }
             }
         }
-    
-        $scope.redirectPageURL('ReviewSubmit_Pecfar');
+        swal({
+            title: "Declaration",
+            text: "Details have been saved successfully.",
+            icon: "success",
+            button: "ok!",
+          }).then((value) => {
+            $scope.redirectPageURL('ReviewSubmit_Pecfar');
+              }); 
+        
     }
                 
     $scope.redirectPageURL = function(pageName){

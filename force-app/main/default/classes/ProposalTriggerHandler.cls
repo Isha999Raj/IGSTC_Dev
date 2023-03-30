@@ -46,4 +46,61 @@ public class ProposalTriggerHandler {
             }
         }
     }
+    
+    public void createDisbursmentFRecord(Map<Id, Application_Proposal__c> newProposalMap,Map<Id,Application_Proposal__c> oldProposalMap){
+        Set<id> proposalId = New Set<Id>();
+        List<Disbursement_Schedule__c> disbursementList = New List<Disbursement_Schedule__c>();
+        
+        for(Application_Proposal__c proposalRec : newProposalMap.values()){
+            system.debug('proposalRec--->'+proposalRec.RecordType_Name__c);
+            system.debug('proposalRec.Proposal_Stages__c ::'+proposalRec.Proposal_Stages__c);
+            system.debug('RecordType ::'+proposalRec.RecordType_Name__c);
+            if(proposalRec.Proposal_Stages__c != null && proposalRec.Proposal_Stages__c != oldProposalMap.get(proposalRec.Id).Proposal_Stages__c && proposalRec.Proposal_Stages__c == 'Under Decision'){
+                if(proposalRec.RecordType_Name__c == 'Industrial Fellowship'){
+                    proposalId.add(proposalRec.Id);
+                }
+            }
+        }
+        system.debug('proposalId ::'+proposalId);
+        List<Contact> contactList = [SELECT Id,Name,Proposals__c,Industrial_Fellowship_Type__c,Proposals__r.Tentative_End_Date__c,Proposals__r.Tentative_Start_Date__c,Proposals__r.RecordType_Name__c FROM Contact WHERE Proposals__c In : proposalId Limit 1];
+        system.debug('contactList ::'+contactList);
+        if(!contactList.isEMpty()){
+            Long Difference = contactList[0].Proposals__r.Tentative_Start_Date__c.monthsBetween(contactList[0].Proposals__r.Tentative_End_Date__c);
+            system.debug('Difference ::'+Difference);
+            if(contactList[0].Industrial_Fellowship_Type__c == 'PDIF' && contactList[0].Proposals__r.RecordType_Name__c == 'Industrial Fellowship'){
+                List<Grant_Portal_Docs__c> getCurrencyForPDIF = [Select Id,Name,Amount__c,Campaign__c,Campaign_Type__c From Grant_Portal_Docs__c WHERE Campaign__c = 'IF' AND Campaign_Type__c = 'PDIF'];
+                for(Integer i=0;i<Difference;i++){
+                    Disbursement_Schedule__c disbursementRecord = New Disbursement_Schedule__c();
+                    disbursementRecord.Proposals__c = contactList[0].Proposals__c;
+                    disbursementRecord.Tranche__c = string.valueOf( i + 1 );
+                    disbursementRecord.Start_Date__c = contactList[0].Proposals__r.Tentative_Start_Date__c.addMonths(i);
+                    disbursementRecord.End_Date__c = contactList[0].Proposals__r.Tentative_Start_Date__c.addMonths(i + 1);
+                    if(disbursementRecord.Start_Date__c.day() < 15 && i == 0){
+                      disbursementRecord.Amount__c = getCurrencyForPDIF[0].Amount__c * 2;  
+                    }else{
+                      disbursementRecord.Amount__c = getCurrencyForPDIF[0].Amount__c;  
+                    }
+                    disbursementRecord.Release_Grant_Amount__c = disbursementRecord.Amount__c;
+                    disbursementList.add(disbursementRecord);
+                }
+            } else{
+                List<Grant_Portal_Docs__c> getCurrencyForPIEF = [Select Id,Name,Amount__c,Campaign__c,Campaign_Type__c From Grant_Portal_Docs__c WHERE Campaign__c = 'IF' AND Campaign_Type__c = 'PIEF'];
+                for(Integer i=0;i<Difference;i++){
+                    Disbursement_Schedule__c disbursementRecord = New Disbursement_Schedule__c();
+                    disbursementRecord.Proposals__c = contactList[0].Proposals__c;
+                    disbursementRecord.Tranche__c = string.valueOf( i + 1 );
+                    disbursementRecord.Start_Date__c = contactList[0].Proposals__r.Tentative_Start_Date__c.addMonths(i);
+                    disbursementRecord.End_Date__c = contactList[0].Proposals__r.Tentative_Start_Date__c.addMonths(i + 1);
+                    disbursementRecord.Amount__c = getCurrencyForPIEF[0].Amount__c;
+                    disbursementRecord.Release_Grant_Amount__c = disbursementRecord.Amount__c;
+                    disbursementList.add(disbursementRecord);
+                }
+            }
+            
+            if(!disbursementList.isEmpty()){
+                    insert disbursementList;
+                }
+        }
+        
+    }
 }

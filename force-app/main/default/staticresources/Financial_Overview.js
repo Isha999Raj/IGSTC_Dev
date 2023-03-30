@@ -65,22 +65,38 @@ angular.module('cp_app').controller('financialCtrl', function ($scope, $rootScop
                 }
             console.log("financial contribution");
             console.log($scope.input);
-                    if($scope.applicantDetails[i].Financial_Contribution__r != undefined){
-                        for(var j=0;j<$scope.applicantDetails[i].Financial_Contribution__r.length;j++){
-                        if($scope.applicantDetails[i].Financial_Contribution__r[j].Country__c == 'India' && $scope.applicantDetails[i].Financial_Contribution__r[j].Account_Type__c == 'Industry'){
-                            $scope.indianIndus = $scope.applicantDetails[i].Financial_Contribution__r[j].IGSTC_Contribution__c ;
-                        }
-                        if($scope.applicantDetails[i].Financial_Contribution__r[j].Country__c == 'India' && $scope.applicantDetails[i].Financial_Contribution__r[j].Account_Type__c == 'Academia'){
-                            $scope.indianAcademia = $scope.applicantDetails[i].Financial_Contribution__r[j].IGSTC_Contribution__c ;
-                        }
-                        if($scope.applicantDetails[i].Financial_Contribution__r[j].Country__c == 'Germany' && $scope.applicantDetails[i].Financial_Contribution__r[j].Account_Type__c == 'Industry'){
-                            $scope.germanIndus = $scope.applicantDetails[i].Financial_Contribution__r[j].IGSTC_Contribution__c ;
-                        }
-                        if($scope.applicantDetails[i].Financial_Contribution__r[j].Country__c == 'Germany' && $scope.applicantDetails[i].Financial_Contribution__r[j].Account_Type__c == 'Academia'){
-                            $scope.germanAcademia = $scope.applicantDetails[i].Financial_Contribution__r[j].IGSTC_Contribution__c ;
-                        }
-                    }
-                }
+            if($scope.applicantDetails[i].Financial_Contribution__r != undefined){
+                for(var j=0;j<$scope.applicantDetails[i].Financial_Contribution__r.length;j++){
+            if($scope.applicantDetails[i].BillingCountry == "India" && $scope.applicantDetails[i].Industry__c == true){
+                $scope.indianIndus = $scope.applicantDetails[i].Financial_Contribution__r[j].IGSTC_Contribution__c ;
+            }else if($scope.applicantDetails[i].BillingCountry == "India" && $scope.applicantDetails[i].Academia__c == true){
+                $scope.indianAcademia = $scope.applicantDetails[i].Financial_Contribution__r[j].IGSTC_Contribution__c ;
+            }else if($scope.applicantDetails[i].BillingCountry == "Germany" && $scope.applicantDetails[i].Industry__c == true){
+                $scope.germanIndus = $scope.applicantDetails[i].Financial_Contribution__r[j].IGSTC_Contribution__c ;
+            }else{
+                $scope.germanAcademia = $scope.applicantDetails[i].Financial_Contribution__r[j].IGSTC_Contribution__c ;
+            }
+
+            $scope.TotalIndianContribution = Number($scope.indianIndus) + Number($scope.indianAcademia);
+            $scope.TotalGermanContribution = Number($scope.germanIndus) + Number($scope.germanAcademia);
+        }
+    }
+                //     if($scope.applicantDetails[i].Financial_Contribution__r != undefined){
+                //         for(var j=0;j<$scope.applicantDetails[i].Financial_Contribution__r.length;j++){
+                //         if($scope.applicantDetails[i].Financial_Contribution__r[j].Country__c == 'India' && $scope.applicantDetails[i].Financial_Contribution__r[j].Account_Type__c == 'Industry'){
+                //             $scope.indianIndus = $scope.applicantDetails[i].Financial_Contribution__r[j].IGSTC_Contribution__c ;
+                //         }
+                //         if($scope.applicantDetails[i].Financial_Contribution__r[j].Country__c == 'India' && $scope.applicantDetails[i].Financial_Contribution__r[j].Account_Type__c == 'Academia'){
+                //             $scope.indianAcademia = $scope.applicantDetails[i].Financial_Contribution__r[j].IGSTC_Contribution__c ;
+                //         }
+                //         if($scope.applicantDetails[i].Financial_Contribution__r[j].Country__c == 'Germany' && $scope.applicantDetails[i].Financial_Contribution__r[j].Account_Type__c == 'Industry'){
+                //             $scope.germanIndus = $scope.applicantDetails[i].Financial_Contribution__r[j].IGSTC_Contribution__c ;
+                //         }
+                //         if($scope.applicantDetails[i].Financial_Contribution__r[j].Country__c == 'Germany' && $scope.applicantDetails[i].Financial_Contribution__r[j].Account_Type__c == 'Academia'){
+                //             $scope.germanAcademia = $scope.applicantDetails[i].Financial_Contribution__r[j].IGSTC_Contribution__c ;
+                //         }
+                //     }
+                // }
                     }
 
                     for(let i=0;i<$scope.input.length;i++){
@@ -107,6 +123,24 @@ angular.module('cp_app').controller('financialCtrl', function ($scope, $rootScop
     $scope.getApplicantDeetails();
 $scope.calculateOtherField=function(index){
     debugger;
+    for(var i=0;i<$scope.applicantDetails.length;i++){
+        if($scope.applicantDetails[i].Financial_Contribution__r != undefined){
+            for(var j=0;j<$scope.applicantDetails[i].Financial_Contribution__r.length;j++){
+        if($scope.applicantDetails[i].BillingCountry == "India" && $scope.applicantDetails[i].Industry__c == true){
+            $scope.indianIndus = $scope.applicantDetails[i].Financial_Contribution__r[j].IGSTC_Contribution__c ;
+        }else if($scope.applicantDetails[i].BillingCountry == "India" && $scope.applicantDetails[i].Academia__c == true){
+            $scope.indianAcademia = $scope.applicantDetails[i].Financial_Contribution__r[j].IGSTC_Contribution__c ;
+        }else if($scope.applicantDetails[i].BillingCountry == "Germany" && $scope.applicantDetails[i].Industry__c == true){
+            $scope.germanIndus = $scope.applicantDetails[i].Financial_Contribution__r[j].IGSTC_Contribution__c ;
+        }else{
+            $scope.germanAcademia = $scope.applicantDetails[i].Financial_Contribution__r[j].IGSTC_Contribution__c ;
+        }
+
+        $scope.TotalIndianContribution = Number($scope.indianIndus) + Number($scope.indianAcademia);
+        $scope.TotalGermanContribution = Number($scope.germanIndus) + Number($scope.germanAcademia);
+    }
+    }
+    }
     $scope.validateFinacialDet(index);    
     $scope.input[index].Financial_Contribution__r[0].Total__c=Number($scope.input[index].Financial_Contribution__r[0].IGSTC_Contribution__c)+Number($scope.input[index].Financial_Contribution__r[0].Own_Contribution__c);
     $scope.input[index].Financial_Contribution__r[0].Asked_From_IGSTC__c=(Number($scope.input[index].Financial_Contribution__r[0].IGSTC_Contribution__c)/(Number($scope.input[index].Financial_Contribution__r[0].IGSTC_Contribution__c)+Number($scope.input[index].Financial_Contribution__r[0].Own_Contribution__c)))*100;
@@ -141,7 +175,7 @@ $scope.validateFinacialDet=function(index){
     }  
         var TotalContri=FisrtAccountIGSTContri;
             for(var i=0;i<SecondAccountIGSTCContr.length;i++){
-                TotalContri=TotalContri+SecondAccountIGSTCContr[i];
+                TotalContri=parseInt(TotalContri)+parseInt(SecondAccountIGSTCContr[i]);
             } 
         if(FisrtAccountCountry=='Germany' && TotalContri>450000){
                 swal('info','For Germay partners max. limit for IGSTC funding is euro 450000/-','info');
@@ -285,7 +319,8 @@ $scope.validateFinacialDet=function(index){
                 }  
                     var TotalContri=FisrtAccountIGSTContri;
                         for(var m=0;m<SecondAccountIGSTCContr.length;m++){
-                            TotalContri=TotalContri+SecondAccountIGSTCContr[m];
+                            TotalContri = parseInt(TotalContri)+parseInt(SecondAccountIGSTCContr[m]);
+                            // TotalContri=TotalContri+SecondAccountIGSTCContr[m];
                         } 
                     if(FisrtAccountCountry=='Germany' && TotalContri>450000){
                             swal('info','For Germay partners max. limit for IGSTC funding is euro 450000/-','info');

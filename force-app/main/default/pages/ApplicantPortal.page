@@ -17,6 +17,7 @@
                         var participatingWorkshop = JSON.parse('{!participatingWorkshop}');
                         var specialization = JSON.parse('{!specialization}');
                         var presentingWorkshop = JSON.parse('{!presentingWorkshop}');
+                        var currencyType2 = JSON.parse('{!currencyType2}');
                         var siteURL = '{!ApplicantPortalSiteURL}';
                         var financialConDetails = JSON.parse('{!financialConDetails}');
                         var thematicAreaList = JSON.parse('{!thematicAreaList}');

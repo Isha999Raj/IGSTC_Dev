@@ -38,7 +38,7 @@ angular.module('cp_app').controller('ProjectDetailCtrl', function($scope,$rootSc
                       $scope.tentitiveStartDate = new Date(result.Tentative_Start_Date__c);
                      }
                      if(result.Summary__c != undefined || result.Summary__c != ""){
-                        result.Summary__c = result.Summary__c ? result.Summary__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result.Summary__c;
+                        result.Summary__c = result.Summary__c ? result.Summary__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result.Summary__c;
                     }
                       $scope.applicantDetails = result;
                         //$scope.applicantDetails.Duration_In_Months_Max_36__c = Math.round($scope.applicantDetails.Duration_In_Months_Max_36__c);
@@ -258,7 +258,7 @@ angular.module('cp_app').controller('ProjectDetailCtrl', function($scope,$rootSc
                 debugger;
                 Swal.fire(
                     'Proposal Detail',
-                    'Project Details have been saved successfully.',
+                    'Basic Details have been saved successfully.',
                     'success'
                 );
                 $scope.redirectPageURL('Consortia');

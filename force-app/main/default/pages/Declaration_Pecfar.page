@@ -286,13 +286,14 @@ compensation in lieu thereof.
 
                         <div class="row m-5" ng-if="!proposalStage">
                             <div class="col-md-12">
-                                <button class="blue-btn float-end" ng-click="saveandNext()" type="button">
+                                <button class="blue-btn float-end" ng-click="saveDetails()" type="button">
                                     <i class="fa-solid fa-check me-2"></i>Save and Next</button>
                                 <button class="blue-bordered-btn float-end me-2" ng-click="redirectPageURL('Attachments_Pecfar')" type="button">
                                     <i class="fa-solid fa-arrow-left me-2"></i>Previous</button>
                             </div>
                         </div>
                     </div>
+                    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         </body>
     </div>
 </html>

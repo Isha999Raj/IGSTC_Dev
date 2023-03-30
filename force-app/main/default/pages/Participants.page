@@ -51,14 +51,6 @@
                                         </a>
                                     </li>
                                     <li class="active pb-cursor">
-                                        <a ng-click="redirectPageURL('Meeting_Theme')">
-                                            <div class="icon-circle">
-                                                <i class="fas fa-people-group"></i>
-                                            </div>
-                                            <span>Meeting Agenda</span>
-                                        </a>
-                                    </li>
-                                    <li class="active pb-cursor">
                                         <a ng-click="redirectPageURL('Financial_Details')">
                                             <div class="icon-circle">
                                                 <i class="fas fa-box"></i>
@@ -72,6 +64,14 @@
                                                 <i class="fab fa-meetup"></i>
                                             </div>
                                             <span>Curriculum vitae</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('Meeting_Theme')">
+                                            <div class="icon-circle">
+                                                <i class="fas fa-people-group"></i>
+                                            </div>
+                                            <span>Workshop Agenda</span>
                                         </a>
                                     </li>
                                     <li class="active pb-cursor">
@@ -124,14 +124,6 @@
                                     <li>
                                         <a>
                                             <div class="icon-circle">
-                                                <i class="fas fa-people-group"></i>
-                                            </div>
-                                            <span>Meeting Agenda</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a>
-                                            <div class="icon-circle">
                                                 <i class="fas fa-box"></i>
                                             </div>
                                             <span>Expense Details</span>
@@ -148,6 +140,14 @@
                                     <li>
                                         <a>
                                             <div class="icon-circle">
+                                                <i class="fas fa-people-group"></i>
+                                            </div>
+                                            <span>Workshop Agenda</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
                                                 <i class="fas fa-file-signature"></i>
                                             </div>
                                             <span>Signature</span>
@@ -159,15 +159,25 @@
                         </div>
 
                         <div class="row mt-5 mx-5">
+                            <div class="col-md-12 alert bg-color-list" role="alert">
+                                <ul class="font-if">  
+                                  <li><i class="fa-solid fa-circle text-success me-3"></i>IGSTC supports participants with an active role in the workshop. Participant should be a speaker in the workshop.</li>
+                                  <li><i class="fa-solid fa-circle text-success me-3"></i>PAN-India/Germany presence of participants is necessary.</li>
+                                  <li><i class="fa-solid fa-circle text-success me-3"></i>The overall number of invited participants should be 30 (appx.). Students and young researchers from the hosting institution may attend the<br/>&nbsp;&nbsp;&nbsp;&nbsp; workshop programme.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3 mx-5">
                             <!-- <div class="col-md-1"></div> -->
-                            <div class="col-md-12 alert" role="alert">
+                            <!-- <div class="col-md-12 alert" role="alert">
                                 <ul>
                                     <li><h4 class="pb-3 color-theme"><b>
                                         DISCLAIMER :
                                         </b></h4></li>
                                   <li class="h5 font-if"><i class="fa-solid fa-circle text-success me-3"></i>IGSTC supports active participation/oral presentation only.</li>  
                                 </ul>
-                              </div>
+                              </div> -->
 
                               <div class="row mt-3">
                                 <div class="col-md-2">
@@ -191,10 +201,8 @@
                                         <th style="width:20%;">Email
                                             <span class="required-asterisk" style="color:red;">*</span>
                                         </th>
-                                        <th style="width:20%;">Phone
-                                            <span class="required-asterisk" style="color:red;">*</span>
-                                        </th>
-                                        <th style="width:15%;">Nature/type of Participation
+                                        <th style="width:20%;">Phone</th>
+                                        <th style="width:15%;">Whether the participant is a speaker?
                                             <span class="required-asterisk" style="color:red;">*</span>
                                         </th>
                                         <th style="width:3%;" ng-hide="proposalStage"><i class="fas fa-plus-circle icon" ng-click="addParticipant('india')"></i></th>
@@ -241,10 +249,8 @@
                                             <th style="width:20%;">Email
                                                 <span class="required-asterisk" style="color:red;">*</span>
                                             </th>
-                                            <th style="width:20%;">Phone
-                                                <span class="required-asterisk" style="color:red;">*</span>
-                                            </th>
-                                            <th style="width:15%;">Nature/type of Participation
+                                            <th style="width:20%;">Phone</th>
+                                            <th style="width:15%;">Whether the participant is a speaker?
                                                 <span class="required-asterisk" style="color:red;">*</span>
                                             </th>
                                             <th style="width:3%;" ng-hide="proposalStage"><i class="fas fa-plus-circle icon" ng-click="addParticipant('german')"></i></th>

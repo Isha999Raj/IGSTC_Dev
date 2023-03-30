@@ -254,7 +254,7 @@
                                   </div>
                             </div>
 
-                            <div class="col-md-3" ng-show="acceptance.ContentDistribution.PreferencesAllowPDFDownload">
+                            <div class="col-md-3" ng-show="acceptance..userDocument.Status__c=='Uploaded'">
                                 <!-- <label style="color: #fff;">.</label> -->
                                 <a class="blue-btn float-end mt-4 py-3"  ng-click="filePreviewHandler(acceptance)">View</a>
                             </div>
@@ -276,7 +276,8 @@
                                   </div>
                             </div>
 
-                            <div class="col-md-3 mt-4" ng-show="recommendation.ContentDistribution.PreferencesAllowPDFDownload">
+                            <div class="col-md-3 mt-4" ng-show="recommendation.userDocument.Status__c=='Uploaded'">
+                                <!-- <a class="blue-btn float-end mt-4 py-3" target="_blank" href="{{baseUrl+recommendation.Attachments[0].Id}}">View</a> -->
                                 <a class="blue-btn float-end mt-4 py-3"  ng-click="filePreviewHandler(recommendation)">View</a>
                                 <!-- <a class="blue-btn float-end mt-4 py-3" href="{{recommendation.ContentDistribution.DistributionPublicUrl}}" target="_blank">View</a> -->
                             </div>
@@ -298,9 +299,10 @@
                                   </div>
                             </div>
 
-                            <div class="col-md-3" ng-show="permission.ContentDistribution.PreferencesAllowPDFDownload">
+                            <div class="col-md-3 mt-4" ng-show="permission.userDocument.Status__c=='Uploaded'">
+                                <!-- <a class="blue-btn float-end mt-4 py-3" target="_blank" href="{{baseUrl+recommendation.Attachments[0].Id}}">View</a> -->
                                 <a class="blue-btn float-end mt-4 py-3"  ng-click="filePreviewHandler(permission)">View</a>
-                                <!-- <a class="blue-btn float-end mt-4 py-3" href="{{permission.ContentDistribution.DistributionPublicUrl}}" target="_blank">View</a> -->
+                                <!-- <a class="blue-btn float-end mt-4 py-3" href="{{recommendation.ContentDistribution.DistributionPublicUrl}}" target="_blank">View</a> -->
                             </div>
                             
                         </div>
@@ -316,9 +318,10 @@
                                   </div>
                             </div>
 
-                            <div class="col-md-3 mt-4" ng-show="reference.ContentDistribution.PreferencesAllowPDFDownload">
+                            <div class="col-md-3 mt-4" ng-show="reference.userDocument.Status__c=='Uploaded'">
+                                <!-- <a class="blue-btn float-end mt-4 py-3" target="_blank" href="{{baseUrl+recommendation.Attachments[0].Id}}">View</a> -->
                                 <a class="blue-btn float-end mt-4 py-3"  ng-click="filePreviewHandler(reference)">View</a>
-                                <!-- <a class="blue-btn float-end mt-4 py-3" href="{{reference.ContentDistribution.DistributionPublicUrl}}" target="_blank">View</a> -->
+                                <!-- <a class="blue-btn float-end mt-4 py-3" href="{{recommendation.ContentDistribution.DistributionPublicUrl}}" target="_blank">View</a> -->
                             </div>
                             
                         </div>
@@ -337,9 +340,10 @@
                                   </div>
                             </div>
 
-                            <div class="col-md-3" ng-show="proof.ContentDistribution.PreferencesAllowPDFDownload">
+                            <div class="col-md-3 mt-4" ng-show="proof.userDocument.Status__c=='Uploaded'">
+                                <!-- <a class="blue-btn float-end mt-4 py-3" target="_blank" href="{{baseUrl+recommendation.Attachments[0].Id}}">View</a> -->
                                 <a class="blue-btn float-end mt-4 py-3"  ng-click="filePreviewHandler(proof)">View</a>
-                                <!-- <a class="blue-btn float-end mt-4 py-3" href="{{proof.ContentDistribution.DistributionPublicUrl}}" target="_blank">View</a> -->
+                                <!-- <a class="blue-btn float-end mt-4 py-3" href="{{recommendation.ContentDistribution.DistributionPublicUrl}}" target="_blank">View</a> -->
                             </div>
                             
                         </div>
@@ -355,9 +359,10 @@
                                   </div>
                             </div>
 
-                            <div class="col-md-3" ng-show="currentPassport.ContentDistribution.PreferencesAllowPDFDownload">
+                            <div class="col-md-3 mt-4" ng-show="currentPassport.userDocument.Status__c=='Uploaded'">
+                                <!-- <a class="blue-btn float-end mt-4 py-3" target="_blank" href="{{baseUrl+recommendation.Attachments[0].Id}}">View</a> -->
                                 <a class="blue-btn float-end mt-4 py-3"  ng-click="filePreviewHandler(currentPassport)">View</a>
-                                <!-- <a class="blue-btn float-end mt-4 py-3" href="{{currentPassport.ContentDistribution.DistributionPublicUrl}}" target="_blank">View</a> -->
+                                <!-- <a class="blue-btn float-end mt-4 py-3" href="{{recommendation.ContentDistribution.DistributionPublicUrl}}" target="_blank">View</a> -->
                             </div>
                             
                         </div>

@@ -51,14 +51,6 @@
                                     </a>
                                 </li>
                                 <li class="active pb-cursor">
-                                    <a ng-click="redirectPageURL('Meeting_Theme')">
-                                        <div class="icon-circle">
-                                            <i class="fas fa-people-group"></i>
-                                        </div>
-                                        <span>Meeting Agenda</span>
-                                    </a>
-                                </li>
-                                <li class="active pb-cursor">
                                     <a ng-click="redirectPageURL('Financial_Details')">
                                         <div class="icon-circle">
                                             <i class="fas fa-box"></i>
@@ -72,6 +64,14 @@
                                             <i class="fab fa-meetup"></i>
                                         </div>
                                         <span>Curriculum vitae</span>
+                                    </a>
+                                </li>
+                                <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('Meeting_Theme')">
+                                        <div class="icon-circle">
+                                            <i class="fas fa-people-group"></i>
+                                        </div>
+                                        <span>Workshop Agenda</span>
                                     </a>
                                 </li>
                                 <li class="active pb-cursor">
@@ -121,14 +121,7 @@
                                         <span>Participants</span>
                                     </a>
                                 </li>
-                                <li>
-                                    <a>
-                                        <div class="icon-circle">
-                                            <i class="fas fa-people-group"></i>
-                                        </div>
-                                        <span>Meeting Agenda</span>
-                                    </a>
-                                </li>
+                                
                                 <li>
                                     <a>
                                         <div class="icon-circle">
@@ -148,6 +141,14 @@
                                 <li>
                                     <a>
                                         <div class="icon-circle">
+                                            <i class="fas fa-people-group"></i>
+                                        </div>
+                                        <span>Workshop Agenda</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <div class="icon-circle">
                                             <i class="fas fa-file-signature"></i>
                                         </div>
                                         <span>Signature</span>
@@ -155,6 +156,16 @@
                                 </li>
                             </ul>
                         </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5 mx-5">
+                        <div class="col-md-12 alert bg-color-list" role="alert">
+                            <ul class="font-if">  
+                              <li><i class="fa-solid fa-circle text-success me-3"></i>Two coordinators – one from India and Germany are necessary for the application.</li><br/>
+                              <li><i class="fa-solid fa-circle text-success me-3"></i>Persons holding regular positions in public or private non-profit research organisations, institutions of higher education and universities are<br/>&nbsp;&nbsp;&nbsp;&nbsp; eligible to submit applications. The application should be submitted by the coordinating host institution / coordinator.</li><br/>
+                              <li><i class="fa-solid fa-circle text-success me-3"></i>Only ONE Coordinator from each country, co-Coordinators NOT ALLOWED.</li>
+                            </ul>
                         </div>
                     </div>
 
@@ -197,27 +208,37 @@
                                             </div>
 
                                             <div class="row mt-5 ms-3">
-                                                <div class="col-md-4">
-                                                    <label class="font-if">Institution/Industry Name<span class="ms-2 text-danger">*</span></label>
-                                                    <input type="text" ng-focus="removeClass('inst',$index)" id="inst{{$index}}" ng-model="account.Name" class="form-control" ng-disabled="proposalStage" />
+                                                <div class="col-md-2">
+                                                    <label class="font-if">Salutation</label>
+                                                    <input type="text" ng-focus="removeClass('sal',$index)" id="sal{{$index}}" ng-model="account.Contacts[0].Salutation" class="form-control" ng-disabled="proposalStage" />
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <label class="font-if">Head Of Project<span class="ms-2 text-danger">*</span></label>
-                                                    <input type="text" ng-focus="removeClass('head',$index)" id="head{{$index}}" ng-model="account.Contacts[0].FirstName" class="form-control" ng-disabled="proposalStage" />
+                                                <div class="col-md-5">
+                                                    <label class="font-if">First Name<span class="ms-2 text-danger">*</span></label>
+                                                    <input type="text" ng-focus="removeClass('fn',$index)" id="fn{{$index}}" ng-model="account.Contacts[0].FirstName" class="form-control" ng-disabled="proposalStage" />
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <label class="font-if">Department/Division<span class="ms-2 text-danger">*</span></label>
-                                                    <input type="text" ng-focus="removeClass('dept',$index)" id="dept{{$index}}" ng-model="account.Contacts[0].Department" class="form-control" ng-disabled="proposalStage" />
+                                                <div class="col-md-5">
+                                                    <label class="font-if">Last Name<span class="ms-2 text-danger">*</span></label>
+                                                    <input type="text" ng-focus="removeClass('ln',$index)" id="ln{{$index}}" ng-model="account.Contacts[0].LastName" class="form-control" ng-disabled="proposalStage" />
                                                 </div>
                                             </div>
 
-                                            <div class="row mt-5 mb-5 ms-3">
-                                                
-                                                <div class="col-md-4">
+                                            <div class="row mt-5 ms-3">
+                                                <div class="col-md-6">
+                                                    <label class="font-if">Department/Division<span class="ms-2 text-danger">*</span></label>
+                                                    <input type="text" ng-focus="removeClass('dept',$index)" id="dept{{$index}}" ng-model="account.Contacts[0].Department" class="form-control" ng-disabled="proposalStage" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="font-if">Institution/Industry Name<span class="ms-2 text-danger">*</span></label>
+                                                    <input type="text" ng-focus="removeClass('inst',$index)" id="inst{{$index}}" ng-model="account.Name" class="form-control" ng-disabled="proposalStage" />
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-5 ms-3 mb-5">
+                                                <div class="col-md-6">
                                                     <label class="font-if">Email<span class="ms-2 text-danger">*</span></label>
                                                     <input type="email" ng-focus="removeClass('email',$index)" id="email{{$index}}" ng-model="account.Contacts[0].Email" class="form-control" ng-disabled="proposalStage" />
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-6">
                                                     <label class="font-if">Phone<span class="ms-2 text-danger">*</span></label>
                                                     <input type="text" ng-focus="removeClass('phone',$index)" id="phone{{$index}}" ng-model="account.Contacts[0].Phone" class="form-control" ng-disabled="proposalStage" />
                                                 </div>
@@ -225,40 +246,53 @@
                                         </div>
 
                                         <div class="row box-shadow-2 mx-1 mt-5">
-                                            <div class="row mt-5 ms-3">
-                                                <div class="col-md-4">
-                                                    <label class="font-if">HomePage URL</label>
-                                                    <input type="text" ng-focus="removeClass('home',$index)" id="home{{$index}}" ng-model="account.Homepage_URL__c" class="form-control" ng-disabled="proposalStage" />
+
+                                            <div class="row mb-3 mt-5 ms-3">
+                                                <div class="col-md-12">
+                                                    <h5 class="pb-3 color-theme"><b>Address of the Institution</b></h5>
                                                 </div>
-                                                <div class="col-md-4">
+                                            </div>
+
+                                            <div class="row mt-3 ms-3">
+                                                <div class="col-md-12">
+                                                    <label class="font-if">Line 1</label>
+                                                    <input type="text" ng-focus="removeClass('street1',$index)" id="street{{$index}}" ng-model="account.BillingStreet1" class="form-control" ng-disabled="proposalStage" />
+                                                </div>
+                                                <!-- <div class="col-md-4">
                                                     <label class="font-if">Street</label>
                                                     <input type="text" ng-focus="removeClass('street',$index)" id="street{{$index}}" ng-model="account.BillingStreet" class="form-control" ng-disabled="proposalStage" />
-                                                </div>
+                                                </div> -->
+                                            </div>
 
-                                                <div class="col-md-4">
-                                                    <label class="font-if">City</label>
-                                                    <input type="text" ng-focus="removeClass('city',$index)" id="city{{$index}}" ng-model="account.BillingCity" class="form-control" ng-disabled="proposalStage" />
+                                            <div class="row mt-5 ms-3">
+                                                <div class="col-md-12">
+                                                    <label class="font-if">Line 2</label>
+                                                    <input type="text" ng-focus="removeClass('street2',$index)" id="street{{$index}}" ng-model="account.BillingStreet2" class="form-control" ng-disabled="proposalStage" />
                                                 </div>
                                             </div>
 
                                             <div class="row mt-5 ms-3 mb-5">
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
+                                                    <label class="font-if">City</label>
+                                                    <input type="text" ng-focus="removeClass('city',$index)" id="city{{$index}}" ng-model="account.BillingCity" class="form-control" ng-disabled="proposalStage" />
+                                                </div>
+                                                <div class="col-md-3">
                                                     <label class="font-if">Country<span class="ms-2 text-danger">*</span></label>
                                                     <select class="form-control" aria-label="Default select example" ng-focus="removeClass('country',$index)" id="country{{$index}}" ng-model="account.BillingCountry" ng-change="onCountryChange($index)" ng-disabled="proposalStage">
                                                      <option ng-repeat="staff in countrytype">{{staff}}</option>
                                                     </select>
                                                 </div>
 
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <label class="font-if">State</label>
                                                     <select class="form-control" aria-label="Default select example" ng-focus="removeClass('state',$index)" id="state{{$index}}" ng-model="account.BillingState" ng-disabled="proposalStage">
                                                      <option ng-repeat="staff in account.stateList">{{staff}}</option>
                                                     </select>
                                                 </div>
 
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <label class="font-if">PostCode</label>
-                                                    <input type="text" number="account.ShippingPostalCode" ng-focus="removeClass('post',$index)" id="post{{$index}}" ng-model="account.BillingPostalCode" class="form-control" ng-disabled="proposalStage" />
+                                                    <input type="text" ng-focus="removeClass('post',$index)" id="post{{$index}}" ng-model="account.BillingPostalCode" class="form-control" ng-disabled="proposalStage" />
                                                 </div>
                                             </div>
                                         </div>
@@ -396,7 +430,7 @@
             </div> -->
             <div class="row m-5" ng-if="!proposalStage">
                 <div class="col-md-12">
-                    <button class="blue-btn float-end" ng-click="submitDetails()" type="button">
+                    <button class="blue-btn float-end" ng-click="checkEmail()" type="button">
                         <i class="fa-solid fa-check me-2"></i>Save and Next</button>
                         <button class="btn btn-secondary float-end me-2" style="padding: 8px 20px !important;font-size: 16px !important;" ng-click="redirectPageURL('Home')" type="button">
                             <i class="fa-solid fa-arrow-left me-2"></i>Back</button>

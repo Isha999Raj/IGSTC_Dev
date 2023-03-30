@@ -33,8 +33,12 @@ angular.module('cp_app').controller('declarationwiser_ctrl', function($scope,$sc
         $scope.selectedFile = fileContent;
     
         console.log('selectedFile---', $scope.selectedFile);
-    
-        $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
+        var jhj=$scope.selectedFile.userDocument.Attachments[0].Id;
+        console.log(jhj);
+        $scope.filesrec = $sce.trustAsResourceUrl(window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.selectedFile.userDocument.Attachments[0].Id);
+        //$scope.filesrec = window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.selectedFile.userDocument.Attachments[0].Id;
+        // $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
+        $('#file_frame').attr('src', $scope.filesrec);
     
         var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
         myModal.show('slow') ;
@@ -142,11 +146,11 @@ angular.module('cp_app').controller('declarationwiser_ctrl', function($scope,$sc
             console.log(result);
             setTimeout(
                 function(){
-                    $("#btnPreview").html('<i class="fa-solid fa-eye me-2"></i>Preview');
+                    $("#btnPreview").html('<i class="fa-solid fa-eye me-2"></i>Review');
                     $scope.getDoc();
                     $scope.$digest();
                 }, 
-                15000);
+                30000);
         });
     }
     $scope.getDoc=function(){
@@ -280,7 +284,7 @@ angular.module('cp_app').controller('declarationwiser_ctrl', function($scope,$sc
                 doneUploading = false;
                 debugger;
                 if (fileSize < maxStringSize) {
-                    $scope.uploadAttachment(type , userDocId, fileId);
+                    $scope.uploadAttachment(type , userDocId, null);
                 } else {
                     swal('info','Base 64 Encoded file is too large.  Maximum size is " + maxStringSize + " your file is " + fileSize + ".','info');
                     return;
@@ -318,9 +322,9 @@ angular.module('cp_app').controller('declarationwiser_ctrl', function($scope,$sc
         $scope.uploadAttachment = function (type, userDocId, fileId) {
             debugger;
             var attachmentBody = "";
-            if (fileId == undefined) {
-                fileId = " ";
-            }
+            // if (fileId == undefined) {
+            //     fileId = " ";
+            // }
             if (fileSize <= positionIndex + chunkSize) {
                 debugger;
                 attachmentBody = attachment.substring(positionIndex);

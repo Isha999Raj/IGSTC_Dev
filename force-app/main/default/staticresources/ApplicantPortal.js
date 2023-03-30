@@ -128,6 +128,7 @@ $scope.config.removeButtons = 'BGColor,Anchor,Subscript,Superscript,Paste,Copy,C
 //  $rootScope.degree = degree;
  $rootScope.specialization = specialization;
  $rootScope.presentingWorkshop = presentingWorkshop;
+ $rootScope.currencyType2 = currencyType2;
  $rootScope.userId = userId;
  $rootScope.candidateId = candidateId;
  $rootScope.campaigntype = campaigntype;

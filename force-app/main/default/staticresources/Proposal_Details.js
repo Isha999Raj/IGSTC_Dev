@@ -62,12 +62,24 @@ angular.module('cp_app').controller('proposal_ctrl', function($scope, $rootScope
             swal("Proposal Details", "Please Enter Specific Need For the Bilateral Event of Proposal.");
               return;
         }
+        if($scope.proposalDetails.Background_Concept_Purpose__c != undefined || $scope.proposalDetails.Background_Concept_Purpose__c != ""){
+            if($scope.objRtf[0].charCount > 3000){
+                swal("info", "Background, concept and purpose maxlength will be 3000 characters only.","info");
+                return;
+            }
+        }
+        if($scope.proposalDetails.Specific_Need_For_the_Bilateral_Event__c != undefined || $scope.proposalDetails.Specific_Need_For_the_Bilateral_Event__c != ""){
+            if($scope.objRtf[1].charCount > 1500){
+                swal("info", "Specific need for the bilateral event, its relevance and mutual benefits maxlength will be 1500 characters only.","info");
+                return;
+            }
+        }
         ApplicantPortal_Contoller.insertProjectDetails($scope.proposalDetails, function(result, event){
             if(event.status){
                 debugger;
                 Swal.fire(
                     'Success',
-                    'Your Proposal detail has been saved successfully.',
+                    'Your Proposal details have been saved successfully.',
                     'success'
                 );
                 $scope.redirectPageURL('Participants');

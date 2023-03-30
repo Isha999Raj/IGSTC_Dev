@@ -307,13 +307,13 @@
                                             </span>
                                     </div>
 
+                                        
+                                    <!-- <div class="col-md-1" ng-show="doc.userDocument.Status__c=='Uploaded'" style="margin-left: 10px">
+                                        <a class="blue-btn float-end py-3"  ng-click="filePreviewHandler(doc)">View</a>
+                                    </div> -->
                                     <div class="col-md-1" ng-show="doc.ContentDistribution.PreferencesAllowPDFDownload" style="margin-left: 10px">
-                                        <!-- <label style="color: #fff;">.</label> -->
                                         <a class="blue-btn float-end py-3"  ng-click="filePreviewHandler(doc)">View</a>
                                     </div>
-                                    <!-- <div class="col-md-1" ng-show="doc.ContentDistribution.PreferencesAllowPDFDownload" style="margin-left: 10px">
-                                        <a class="blue-btn float-end py-3" href="{{doc.ContentDistribution.DistributionPublicUrl}}" target="_blank">View</a>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>

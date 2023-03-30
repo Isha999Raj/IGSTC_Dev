@@ -1,4 +1,4 @@
-angular.module('cp_app').controller('Attachments_Ctrl', function($scope,$rootScope) {
+angular.module('cp_app').controller('Attachments_Ctrl', function($scope,$sce,$rootScope) {
     $scope.disableSubmit = true;
     $scope.previousProjectDetSingh=function(){
         var link=document.createElement("a");
@@ -43,20 +43,24 @@ angular.module('cp_app').controller('Attachments_Ctrl', function($scope,$rootSco
     $scope.getProjectdetils();
     $scope.selectedFile;
 
-$scope.filePreviewHandler = function(fileContent){
-    debugger;
-    $scope.selectedFile = fileContent;
-
-    console.log('selectedFile---', $scope.selectedFile);
-
-    $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
-
-    var myModal = new bootstrap.Modal(document.getElementById('filePreview'))
-    myModal.show('slow') ;
-    $scope.$apply();
-
-    //.ContentDistribution.DistributionPublicUrl
-}
+    $scope.filePreviewHandler = function(fileContent){
+        debugger;
+        $scope.selectedFile = fileContent;
+    
+        console.log('selectedFile---', $scope.selectedFile);
+        var jhj=$scope.selectedFile.userDocument.Attachments[0].Id;
+        console.log(jhj);
+        $scope.filesrec = $sce.trustAsResourceUrl(window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.selectedFile.userDocument.Attachments[0].Id);
+        //$scope.filesrec = window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.selectedFile.userDocument.Attachments[0].Id;
+        // $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
+        $('#file_frame').attr('src', $scope.filesrec);
+    
+        var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
+        myModal.show('slow') ;
+        $scope.$apply();
+    
+        //.ContentDistribution.DistributionPublicUrl
+    }
     $scope.redirectPageURL=function(URL){
         var link=document.createElement("a");
         link.id = 'someLink'; //give it an ID!
@@ -122,7 +126,7 @@ $scope.filePreviewHandler = function(fileContent){
                     doneUploading = false;
                     debugger;
                     if (fileSize < maxSize) {
-                        $scope.uploadAttachment(type , userDocId, fileId);
+                        $scope.uploadAttachment(type , userDocId, null);
                     } else {
                         swal('info','Base 64 Encoded file is too large.','info');
                         return;
@@ -155,9 +159,9 @@ $scope.filePreviewHandler = function(fileContent){
     $scope.uploadAttachment = function (type, userDocId, fileId) {
         debugger;
         var attachmentBody = "";
-        if (fileId == undefined) {
-            fileId = " ";
-        }
+        // if (fileId == undefined) {
+        //     fileId = " ";
+        // }
         if (fileSize <= positionIndex + chunkSize) {
             debugger;
             attachmentBody = attachment.substring(positionIndex);

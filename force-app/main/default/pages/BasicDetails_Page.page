@@ -60,14 +60,7 @@
                                             <span>Participants</span>
                                         </a>
                                     </li>
-                                    <li class="active pb-cursor">
-                                        <a ng-click="redirectPageURL('Meeting_Theme')">
-                                            <div class="icon-circle">
-                                                <i class="fas fa-people-group"></i>
-                                            </div>
-                                            <span>Meeting Agenda</span>
-                                        </a>
-                                    </li>
+                                    
                                     <li class="active pb-cursor">
                                         <a ng-click="redirectPageURL('Financial_Details')">
                                             <div class="icon-circle">
@@ -82,6 +75,14 @@
                                                 <i class="fab fa-meetup"></i>
                                             </div>
                                             <span>Curriculum vitae</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('Meeting_Theme')">
+                                            <div class="icon-circle">
+                                                <i class="fas fa-people-group"></i>
+                                            </div>
+                                            <span>Workshop Agenda</span>
                                         </a>
                                     </li>
                                     <li class="active pb-cursor">
@@ -131,14 +132,7 @@
                                             <span>Participants</span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a>
-                                            <div class="icon-circle">
-                                                <i class="fas fa-people-group"></i>
-                                            </div>
-                                            <span>Meeting Agenda</span>
-                                        </a>
-                                    </li>
+                                    
                                     <li>
                                         <a>
                                             <div class="icon-circle">
@@ -158,6 +152,14 @@
                                     <li>
                                         <a>
                                             <div class="icon-circle">
+                                                <i class="fas fa-people-group"></i>
+                                            </div>
+                                            <span>Workshop Agenda</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
                                                 <i class="fas fa-file-signature"></i>
                                             </div>
                                             <span>Signature</span>
@@ -171,24 +173,24 @@
                             
 
                 <form name="formPrjDet">
-                    <div class="row mb-5 mx-5 mt-5">
+                    <!-- <div class="row mb-5 mx-5 mt-5">
                         <div class="col-md-12 alert bg-color-list" role="alert">
                             <ul class="font-if">  
                               <li><i class="fa-solid fa-circle text-success me-3"></i>Workshop should tentatively start after 1st June 2023 and not before.</li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
                         <div class="row box-shadow-2 mt-3 mx-5 p-3">
                             
 
-                            <div class="col-md-4 mt-3">
+                            <div class="col-md-12 mt-3">
                                 <label class="font-if">
                                     Thematic Area of the Proposal
                                 </label>
                                 <span class="required-asterisk" style="color:red;">*</span>
                                 <input ng-focus="removeClass2('thematic')" id="thematic" name="Thematic Area" placeholder="Thematic Area" class="form-control" type="text" ng-model="applicantDetails.Thematic_Area__c" ng-disabled="proposalStage" />
                             </div>
-                            <div class="col-md-4 mt-3">
+                            <div class="col-md-12 mt-3">
                                 <label class="font-if">
                                     Title Of Proposal
                                 </label>
@@ -197,23 +199,31 @@
                             </div>
                             <!-- </div> -->
                             <!-- <div class="row mt-4 mx-5"> -->
-                                <div class="col-md-4 mt-3">
+                                <div class="col-md-12 mt-3">
                                     <label class="font-if">
                                         Title des Antrages(In German)
                                     </label>
                                     <span class="required-asterisk" style="color:red;">*</span>
                                     <input ng-focus="removeClass2('title')" id="title" name="Title In German" placeholder="Title In German" class="form-control" type="text" ng-model="applicantDetails.Title_In_German__c" ng-disabled="proposalStage" />
                                 </div>
-                                <div class="col-md-4 mt-3">
+                                <div class="col-md-6 mt-3">
                                     <label class="font-if">
                                         Acronym
                                     </label>
                                     <span class="required-asterisk" style="color:red;">*</span>
                                     <input ng-focus="removeClass2('acronym')" id="acronym" name="acronym" placeholder="acronym" class="form-control" type="text" ng-model="applicantDetails.Acronym__c" ng-disabled="proposalStage" />
                                 </div>
+
+                                <div class="col-md-6 mt-3">
+                                    <label class="font-if">
+                                        Proposed Venue
+                                    </label>
+                                    <span class="required-asterisk" style="color:red;">*</span>
+                                    <input ng-focus="removeClass2('venue')" id="venue" name="proposedvenue" placeholder="proposedvenue" class="form-control" type="text" ng-model="applicantDetails.Proposed_Venue__c" ng-disabled="proposalStage" /><br/>
+                                </div>
                             <!-- </div> -->
                             <!-- <div class="row mt-4 mx-5"> -->
-                                <div class="col-md-4 mt-3">
+                                <div class="col-md-6 mt-3 mb-3">
                                     <label class="font-if">
                                         Workshop Proposed Date
                                     </label>
@@ -221,7 +231,7 @@
                                     <input ng-focus="removeClass2('proposedDate')" id="proposedDate" name="Proposed Date" placeholder="Proposed Date" class="form-control" ng-init="proposedDate=(proposedDate | date:'yyyy-MM-dd')"
                                         type="date" ng-model="proposedDate" required="true" ng-required="applicantDetails.Proposed_Date__c" ng-disabled="proposalStage" />
                                 </div>
-                                <div class="col-md-4 mt-3">
+                                <div class="col-md-6 mt-3 mb-3">
                                     <label class="font-if">
                                         Workshop End Date
                                     </label>
@@ -231,21 +241,16 @@
                                 </div>
                             <!-- </div> -->
                             <!-- <div class="row mt-4 mx-5"> -->
-                                <div class="col-md-4 mt-3">
-                                    <label class="font-if">
-                                        Proposed Venue
-                                    </label>
-                                    <span class="required-asterisk" style="color:red;">*</span>
-                                    <input ng-focus="removeClass2('venue')" id="venue" name="proposedvenue" placeholder="proposedvenue" class="form-control" type="text" ng-model="applicantDetails.Proposed_Venue__c" ng-disabled="proposalStage" /><br/>
-                                </div><br/>
+                                <br/>
                             <!-- </div> -->
                             </div>
                             <!-- <div class="row mt-4 mx-5"> -->
                                 <div class="row mt-5 mx-4">
                                     <div class="col-md-12 mt-3">
-                                        <label class="pb-3 color-theme px-3">
-                                            Summary (Max 1000):
-                                        </label>
+                                        <label class="pb-3 color-theme">
+                                            Summary (Max 1000 characters):
+                                        </label><br/>
+                                        <small class="label-rtf"><b>To use the below RTF box more efficiently, make sure you write your content in word document first and then copy paste here</b></small>
                                         <span class="required-asterisk" style="color:red;">*</span>
                                             <ng-ckeditor id="txtSummary" ng-change="readCharacter(applicantDetails.Summary__c,0)" read-Only="true" ng-model="applicantDetails.Summary__c" name="ckEditor1" ng-config="config" maxlength="1000"></ng-ckeditor>
                                             <span>Total characters : {{objRtf[0].charCount}}</span>

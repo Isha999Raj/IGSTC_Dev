@@ -114,14 +114,17 @@ angular.module('cp_app').controller('deliverables_ctrl', function($scope,$rootSc
             }
             if(count <= 0){
                 swal("PI Deliverables Details", "Please Select Partners.");
+                $("#partner"+i+"").addClass('border-theme');
                 return; 
             }
             if(objData[i].title == undefined || objData[i].title == ""){
                 swal("PI Deliverables Details", "Please Enter Title.");
+                $("#title"+i+"").addClass('border-theme');
                 return;
             }
             if(objData[i].Due_Date__c == undefined || objData[i].Due_Date__c == ""){
                 swal("PI Deliverables Details", "Please Enter Due Date.");
+                $("#due"+i+"").addClass('border-theme');
                 return;
             }
             
@@ -217,6 +220,12 @@ angular.module('cp_app').controller('deliverables_ctrl', function($scope,$rootSc
         link.href = "#/" + pageName;
         link.click();
     }
+
+    $scope.removeClass=function(controlid,index){
+        debugger;
+        var controlIdfor=controlid+""+index;
+        $("#"+controlIdfor+"").removeClass('border-theme');
+      }
     // $scope.date;
     // $scope.siteURL = siteURL;
     // $scope.deliverableList = [];

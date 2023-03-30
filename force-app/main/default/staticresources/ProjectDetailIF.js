@@ -1,4 +1,4 @@
-angular.module('cp_app').controller('ProjectDetailIF_Ctrl', function($scope,$rootScope) {
+angular.module('cp_app').controller('ProjectDetailIF_Ctrl', function($scope,$sce,$rootScope) {
     $scope.objContactList=[];
     $scope.objProposal={};
     $scope.objContacts__r={};
@@ -12,7 +12,7 @@ angular.module('cp_app').controller('ProjectDetailIF_Ctrl', function($scope,$roo
     
     $scope.getProjectdetils = function () {
       debugger;
-      ApplicantPortal_Contoller.getAllUserDoc($rootScope.projectId, function (result, event) {
+      ApplicantPortal_Contoller.getAllUserDocSignature($rootScope.projectId, function (result, event) {
           debugger
           console.log('result return onload :: ');
           console.log(result);
@@ -33,7 +33,7 @@ angular.module('cp_app').controller('ProjectDetailIF_Ctrl', function($scope,$roo
 
   $scope.selectedFile;
 
-$scope.filePreviewHandler = function(fileContent){
+  $scope.filePreviewHandler = function(fileContent){
     debugger;
     $scope.selectedFile = fileContent;
 
@@ -41,8 +41,8 @@ $scope.filePreviewHandler = function(fileContent){
 
     $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
 
-    var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
-    myModal.show('slow') ;
+    var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
+    myModal.show('slow') ;
     $scope.$apply();
 
     //.ContentDistribution.DistributionPublicUrl
@@ -176,7 +176,7 @@ $scope.uploadAttachment = function (type, userDocId, fileId) {
         attachmentBody = attachment.substring(positionIndex, positionIndex + chunkSize);
     }
     console.log("Uploading " + attachmentBody.length + " chars of " + fileSize);
-    ApplicantPortal_Contoller.doCUploadAttachmentAa(
+    ApplicantPortal_Contoller.doCUploadAttachmentSignature(
         attachmentBody, attachmentName,fileId, userDocId,
         function (result, event) {
             console.log(result);

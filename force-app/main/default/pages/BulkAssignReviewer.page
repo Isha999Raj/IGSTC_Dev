@@ -134,7 +134,8 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <button type="button" ng-click="saveReviewersAction()" class="blue-btn float-end">Save</button>
+                    <button type="button" ng-click="saveReviewersAction()" id="btnSave" class="blue-btn float-end">Save</button>
+                    <button type="button" id="btnWait" style="display: none;" class="blue-btn float-end"><i class="fa-solid fa-spinner fa-spin-pulse me-3"></i>Please wait...</button>
                 </div>
             </div>
         </div>
@@ -249,8 +250,12 @@ console.log($scope.applicationData.allAppWithRM[parIndex].reviewerList[index].is
                     console.log(finalReviewermappingForInsert);
                     console.log("for delete=>");
                     console.log(finalReviewermappingForDelete);
+                $("#btnSave").hide();
+                $("#btnWait").show();
                 BulkAssignReviewerController.getReviewerAction(finalReviewermappingForInsert,finalReviewermappingForDelete, function (result, event) {
                     debugger;
+                    $("#btnWait").hide();
+                    $("#btnSave").show();
                     if (event.status) {
                         swal('Save Details','Reviewers details have been saved successfully.','success');
                         $scope.reviewerPropCount=[];

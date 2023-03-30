@@ -75,6 +75,12 @@ angular.module('cp_app').controller('ProjectDetailsSing_Ctrl', function($scope,$
         return;
       }
       $scope.objProposal.Campaign__c = $rootScope.tagCampaignId;
+
+      if($scope.objProposal.Purpose_for_applying__c == "Other" && $scope.objProposal.Purpose_for_Applying_Other__c == undefined){
+        swal('info','Please specify purpose for applying.','info');
+        $("#other").addClass('border-theme');
+        return;
+      }
       if($scope.objProposal.Brief_Statement_of_Purpose__c==undefined || $scope.objProposal.Brief_Statement_of_Purpose__c=='' || $scope.objProposal.Brief_Statement_of_Purpose__c==' '){
         swal('info','Please enter brief description of the organization.','info');
         $("#txtBStatement").addClass('border-theme');
@@ -150,7 +156,7 @@ angular.module('cp_app').controller('ProjectDetailsSing_Ctrl', function($scope,$
                       icon: "success",
                       button: "ok!",
                     }).then((value) => {
-                      $scope.redirectPageURL('AttachmentsSing');
+                      $scope.redirectPageURL('BudgetDetails');
                         });
                   }
                   else

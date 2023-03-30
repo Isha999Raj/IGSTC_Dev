@@ -23,7 +23,7 @@
                                         <div class="icon-circle">
                                             <i class="fa fa-home"></i>
                                         </div>
-                                        <span>Project Details</span>
+                                        <span>Basic Details</span>
                                     </a>
                                 </li>
                                 <li class="active pb-cursor">
@@ -58,7 +58,7 @@
                                         <span>Project Details</span>
                                     </a>
                                 </li>
-                                <li class="active pb-cursor">
+                                <li class="active pb-cursor" ng-hide="secondStage">
                                     <a ng-click="redirectPageURL('WorkPackages')">
                                         <div class="icon-circle">
                                             <i class="fa-solid fa-box"></i>
@@ -68,9 +68,61 @@
                                 </li>
                             </ul>
                         </div>
+
+                        <div ng-show="proposalStage">
+                            <div class="tab-link" ng-show="secondStage">
+                                <div class="progress">
+                                    <div class="progress-success w-100"></div>
+                                </div>
+                                <ul>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('WorkPackages')">
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-box"></i>
+                                            </div>
+                                            <span>Work Package</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('PIDeliverables')">
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-business-time"></i>
+                                            </div>
+                                            <span>PI Deliverables</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('Network_Meeting')">
+                                            <div class="icon-circle">
+                                                <i class="fa fa-group"></i>
+                                            </div>
+                                            <span>Network Meeting</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('ExpenseDeclaration')">
+                                            <div class="icon-circle">
+                                                <i class="fa fa-money"></i>
+                                            </div>
+                                            <span>Expense Details</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('GrantApplication')">
+                                            <div class="icon-circle">
+                                                <i class="fas fa-donate"></i>
+                                            </div>
+                                            <span>Grant Application</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
                         <div class="tab-link" ng-hide="proposalStage">
                             <div class="progress">
-                                <div class="progress-success wp-6"></div>
+                                <div class="progress-success wp-7"></div>
                             </div>
                             <ul>
                                 <li class="active">
@@ -78,7 +130,7 @@
                                         <div class="icon-circle">
                                             <i class="fa fa-home"></i>
                                         </div>
-                                        <span>Project Details</span>
+                                        <span>Basic Details</span>
                                     </a>
                                 </li>
                                 <li class="active">
@@ -113,7 +165,7 @@
                                         <span>Project Details</span>
                                     </a>
                                 </li>
-                                <li>
+                                <li ng-hide="secondStage">
                                     <a>
                                         <div class="icon-circle">
                                             <i class="fa-solid fa-box"></i>
@@ -122,6 +174,56 @@
                                     </a>
                                 </li>
                             </ul>
+                        </div>
+
+                        <div ng-hide="proposalStage">
+                            <div class="tab-link" ng-show="secondStage">
+                                <div class="progress">
+                                    <div class=""></div>
+                                </div>
+                                <ul>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-box"></i>
+                                            </div>
+                                            <span>Work Packages</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa-solid fa-business-time"></i>
+                                            </div>
+                                            <span>PI Deliverables</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa fa-group"></i>
+                                            </div>
+                                            <span>Network Meeting</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fa fa-money"></i>
+                                            </div>
+                                            <span>Expense Details</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fas fa-donate"></i>
+                                            </div>
+                                            <span>Grant Details</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -136,17 +238,17 @@
                         <div class="col-md-6">
                             <h4 class="label-rtf ms-5">Indian IGSTC Funding:</h4>
                             <div class="row box-shadow-2 mt-3 ms-5 mx-5">
-                                <p style="font-size: 15px;"><i class="fa fa-money me-3 ms-3 mt-3"></i>Total Funding Asked By Indian Partners : {{indianIndus+indianAcademia}}</p>
-                                <p style="font-size: 15px;"><i class="fa fa-money me-3 ms-3 mt-3"></i>Indian Industy Partner : {{indianIndus}}</p>
-                                <p style="font-size: 15px;"><i class="fa fa-money me-3 ms-3 mt-3 mb-3"></i>Indian Academia Partner : {{indianAcademia}}</p>
+                                <p style="font-size: 15px;"><i class="fa fa-money me-3 ms-3 mt-3"></i>Total Funding Asked By Indian Partners : {{TotalIndianContribution}}</p>
+                                <p style="font-size: 15px;"><i class="fa fa-money me-3 ms-3 mt-3"></i>Indian Industy Partner : {{indus}}</p>
+                                <p style="font-size: 15px;"><i class="fa fa-money me-3 ms-3 mt-3 mb-3"></i>Indian Academia Partner : {{acad}}</p>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <h4 class="label-rtf">German IGSTC Funding:</h4>
                             <div class="row box-shadow-2 mt-3 ms-1 mx-2">
-                                <p style="font-size: 15px;"><i class="fa fa-money me-3 ms-3 mt-3"></i>Total Funding Asked By German Partners : {{germanIndus+germanAcademia}}€</p>
-                                <p style="font-size: 15px;"><i class="fa fa-money me-3 ms-3 mt-3"></i>German Industy Partner : {{germanIndus}}€</p>
-                                <p style="font-size: 15px;"><i class="fa fa-money me-3 ms-3 mt-3 mb-3"></i>German Academia Partner : {{germanAcademia}}€</p>
+                                <p style="font-size: 15px;"><i class="fa fa-money me-3 ms-3 mt-3"></i>Total Funding Asked By German Partners : {{TotalGermanContribution}}€</p>
+                                <p style="font-size: 15px;"><i class="fa fa-money me-3 ms-3 mt-3"></i>German Industy Partner : {{gIndus}}€</p>
+                                <p style="font-size: 15px;"><i class="fa fa-money me-3 ms-3 mt-3 mb-3"></i>German Academia Partner : {{gAcad}}€</p>
                             </div>
                         </div>
                     </div>

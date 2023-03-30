@@ -58,14 +58,7 @@
                                             <span>Participants</span>
                                         </a>
                                     </li>
-                                    <li class="active pb-cursor">
-                                        <a ng-click="redirectPageURL('Meeting_Theme')">
-                                            <div class="icon-circle">
-                                                <i class="fas fa-people-group"></i>
-                                            </div>
-                                            <span>Meeting Agenda</span>
-                                        </a>
-                                    </li>
+                                    
                                     <li class="active pb-cursor">
                                         <a ng-click="redirectPageURL('Financial_Details')">
                                             <div class="icon-circle">
@@ -80,6 +73,14 @@
                                                 <i class="fab fa-meetup"></i>
                                             </div>
                                             <span>Curriculum vitae</span>
+                                        </a>
+                                    </li>
+                                    <li class="active pb-cursor">
+                                        <a ng-click="redirectPageURL('Meeting_Theme')">
+                                            <div class="icon-circle">
+                                                <i class="fas fa-people-group"></i>
+                                            </div>
+                                            <span>Workshop Agenda</span>
                                         </a>
                                     </li>
                                     <li class="active pb-cursor">
@@ -132,14 +133,6 @@
                                     <li>
                                         <a>
                                             <div class="icon-circle">
-                                                <i class="fas fa-people-group"></i>
-                                            </div>
-                                            <span>Meeting Agenda</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a>
-                                            <div class="icon-circle">
                                                 <i class="fas fa-box"></i>
                                             </div>
                                             <span>Expense Details</span>
@@ -151,6 +144,14 @@
                                                 <i class="fab fa-meetup"></i>
                                             </div>
                                             <span>Curriculum vitae</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            <div class="icon-circle">
+                                                <i class="fas fa-people-group"></i>
+                                            </div>
+                                            <span>Workshop Agenda</span>
                                         </a>
                                     </li>
                                     <li>
@@ -171,14 +172,16 @@
                         
                         <div class="row mt-5 mx-5">
                             <div class="col-md-12 mb-5">
-                                    <h4 class="pb-3 color-theme"><b>Background, concept and purpose in detail</b>
-                                        <span class="required-asterisk" style="color:red;">*</span></h4><br/>
+                                    <h4 class="pb-3 color-theme"><b>Background, concept and purpose in detail (Max 3000 characters):</b>
+                                        <span class="required-asterisk" style="color:red;">*</span></h4>
+                                        <small class="label-rtf"><b>To use the below RTF box more efficiently, make sure you write your content in word document first and then copy paste here</b></small>
                                     <ng-ckeditor id="txtSummary" read-Only="true" ng-change="readCharacter(proposalDetails.Background_Concept_Purpose__c,0)" ng-model="proposalDetails.Background_Concept_Purpose__c" name="ckEditor" ng-config="config" required="true" ng-required="proposalDetails.Background_Concept_Purpose__c"></ng-ckeditor>
                                     <span>Total characters : {{objRtf[0].charCount}}</span>
                             </div>
                             <div class="col-md-12 mb-5">
-                                    <h4 class="pb-3 color-theme"><b>Specific need for the bilateral event, its relevance and mutual benefits</b>
-                                        <span class="required-asterisk" style="color:red;">*</span></h4><br/>
+                                    <h4 class="pb-3 color-theme"><b>Specific need for the bilateral event, its relevance and mutual benefits (Max 1500 characters):</b>
+                                        <span class="required-asterisk" style="color:red;">*</span></h4>
+                                        <small class="label-rtf"><b>To use the below RTF box more efficiently, make sure you write your content in word document first and then copy paste here</b></small>
                                     <ng-ckeditor id="txtSummary" read-Only="true" ng-change="readCharacter(proposalDetails.Specific_Need_For_the_Bilateral_Event__c,1)" ng-model="proposalDetails.Specific_Need_For_the_Bilateral_Event__c" name="ckEditor" ng-config="config" required="true" ng-required="proposalDetails.Specific_Need_For_the_Bilateral_Event__c"></ng-ckeditor>
                                     <span>Total characters : {{objRtf[1].charCount}}</span>
                             </div>

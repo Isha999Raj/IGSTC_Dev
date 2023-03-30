@@ -14,6 +14,7 @@ angular.module('rp_app').controller('projects_ctrl', function($scope,$sce,$rootS
     $scope.PendingProposal=false;
     $scope.DraftProposal=false;
     $scope.SubmittedProposal=false;
+    $scope.myReviews=false;
     $scope.flagDashboard=true;
     $scope.projectDescriptionShow=false;
     $scope.mainObjectiveShow=false;
@@ -43,6 +44,7 @@ angular.module('rp_app').controller('projects_ctrl', function($scope,$sce,$rootS
      $scope.proposalListByDueDate={};
      $scope.showDashboard=true;
      $scope.showProfile=true;
+     $scope.myReviewsHeading="Draft Reviews";
      $scope.rFirstName="";
      var maxStringSize = 6000000;    //Maximum String size is 6,000,000 characters 6 MB
             var maxFileSize = 4350000;      //After Base64 Encoding, this is the max file size
@@ -247,7 +249,7 @@ angular.module('rp_app').controller('projects_ctrl', function($scope,$sce,$rootS
     }
     
     $scope.getReviewerDet();
-    $scope.showProfile=function(){
+    $scope.showProfileDiv=function(){
         debugger;
         $scope.showDashboard=false;
         $scope.showProfile=false;
@@ -255,30 +257,31 @@ angular.module('rp_app').controller('projects_ctrl', function($scope,$sce,$rootS
     $scope.fileUrl;
     $scope.getProposalDocuments = function(selectedProposalId){
         debugger;
-        // ReviewerPortal_Controller.getProAttachment($scope.pId,function(res,evt){
-            ReviewerPortal_Controller.getContactUserDoc(selectedProposalId,function(res,evt){
+        ReviewerPortal_Controller.getProAttachment(selectedProposalId,function(res,evt){
+            console.log('selected proposal id::=>'+selectedProposalId);
+            // ReviewerPortal_Controller.getContactUserDoc(selectedProposalId,function(res,evt){
                 debugger
             console.log('Documents---',res); // remove this line in prod;
             if(res && res.length>0){
                 let dList = [];
 
-                // res.forEach((item,index)=>{
-                //     item.Name = item.Name.split('.')[0];
-                //     item.selected = index==0;
-                //     item.style = index==0?'border: 0px;border-radius: 3px;width: 100%;cursor: pointer;background-color: #160a4b;color: white':'border: 0px;border-radius: 3px;width: 100%;cursor: pointer;'
-                //     dList.push(item);
-                // })
                 res.forEach((item,index)=>{
-                    item.Name = item.userDocument.Name;
+                    item.Name = item.Name.split('.')[0];
                     item.selected = index==0;
                     item.style = index==0?'border: 0px;border-radius: 3px;width: 100%;cursor: pointer;background-color: #160a4b;color: white':'border: 0px;border-radius: 3px;width: 100%;cursor: pointer;'
                     dList.push(item);
                 })
+                // res.forEach((item,index)=>{
+                //     item.Name = item.userDocument.Name;
+                //     item.selected = index==0;
+                //     item.style = index==0?'border: 0px;border-radius: 3px;width: 100%;cursor: pointer;background-color: #160a4b;color: white':'border: 0px;border-radius: 3px;width: 100%;cursor: pointer;'
+                //     dList.push(item);
+                // })
                 $scope.documents = dList;
 
-                //let baseUrl = window.location.origin;
-                // $scope.fileUrl = $sce.trustAsResourceUrl(baseUrl+'/servlet/servlet.FileDownload?file='+res[0].ContentDistribution.ContentVersionId+'#view=FitH');
-                $scope.fileUrl = $sce.trustAsResourceUrl(res[0].ContentDistribution.DistributionPublicUrl+'#view=FitH');
+                let baseUrl = window.location.origin;
+                $scope.fileUrl = $sce.trustAsResourceUrl(baseUrl+'/servlet/servlet.FileDownload?file='+res[0].Id+'#view=FitH');
+                // $scope.fileUrl = $sce.trustAsResourceUrl(res[0].ContentDistribution.DistributionPublicUrl+'#view=FitH');
                 // $scope.fileUrl = $sce.trustAsResourceUrl(baseUrl+'/servlet/servlet.FileDownload?file='+res[0].Id+'#view=FitH');
                 // console.log('URL---',baseUrl+'/servlet/servlet.FileDownload?file='+dList[cSelectedFIndex].Id+'&embedded=true');
 
@@ -435,6 +438,7 @@ angular.module('rp_app').controller('projects_ctrl', function($scope,$sce,$rootS
                 if($scope.workshopProp.length>0){
                     $scope.infoCardWorkshop=true;
                 }
+                $scope.myReviewsList=$scope.draftList;
                 $scope.$apply();
             }
         })
@@ -463,6 +467,15 @@ $scope.getOnload();
             if(event.status && result != null){
                 $scope.partnersDetail=result.accountsList;
                 $scope.ProposalData=result.proposalData;
+                $scope.objContact=result.proposalData.Contacts__r;
+                $scope.objContactHost=result.contactsList;
+                for(var i=0;i<$scope.objContact.length;i++){
+                    if($scope.objContact[i].MailingAddress!=undefined)
+                        if($scope.objContact[i].MailingAddress.street!=undefined)    
+                            $scope.objContact[i].MailingAddress.street=$scope.objContact[i].MailingAddress.street.replace(';',', ');
+                }
+                console.log('proposal contacts::=>');
+                console.log($scope.objContact);
                 $scope.proposalSummary=result.proposalData.Summary__c;
                 $scope.Attachments=result.proposalData.Attachments;
                 // $scope.ExistingGrants=result.existingGrantsList;
@@ -501,6 +514,17 @@ $scope.getOnload();
                     $scope.currentStateArtShow=false;
                     $scope.mainObjectiveShow=false;
                     $scope.showWorkshop=false;
+                }else if(result.proposalData.Campaign__r.Name=="WISER"){
+                    $scope.show2plus2=false;
+                    $scope.showSing=false;
+                    $scope.showIndustrial=false;
+                    $scope.showWiser=true;
+                    $scope.proposalSummaryShow=false;
+                    $scope.projectDescriptionShow=false;
+                    $scope.showPecfar=false;
+                    $scope.currentStateArtShow=false;
+                    $scope.mainObjectiveShow=false;
+                    $scope.showWorkshop=false;
                 }
                 else
                 {
@@ -515,6 +539,28 @@ $scope.getOnload();
                     $scope.currentStateArtShow=true;
                     $scope.showWorkshop=false;
                 }
+                if($scope.ProposalData.Attachments!=undefined){
+                    if($scope.ProposalData.Attachments.length>0){
+                        let dList = [];
+                        $scope.ProposalData.Attachments.forEach((item,index)=>{
+                            item.Name = item.Name.split('.')[0];
+                            item.selected = index==0;
+                            item.style = index==0?'border: 0px;border-radius: 3px;width: 100%;cursor: pointer;background-color: #160a4b;color: white':'border: 0px;border-radius: 3px;width: 100%;cursor: pointer;'
+                            dList.push(item);
+                        })
+                        $scope.documents = dList;
+                        let baseUrl = window.location.origin;
+                        $scope.fileUrl = $sce.trustAsResourceUrl(baseUrl+'/servlet/servlet.FileDownload?file='+$scope.ProposalData.Attachments[0].Id+'#view=FitH');
+                    }else{
+                        $scope.documents = [];
+                    }
+                }else{
+                    // $scope.fileUrl=null;
+                    //$scope.fileUrl='';
+                    $scope.fileUrl = $sce.trustAsResourceUrl('');
+                    $("#myIframe").attr('src','');
+                    $scope.documents = [];                    
+                }
                 $scope.$apply();
             }
         },
@@ -522,7 +568,47 @@ $scope.getOnload();
         )
        }
       // $scope.getProposalDetails();
-    
+      $scope.setReviewsList=function(mrFlag){
+        if(mrFlag=='draft'){
+            $scope.myReviewsHeading="Draft Reviews";
+            $scope.myReviewsList=$scope.draftList;
+        }
+        else{
+            $scope.myReviewsHeading="Submitted Reviews";
+            $scope.myReviewsList=$scope.submittedList;
+        }
+      }
+    $scope.closeRow=function(index){
+        $("#myReviewsRow"+index+"").hide('slow');
+    }
+    $scope.getReviews=function(projectId,index){
+        debugger
+        var selectedProposal;
+        for(var i = 0; i<$scope.getAllProposalFromReviewer.length;i++){
+            if($scope.getAllProposalFromReviewer[i].Id == projectId){
+                 selectedProposal=$scope.getAllProposalFromReviewer[i];
+            }
+        } 
+        if(selectedProposal!=undefined){
+         var reviewerMapId = '';
+         if(selectedProposal.Reviewer_Mapping__r.length>0){
+            reviewerMapId = selectedProposal.Reviewer_Mapping__r[0].Id;
+         }
+            ReviewerPortal_Controller.getAllQLIAndRRLI(selectedProposal.Question_Template__c, reviewerMapId, function(result, event){
+                debugger
+                console.log('all questions');
+                console.log(result);
+                if(event.status && result !=null){
+                    $scope.questionList =result; 
+                    if($scope.questionList.length>0){
+                        $('[id^="myReviewsRow"]').hide();
+                    $("#myReviewsRow"+index+"").show('slow');                          
+                }
+                    $scope.$apply();
+                }
+            })
+        }
+    }
     $scope.enableProjectDetails = function(projectId,stageFlag){
         debugger;
         $scope.reviewShow=stageFlag;
@@ -530,13 +616,14 @@ $scope.getOnload();
         $scope.PendingProposal=false;
         $scope.SubmittedProposal=false;
         $scope.flagDashboard=false;
+        $scope.divReviewerResponse=true;
         $scope.disable=stageFlag;
         for(var i = 0; i<$scope.getAllProposalFromReviewer.length;i++){
             if($scope.getAllProposalFromReviewer[i].Id == projectId){
                 $scope.projectDetails($scope.getAllProposalFromReviewer[i]);
             }
         }    
-        $scope.getProposalDocuments(projectId);                   
+        //$scope.getProposalDocuments(projectId);                   
     }
 
     $scope.projectDetails = function(project){
@@ -572,10 +659,23 @@ $scope.getOnload();
             console.log('all questions');
             console.log(result);
             if(event.status && result !=null){
+                for(var i=0;i<result.length;i++){
+                    if(result[i].RRLineItemList!=undefined){
+                        if(result[i].RRLineItemList.Ratings__c!=undefined){
+                            try{
+                                result[i].RRLineItemList.Ratings__c=parseInt(result[i].RRLineItemList.Ratings__c);
+                            }catch(e){
+                                console.log(e);
+                            }
+                        }
+                    }
+                }
                 $scope.QuestionTempList =result; 
+                if($scope.QuestionTempList.length>0){
                 if(result[0].rmStage == 'Submitted'){
                     $scope.disable = true;
                 }                                
+            }
                 $scope.$apply();
             }
             $scope.getReviewersDet(QuesTempId,ProposalId); 
@@ -584,7 +684,7 @@ $scope.getOnload();
 
     $scope.getReviewersDet=function(QuesTempId,ProposalId){
         debugger
-        ReviewerPortal_Controller.getReviewersDet(QuesTempId, $scope.reviewerMapId,ProposalId, function(result, event){
+        ReviewerPortal_Controller.getReviewersDet(QuesTempId, $scope.reviewerMapId,ProposalId,reviewerId, function(result, event){
             debugger;
             console.log('reviewer det');
             console.log(result);
@@ -606,11 +706,42 @@ $scope.getOnload();
             $scope.$apply();
         }
     }
+    $scope.validateRating=function(index,rating){
+        if(rating<=0){
+            $("#spnRating"+index+"").show();
+            $("#txtRating"+index+"").addClass('border-theme');
+        }else if(rating>10){
+            $scope.QuestionTempList[index].RRLineItemList.Ratings__c=10;
+            $("#spnRating"+index+"").hide();
+            $("#txtRating"+index+"").removeClass('border-theme');
+        }else if(rating>0 && rating<10){
+            $("#spnRating"+index+"").hide();
+            $("#txtRating"+index+"").removeClass('border-theme');
+        }
+    }
     $scope.submitResponseDetail = function(param1){
         debugger;
         for(var i=0;i<$scope.QuestionTempList.length;i++){
             if($scope.QuestionTempList[i] != undefined){
-                
+                if(param1 == 'Submitted'){
+            if($scope.QuestionTempList[i].RRLineItemList==undefined){
+                swal('Reviews','Please provide ratings & comments on all questions','error');
+                return
+            }
+                if($scope.QuestionTempList[i].RRLineItemList.Ratings__c==undefined||$scope.QuestionTempList[i].RRLineItemList.Ratings__c==""){
+                swal('Reviews','Please provide ratings & comments on all questions','error');
+                return
+            }else if($scope.QuestionTempList[i].RRLineItemList.Ratings__c<=0){
+                $("#spnRating"+i+"").show();
+                $("#txtRating"+i+"").addClass('border-theme');
+                swal('Reviews','Please enter rating between 1 to 100','error');
+                return;
+            }
+            if($scope.QuestionTempList[i].RRLineItemList.Response__c==undefined||$scope.QuestionTempList[i].RRLineItemList.Response__c==""){
+                swal('Reviews','Please provide ratings & comments on all questions','error');
+                return
+            }
+        }
             if($scope.QuestionTempList[i]['$$hashKey'] != undefined){
                 delete($scope.QuestionTempList[i]['$$hashKey']);
             }
@@ -619,11 +750,15 @@ $scope.getOnload();
             }
           }     
         }
-        
+        $scope.qtList=[];
         for(var i=0;i<$scope.QuestionTempList.length; i++){
             if($scope.QuestionTempList[i] != undefined){
-                if($scope.QuestionTempList[i].RRLineItemList!=undefined){         
-                    if(($scope.QuestionTempList[i].RRLineItemList.Rating__c == undefined || $scope.QuestionTempList[i].RRLineItemList.Rating__c == "") &&
+                if($scope.QuestionTempList[i].RRLineItemList!=undefined){  
+                    if($scope.QuestionTempList[i].RRLineItemList.Ratings__c != undefined){
+                        $scope.QuestionTempList[i].RRLineItemList.Ratings__c=$scope.QuestionTempList[i].RRLineItemList.Ratings__c.toString();
+                    }
+                    $scope.qtList.push($scope.QuestionTempList[i]);
+                    if(($scope.QuestionTempList[i].RRLineItemList.Ratings__c == undefined || $scope.QuestionTempList[i].RRLineItemList.Ratings__c == "") &&
                     ($scope.QuestionTempList[i].RRLineItemList.Response__c == undefined || $scope.QuestionTempList[i].RRLineItemList.Response__c == "") &&
                     ($scope.QuestionTempList[i].RRLineItemList.Grade_Value__c == undefined || $scope.QuestionTempList[i].RRLineItemList.Grade_Value__c == "")){
                                     $scope.QuestionTempList.splice(i, 0);
@@ -633,9 +768,9 @@ $scope.getOnload();
             }
             
             console.log("submit data");
-            console.log($scope.QuestionTempList);
+            console.log($scope.qtList);
                 console.log(param1)
-        ReviewerPortal_Controller.getAllResponseLineItem( $scope.QuestionTempList, $scope.reviewerMapId, param1, function(result, event){
+        ReviewerPortal_Controller.getAllResponseLineItem( $scope.qtList, $scope.reviewerMapId, param1, function(result, event){
             console.log('submit response');
             console.log(result);
             console.log(event);
@@ -684,6 +819,7 @@ $scope.showDraft=function(){
     $scope.showProfile=true;
     $scope.flagProjectDet=true;
     $scope.showHome=true;
+    $scope.myReviews=false;
 }
 $scope.showPending=function(){
     $scope.flagDashboard=false;
@@ -695,6 +831,7 @@ $scope.showPending=function(){
     $scope.SubmittedProposal=false;
     $scope.flagProjectDet=true;
     $scope.showHome=true;
+    $scope.myReviews=false;
 }
 $scope.showSubmitted=function(){
     $scope.flagDashboard=false;
@@ -706,6 +843,19 @@ $scope.showSubmitted=function(){
     $scope.SubmittedProposal=true;
     $scope.flagProjectDet=true;
     $scope.showHome=true;
+    $scope.myReviews=false;
+}
+$scope.showReviewerReviews=function(){
+    $scope.flagDashboard=false;
+    $scope.flag=true;
+    $scope.showDashboard=true;
+    $scope.showProfile=true;
+    $scope.PendingProposal=false;
+    $scope.DraftProposal=false;
+    $scope.SubmittedProposal=false;
+    $scope.flagProjectDet=true;
+    $scope.showHome=true;
+    $scope.myReviews=true;
 }
 $scope.showAllProposals=function(){
     $scope.flag=true;
@@ -717,6 +867,7 @@ $scope.showAllProposals=function(){
     $scope.SubmittedProposal=false;
     $scope.flagProjectDet=true;
     $scope.showHome=true;
+    $scope.myReviews=false;
 }
 $scope.showHome=function(){
     $scope.flag=false;
@@ -727,6 +878,7 @@ $scope.showHome=function(){
     $scope.SubmittedProposal=false;
     $scope.showHome=false;
     $scope.flagProjectDet=true;
+    $scope.myReviews=false;
 }
 $scope.backToList=function(){
     $scope.flag=true;
@@ -736,7 +888,7 @@ $scope.backToList=function(){
 $scope.redirect = function(){
         
     // var sitePrefix = window.location.href.includes('/apex') ? '/apex' : '/ReviewerPortal';   
-    window.location.replace(window.location.origin+'/Reviewer');
+    window.location.replace(window.location.origin+'/Reviewer');    
     
 }
 $scope.ratingNgRepeat=1;
@@ -745,11 +897,11 @@ $scope.setRating=function(val,index){
     $scope.ratingNgRepeat=0;
     if($scope.QuestionTempList[index].RRLineItemList==undefined){
         $scope.QuestionTempList[index].RRLineItemList={
-            Rating__c:''
+            Ratings__c:''
         };  
     }
-    $scope.QuestionTempList[index].RRLineItemList.Rating__c=0;
-$scope.QuestionTempList[index].RRLineItemList.Rating__c=val;
+    $scope.QuestionTempList[index].RRLineItemList.Ratings__c=0;
+$scope.QuestionTempList[index].RRLineItemList.Ratings__c=val;
 $scope.$apply();
 }
 $scope.setGrade=function(val,index){
@@ -856,7 +1008,7 @@ $scope.getProjectdetils = function () {
                 if (fileSize < fileSizeFun) {
                     $scope.uploadAttachment(type , userDocId, fileId);
                 } else {
-                  swal("info", "Base 64 Encoded file is too large.  Maximum size is " + maxStringSize + " your file is " + fileSize + ".","info");
+                  swal("info", "Base 64 Encoded file is too large.  Maximum size is 512000 your file is " + fileSize + ".","info");
                   $scope.setLostValues();
                   return;
                     // alert("Base 64 Encoded file is too large.  Maximum size is " + maxStringSize + " your file is " + fileSize + ".");
@@ -1020,8 +1172,20 @@ $scope.uploadAttachment = function (type, userDocId, fileId) {
 //     );
 // }
 $scope.tabToggle=function(tabId){
+    debugger
 $("#home,#existingGrants,#askedGrants,#workPackages,#proposalSummary,#divFiles,#divReview").hide();
+$("div[name=divTopTables]").hide();
 $("#"+tabId+"").show('slow');
+}
+$scope.accordianToggleInd=function(accordianId,index){
+    debugger
+$("#collapseOne,#collapseTwo,#collapseThree,#collapseFour").hide();
+$("#"+accordianId+""+index+"").show();
+}
+$scope.accordianToggleWiser=function(accordianId){
+    debugger
+$("#collapseWiserOne,#collapseWiserTwo").hide();
+$("#"+accordianId+"").show();    
 }
 $scope.accordianToggle=function(accordianId){
     debugger

@@ -45,6 +45,14 @@
                                     </a>
                                 </li>
                                 <li class="active pb-cursor">
+                                    <a ng-click="redirectPageURL('BudgetDetails')">
+                                        <div class="icon-circle">
+                                            <i class="fa fa-money"></i>
+                                        </div>
+                                        <span>Budget Details</span>
+                                    </a>
+                                </li>                               
+                                <li class="active pb-cursor">
                                     <a ng-click="redirectPageURL('AttachmentsSing')">
                                         <div class="icon-circle">
                                             <i class="fas fa-file-invoice"></i>
@@ -64,7 +72,7 @@
                         </div>
                         <div class="tab-link" ng-hide="proposalStage">
                             <div class="progress">
-                                <div class="progress-success wp-7"></div>
+                                <div class="progress-success wp-8"></div>
                             </div>
                             <ul>
                                 <li class="active">
@@ -90,8 +98,15 @@
                                         </div>
                                         <span>Proposed Work</span>
                                     </a>
-                                </li>
-
+                                </li> 
+                                <li class="active">
+                                    <a>
+                                        <div class="icon-circle">
+                                            <i class="fa fa-money"></i>
+                                        </div>
+                                        <span>Budget Details</span>
+                                    </a>
+                                </li>                               
                                 <li class="active">
                                     <a>
                                         <div class="icon-circle">
@@ -137,16 +152,14 @@
                     <div class="col-md-12 alert bg-color-list" role="alert">
                         <ul class="font-if">
                             <li>
-                                <i class="fa-solid fa-circle text-success me-3"></i>Upload each attachment in pdf format with max. size 1 Mb</li>
-                            <li>
-                                <i class="fa-solid fa-circle text-success me-3"></i>Click on upload button to upload the documents</li>
+                                <i class="fa-solid fa-circle text-success me-3"></i>Upload each attachment in a pdf format. The Size of the attachments are respectively mentioned.</li>
                         </ul>
                     </div>
                 </div>
                 <div class="row box-shadow-2 mt-5 mx-5 p-3">
                     <div class="row mt-5 pb-5" style="margin-left: -1px">
                         <div class="col-md-5">
-                            <label class="font-if">Consent from the parent organisation<br/><span style="color:#fff;">.</span></label>
+                            <label class="font-if">Consent Letter/No Objection Certificate from the Parent Institution (max size 1 MB) <br/><span style="color:#fff;">.</span></label>
                                 <div class="input-group input-group-lg">
                                     <input type="file" accept=".pdf" ng-disabled="proposalStage" id="{{doc.userDocument.Name}}" class="form-control " />
                                     <span class="input-group-btn" ng-hide="proposalStage">
@@ -155,14 +168,14 @@
                                 </div>
                         </div>
                         <div class="col-md-1 mt-3">
-                            <div ng-show="doc.ContentDistribution.PreferencesAllowPDFDownload">
+                            <div ng-show="doc.userDocument.Status__c=='Uploaded'">
                                 <span style="color:#fff;">.</span>
                                 <!-- <a class="blue-btn py-3 mt-4 float-end" href="{{doc.ContentDistribution.DistributionPublicUrl}}" target="_blank">View</a> -->
                                 <a class="blue-btn py-3 mt-4 float-end" ng-click="filePreviewHandler(doc)">View</a>
                             </div>
                         </div>
                         <div class="col-md-5">
-                            <label class="font-if">Supporting documents in favour of your application<br/> (Max 5Mb)</label>
+                            <label class="font-if">Supporting documents in favour of your application<br/> (max size 5 MB) </label>
                                 <div class="input-group input-group-lg">
                                     <input type="file" accept=".pdf" ng-disabled="proposalStage" id="{{doc2.userDocument.Name}}" class="form-control " />
                                     <span class="input-group-btn" ng-hide="proposalStage">
@@ -172,7 +185,7 @@
                                 </div>
                         </div>
                         <div class="col-md-1 mt-3">
-                            <div ng-show="doc2.ContentDistribution.PreferencesAllowPDFDownload">
+                            <div ng-show="doc2.userDocument.Status__c=='Uploaded'">
                                 <span style="color:#fff;">.</span>
                                 <!-- <a class="blue-btn py-3 mt-4 float-end" href="{{doc2.ContentDistribution.DistributionPublicUrl}}" target="_blank">View</a> -->
                                 <a class="blue-btn py-3 mt-4 float-end" ng-click="filePreviewHandler(doc2)">View</a>
@@ -181,7 +194,7 @@
                     </div>
                     <div class="row mt-5 pb-5" style="margin-left: -1px">
                         <div class="col-md-5">
-                            <label class="font-if">No Objection Certificate from the Parent Institution</label>
+                            <label class="font-if">Invitation / Support Letter from the Host Institution (max size 1 MB)</label>
                             <div class="input-group input-group-lg">
                                 <input type="file" accept=".pdf" ng-disabled="proposalStage" id="{{doc3.userDocument.Name}}" class="form-control " />
                                 <span class="input-group-btn" ng-hide="proposalStage">
@@ -190,7 +203,7 @@
                             </div>
                         </div>
                         <div class="col-md-1 mt-3">
-                            <div ng-show="doc3.ContentDistribution.PreferencesAllowPDFDownload">
+                            <div ng-show="doc3.userDocument.Status__c=='Uploaded'">
                                 <!-- <a class="blue-btn py-3 mt-4 float-end" href="{{doc.ContentDistribution.DistributionPublicUrl}}" target="_blank">View</a> -->
                                 <a class="blue-btn py-3 mt-4 float-end" ng-click="filePreviewHandler(doc3)">View</a>
                             </div>
@@ -198,7 +211,7 @@
                         <div class="col-md-6 pt-5" ng-if="!proposalStage">
                             <button class="blue-btn float-end" ng-click="submitSingApp()" type="button">
                                 <i class="fa-solid fa-check me-2"></i>Save and Next</button>
-                            <button class="blue-bordered-btn float-end me-2" ng-click="redirectPageURL('ProjectDetailsSing')" type="button">
+                            <button class="blue-bordered-btn float-end me-2" ng-click="redirectPageURL('BudgetDetails')" type="button">
                                 <i class="fa-solid fa-arrow-left me-2"></i>Previous</button>
                         </div>
                     </div>
@@ -214,38 +227,6 @@
                 </div> -->
 
             </div>
-
-            <!-- <div class="container px-5">
-                
-                        <div class="row mt-3">
-                            <div class="col-md-6 mb-3" ng-repeat="doc in proposalDetails">
-                                <label>{{doc.userDocument.Name}}</label>
-                                <div class="input-group input-group-lg">
-                                    <input type="file" accept=".pdf,.png,.jpg,.jpeg" ng-disabled="proposalStage" id="{{doc.userDocument.Name}}" class="form-control "/>
-                                    <span class="input-group-btn" ng-hide="proposalStage">
-                                      <button class="btn btn-success" ng-click="uploadFile(doc.userDocument.Name,doc.userDocument.Id,'')" type="button">Upload</button>
-                                    </span>
-                                  </div>
-                                  <div ng-show="doc.ContentDistribution.PreferencesAllowPDFDownload">
-                                  <label class="pt-2">Uploaded File :{{doc.contentVersion.Title}}</label><br/>
-                                  <a class="btn btn-primary background-theme border-theme mt-3" href="{{doc.ContentDistribution.DistributionPublicUrl}}" target="_blank"><i class="fa-solid fa-eye pe-2"></i>View</a>
-                                </div>
-                            </div>
-                           
-                        </div>
-                    
-                       
-                        <div class="row mt-3">
-                            <div class="col-md-12">
-                                    <button class="blue-btn float-end me-2" ng-click="submitSingApp('d')" type="button">
-                                        <i class="fa-solid fa-check me-2"></i>Save and Next</button>
-                                <button class="blue-bordered-btn float-end me-2" ng-click="redirectPageURL('ApplicantInformationSing')" type="button">
-                                    <i class="fa-solid fa-arrow-left me-2"></i>Previous</button>
-                            </div>
-                        </div>            
-                    </div> -->
-            <!-- </div>
-            </div> -->
 
             <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         </body>

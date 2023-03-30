@@ -6,6 +6,7 @@ import { LightningElement, track } from 'lwc';
         isopenDashBoard = false;
         isallAppliactions=false;
         isAllocated = false;
+        isReviwer = false
         allApplications1 =false;
       @track dashboardOpen = true;
         @track openMenu = false;
@@ -24,10 +25,12 @@ import { LightningElement, track } from 'lwc';
             this.isopenDashBoard= false;
             this.isallAppliactions=true;
             this.isAllocated = false;
+              this.isReviwer = false;
         }
         openAlocationdefault(){
              this.dashboardOpen= true;
                this.isAllocated = true;
+                 this.isReviwer = false;
         this.allApplications1=false;   
         this.allApplications= true;
         this.isopenDashBoard= false;
@@ -39,6 +42,7 @@ import { LightningElement, track } from 'lwc';
             this.isopenDashBoard= true;
             this.isallAppliactions=false;
             this.isAllocated = false;
+                this.isReviwer = false;
             this.allApplications1=false;   
         }
         hamburgerClose(){
@@ -50,6 +54,7 @@ import { LightningElement, track } from 'lwc';
             this.isopenDashBoard= true;
             this.isallAppliactions=false;
             this.isAllocated = false;
+               this.isReviwer = false;
             this.allApplications1=false;       
             console.log(this.allApplications);
         }
@@ -59,10 +64,20 @@ import { LightningElement, track } from 'lwc';
             this.isopenDashBoard= false;
             this.isallAppliactions=true;
             this.isAllocated = false;
+           this.isReviwer = false;
             console.log(this.allApplications);
           }
      allocated(){
         this.isAllocated = true;
+        this.isReviwer = false;
+        this.allApplications1=false;   
+        this.allApplications= true;
+        this.isopenDashBoard= false;
+        this.isallAppliactions=false;
+           }
+           reviewerData(){
+             this.isReviwer = true;
+               this.isAllocated = false;
         this.allApplications1=false;   
         this.allApplications= true;
         this.isopenDashBoard= false;
