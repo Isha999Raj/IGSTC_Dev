@@ -90,7 +90,9 @@ public with sharing class CongaHelperToolLightning {
             System.debug('Exception:' + e.getMessage() +'@'+e.getLineNumber());    
         }
       
-        return sessionId;//userinfo.getSessionId();//sessionId;
+        return sessionId;
+        //userinfo.getSessionId();//sessionId;
+        //return userinfo.getSessionId();
     }
     
     public static string generateReport(String reportLink,string fileName,string dv0, string dv1, string dv2){

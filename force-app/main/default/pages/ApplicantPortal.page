@@ -218,9 +218,9 @@
                 </a>
                 <div class="">
                     <!-- <p class="nav-link text-center ps-5"><b>Application submission Deadline :</b></p> -->
-                    <li class="nav-link text-center" ng-if="programmeHeaderName=='WISER' || programmeHeaderName=='Workshop'"><b>Cut-off dates: {{cutOffSD}} and {{cutOffED}}</b></li>
+                    <li class="nav-link text-center" ng-if="programmeHeaderName=='Workshop'"><b>Cut-off dates: {{cutOffSD}} and {{cutOffED}}</b></li>
                     <li class="nav-link text-center" ng-if="programmeHeaderName=='2PLUS2' || programmeHeaderName=='PECFAR' || programmeHeaderName=='INDUSTRIAL FELLOWSHIPS'"><b>Application submission Deadline : {{campaignEndDate}}</b></li>
-                    <li class="nav-link text-center" ng-if="programmeHeaderName=='SING'"><b>Applications are accepted throughout the year</b></li>
+                    <li class="nav-link text-center" ng-if="programmeHeaderName=='SING' || programmeHeaderName=='WISER'"><b>Applications are accepted throughout the year</b></li>
                     <!-- <marquee>
                         <p class="nav-link"><b>{{campaignEndDate}}</b></p>
                      </marquee> -->

@@ -4,6 +4,36 @@ angular.module('cp_app').controller('singHost_ctrl', function($scope,$rootScope,
      $rootScope.projectId;
     debugger;
 
+    $scope.getDependentPicklistValues = function(){
+      debugger;
+      $scope.indianStates = [];
+      $scope.germanStates = [];
+      ApplicantPortal_Contoller.getFieldDependencies('Contact','Country__c','States__c', function(result,event){
+          debugger;
+          if(event.status && result != null){
+              debugger;
+              $scope.indianStates = result.India;
+              $scope.germanStates = result.Germany;
+              $scope.getHostSing();
+              debugger;
+              $scope.$apply();
+          }
+      }
+      )  
+    }
+    $scope.getDependentPicklistValues();
+
+    $scope.onCountryChange = function(){
+      debugger;
+      
+              if($scope.hostDetails.BillingCountry == 'India'){
+                  $scope.hostDetails.stateList = $scope.indianStates;
+              }else if($scope.hostDetails.BillingCountry == 'Germany'){
+                  $scope.hostDetails.stateList = $scope.germanStates;
+              }
+              $scope.$apply();
+  }
+
     $scope.checkEmail = function(email,contId){
       debugger;
       $scope.emailCheck = false;
@@ -32,6 +62,11 @@ angular.module('cp_app').controller('singHost_ctrl', function($scope,$rootScope,
             if(event.status && result){
                 $scope.hostDetails = result;
                 $scope.contactDetails = result.Contacts[0];
+                if($scope.hostDetails.BillingCountry == 'India'){
+                  $scope.hostDetails.stateList = $scope.indianStates;
+              }else if($scope.hostDetails.BillingCountry == 'Germany'){
+                  $scope.hostDetails.stateList = $scope.germanStates; 
+              }
             }else{
                 $scope.hostDetails = {"Name":"","Email__c":""};
                 $scope.contactDetails = {"LastName":"","Email":""};
@@ -39,7 +74,7 @@ angular.module('cp_app').controller('singHost_ctrl', function($scope,$rootScope,
             $scope.$apply();
         })
      }
-     $scope.getHostSing();
+     //$scope.getHostSing();
 
      $scope.saveHostDetails = function(){
         debugger;
@@ -124,6 +159,9 @@ angular.module('cp_app').controller('singHost_ctrl', function($scope,$rootScope,
                 return;
         }
 
+        $scope.hostDetails['Shipping_State__c'] = $scope.hostDetails['BillingState'];
+
+        delete ($scope.hostDetails['stateList']);
         delete($scope.hostDetails['Contacts']);
         console.log($scope.hostDetails);
         debugger;

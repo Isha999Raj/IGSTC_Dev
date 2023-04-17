@@ -33,11 +33,18 @@ angular.module('cp_app').controller('budget_ctrl', function($scope, $rootScope){
                        if(result[i].Expense_Line_Items__r == undefined){
                            result[i].Expense_Line_Items__r  = [];
                            if($scope.conRecord.MailingCountry == "India"){
+                            $scope.year1 = result[0].Proposals__r.Total_funding_requested_from_IGSTC__c;
                             result[i].Expense_Line_Items__r.push( {"Expense_Head__c":result[i].Id,'Description__c': '',"Currency_Type__c":'INR'});
                            }else{
+                            $scope.year1Germany = result[0].Proposals__r.Total_funding_requested_from_IGSTC__c;
                             result[i].Expense_Line_Items__r.push( {"Expense_Head__c":result[i].Id,'Description__c': '',"Currency_Type__c":'EURO'});
                            }
                        }else{
+                        if($scope.conRecord.MailingCountry == "India"){
+                            $scope.year1 = result[0].Proposals__r.Total_funding_requested_from_IGSTC__c;
+                        }else{
+                            $scope.year1Germany = result[0].Proposals__r.Total_funding_requested_from_IGSTC__c;
+                        }
                            result[i].Expense_Line_Items__r = result[i].Expense_Line_Items__r;
                        }
                       }
@@ -82,18 +89,20 @@ $scope.saveExpenceLineitems = function(){
    }
 
    if($scope.conRecord.MailingCountry == "India"){
+    $scope.expenseList[0].Proposals__r.Total_funding_requested_from_IGSTC__c = $scope.year1;
     if($scope.year1 > 900000){
         swal("info", "Total Grants asked by IGSTC should not be more than 900000.","info");
         return;
     }
    }else{
+    $scope.expenseList[0].Proposals__r.Total_funding_requested_from_IGSTC__c = $scope.year1Germany;
         if($scope.year1Germany > 10000){
             swal("info", "Total Grants asked by IGSTC should not be more than 10000 €.","info");
             return;
         }
    }
 
-   IndustrialFellowshipController.saveExpenceLineItem($scope.expLineItem,function(result,event){
+   IndustrialFellowshipController.saveExpenceLineItem($scope.expLineItem,$scope.expenseList[0].Proposals__c,$scope.expenseList[0].Proposals__r.Total_funding_requested_from_IGSTC__c,function(result,event){
        if(event.status && result != null){
                console.log(result);                    
            swal({

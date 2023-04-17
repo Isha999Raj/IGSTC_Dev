@@ -474,7 +474,8 @@
             <li>Queries, if any, should be addressed to
               <a href="mailto:wiser@igstc.org">wiser@igstc.org</a>
             </li>
-            <li>Cut-off dates: {{cutOffSD}} and {{cutOffED}}</li>
+            <li>Applications are accepted throughout the year</li>
+            <!-- <li>Cut-off dates: {{cutOffSD}} and {{cutOffED}}</li> -->
             <li>You may note that any false information given in the application can lead to disqualification of your candidature
               at any stage of the process.</li>
           </ol>

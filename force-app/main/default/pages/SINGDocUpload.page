@@ -1,0 +1,192 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false">
+    <html>
+        <div ng-controller="singdoc_ctrl">
+
+            <head>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+                <apex:stylesheet value="{!$Resource.ApplicantPortalCSS}" />
+            </head>
+
+            <body>
+                <div class="container mt-5">
+
+                    <div class="modal" id="filePreview">
+                        <div class="modal-dialog" style="min-width:120rem">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">
+                                        <div class="d-flex" style="background:unset;">
+                                            <h3 style="text-align: center"><b>{{selectedFile.userDocument.Name}}</b></h3>
+                                        </div>
+                                    </h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <iframe style="width:100%;height:75vh;border: 0px;border-radius: 10px;" id="file_frame" title="File"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5 mx-5">
+                        <div class="col-md-12 alert bg-color-list" role="alert">
+                            <ul class="font-if">  
+                              <li><i class="fa-solid fa-circle text-success me-3"></i>Kindly upload all the documents in a pdf with maximum size of 1 MB</li>
+                              <li><i class="fa-solid fa-circle text-success me-3"></i>Click on upload button to upload the documents</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="row box-shadow-2 mt-5 mx-5 p-3">
+                        <div class="row mt-5" style="margin-left: -1px">
+
+                            <div class="col-md-6">
+                                    <label class="font-if">Bank Account Details</label>
+                                    <div class="col-md-9 mt-4" style="padding-left: 0px !important; padding-right: 0px !important">
+
+                                    <div class="input-group input-group-lg">
+                                        <input type="file" accept=".pdf" id="{{bank.userDocument.Name}}" class="form-control "/>
+                                        <span class="input-group-btn">
+                                          <button class="btn btn-success" ng-click="uploadFile(bank.userDocument.Name,bank.userDocument.Id,'','1048576','1048576')" type="button">Upload</button>
+                                        </span>
+                                      </div>
+                                </div>
+
+                                  <div class="col-md-3" ng-show="bank.userDocument.Status__c=='Uploaded'">
+                                    <!-- <label style="color: #fff;">.</label> -->
+                                    <a class="blue-btn float-end mt-4 py-3"  ng-click="filePreviewHandler(bank)">View</a>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <label class="font-if">Sensitivity/Security Clearance</label>
+                                <div class="col-md-9 mt-4" style="padding-left: 0px !important; padding-right: 0px !important">
+                                    <div class="input-group input-group-lg">
+                                        <input type="file" accept=".pdf" id="{{sensitivity.userDocument.Name}}" class="form-control "/>
+                                        <span class="input-group-btn">
+                                          <button class="btn btn-success" ng-click="uploadFile(sensitivity.userDocument.Name,sensitivity.userDocument.Id,'','1048576','1048576')" type="button">Upload</button>
+                                        </span>
+                                      </div>
+                                </div>
+
+                                <div class="col-md-3" ng-show="sensitivity.userDocument.Status__c=='Uploaded'">
+                                    <a class="blue-btn float-end mt-4 py-3" ng-click="filePreviewHandler(sensitivity)">View</a>
+                                </div>
+                                
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-5" style="margin-left: -1px">
+
+                            <div class="col-md-6">
+                                <label class="font-if mb-2">Note for Sensitivity/Security Clearance</label>
+                                <div class="col-md-9 mt-4" style="padding-left: 0px !important; padding-right: 0px !important">
+                                    <div class="input-group input-group-lg">
+                                        <input type="file" accept=".pdf" id="{{noteForSensitivity.userDocument.Name}}" class="form-control "/>
+                                        <span class="input-group-btn">
+                                          <button class="btn btn-success" ng-click="uploadFile(noteForSensitivity.userDocument.Name,noteForSensitivity.userDocument.Id,'','1048576','1048576')" type="button">Upload</button>
+                                        </span>
+                                      </div>
+                                </div>
+
+                                <div class="col-md-3" ng-show="noteForSensitivity.userDocument.Status__c=='Uploaded'">
+                                    <a class="blue-btn float-end mt-4 py-3" ng-click="filePreviewHandler(noteForSensitivity)">View</a>
+                                </div>
+                                
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="font-if mb-2">Note for Due Diligence</label>
+                                <div class="col-md-9 mt-4" style="padding-left: 0px !important; padding-right: 0px !important">
+                                    <div class="input-group input-group-lg">
+                                        <input type="file" accept=".pdf" id="{{dueDiligence.userDocument.Name}}" class="form-control "/>
+                                        <span class="input-group-btn">
+                                          <button class="btn btn-success" ng-click="uploadFile(dueDiligence.userDocument.Name,dueDiligence.userDocument.Id,'','1048576','1048576')" type="button">Upload</button>
+                                        </span>
+                                      </div>
+                                </div>
+
+                                <div class="col-md-3" ng-show="dueDiligence.userDocument.Status__c=='Uploaded'">
+                                    <a class="blue-btn float-end mt-4 py-3" ng-click="filePreviewHandler(dueDiligence)">View</a>
+                                </div>
+                                
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-5" style="margin-left: -1px">
+
+                            <div class="col-md-6">
+                                <label class="font-if mb-2">Note for Approval to release Award Letter</label>
+                                <div class="col-md-9 mt-4" style="padding-left: 0px !important; padding-right: 0px !important">
+                                    <div class="input-group input-group-lg">
+                                        <input type="file" accept=".pdf" id="{{awardNote.userDocument.Name}}" class="form-control "/>
+                                        <span class="input-group-btn">
+                                          <button class="btn btn-success" ng-click="uploadFile(awardNote.userDocument.Name,awardNote.userDocument.Id,'','1048576','1048576')" type="button">Upload</button>
+                                        </span>
+                                      </div>
+                                </div>
+
+                                <div class="col-md-3" ng-show="awardNote.userDocument.Status__c=='Uploaded'">
+                                    <a class="blue-btn float-end mt-4 py-3" ng-click="filePreviewHandler(awardNote)">View</a>
+                                </div>
+                                
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="font-if mb-2">Undertaking</label>
+                                <div class="col-md-9 mt-4" style="padding-left: 0px !important; padding-right: 0px !important">
+                                    <div class="input-group input-group-lg">
+                                        <input type="file" accept=".pdf" id="{{undertaking.userDocument.Name}}" class="form-control "/>
+                                        <span class="input-group-btn">
+                                          <button class="btn btn-success" ng-click="uploadFile(undertaking.userDocument.Name,undertaking.userDocument.Id,'','1048576','1048576')" type="button">Upload</button>
+                                        </span>
+                                      </div>
+                                </div>
+
+                                <div class="col-md-3" ng-show="undertaking.userDocument.Status__c=='Uploaded'">
+                                    <a class="blue-btn float-end mt-4 py-3" ng-click="filePreviewHandler(undertaking)">View</a>
+                                </div>
+                                
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-5 mb-5" style="margin-left: -1px">
+                            <div class="col-md-6">
+                                <label class="font-if mb-2">Euro Remittance Invoice (German applicant only)<span class="text-danger me-2">*</span></label>
+                                <div class="col-md-9 mt-4" style="padding-left: 0px !important; padding-right: 0px !important">
+                                    <div class="input-group input-group-lg">
+                                        <input type="file" accept=".pdf" id="{{euroRemittance.userDocument.Name}}" class="form-control "/>
+                                        <span class="input-group-btn">
+                                          <button class="btn btn-success" ng-click="uploadFile(euroRemittance.userDocument.Name,euroRemittance.userDocument.Id,'','1048576','1048576')" type="button">Upload</button>
+                                        </span>
+                                      </div>
+                                </div>
+
+                                <div class="col-md-3" ng-show="euroRemittance.userDocument.Status__c=='Uploaded'">
+                                    <a class="blue-btn float-end mt-4 py-3" ng-click="filePreviewHandler(euroRemittance)">View</a>
+                                </div>
+                                
+                            </div>
+
+                            <div class="col-md-6 mt-5" ng-if="!proposalStage">
+                                <div class="mt-5">
+                                        <button class="blue-btn float-end" ng-click="saveandNext()" type="button">
+                                            <i class="fa-solid fa-check me-2"></i>Save and Next</button>
+                                    <button class="blue-bordered-btn float-end me-2" ng-click="redirectPageURL('Achievements_Pecfar')" type="button">
+                                        <i class="fa-solid fa-arrow-left me-2"></i>Previous</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </body>
+        </div>
+    </html>
+</apex:page>

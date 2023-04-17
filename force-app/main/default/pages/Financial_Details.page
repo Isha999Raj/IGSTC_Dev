@@ -322,7 +322,7 @@
                                 </table>
                             </div>
                         </div> -->
-                <div class="card-footer m-5" ng-if="!proposalStage">
+                <div class="card-footer" ng-if="!proposalStage">
                     <button type="button" class="blue-btn float-end me-4" ng-click="saveLineItems()">Save and Next
                         <i class="fa-solid fa-arrow-right ms-3"></i>
                     </button>

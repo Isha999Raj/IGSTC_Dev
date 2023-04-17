@@ -284,5 +284,6 @@ angular.module('textarea', [])
            <script src="{!$Resource.ConnectAllDocUpload}" />
            <script src="{!$Resource.SingHostDetails}" />
            <script src="{!$Resource.BudgetDetails}" />
-           <script src="{!$Resource.CallReviewerDetails}" />        
+           <script src="{!$Resource.CallReviewerDetails}" /> 
+           <script src="{!$Resource.SingDocUpload}" />        
 </apex:component>

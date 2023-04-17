@@ -149,7 +149,7 @@ system.debug('candidateId---'+candidateId);
         list<contact> applicantList = New list<contact>();
         system.debug('conRec.Proposals__c---'+conRec.Proposals__c);
         if(!string.isBlank(conRec.Proposals__c)){
-            List<account> accountContactList = [select Name,Website,Id,Year_Of_Establishment__c,Last_Year_s_Balance__c,SME__c, Homepage_URL__c,Country_Type__c,Industry__c,
+            List<account> accountContactList = [select Name,Website,Id,Is_Coordinator__c,Is_Primary__c,Year_Of_Establishment__c,Last_Year_s_Balance__c,SME__c, Homepage_URL__c,Country_Type__c,Industry__c,
                                                 Email__c,Is_DSIR_Available__c,DSIR_Recoginition_Details__c,Company_Profile__c,Ownership_Profile__c,Company_Website__c,Academia__c,Phone,Main_Business_Area__c,Infrastructural_Facilities__c,
                                                 Domain_Expertise_Available__c,Large_Industry__c,Start_Up__c,BillingStreet,BillingCity,BillingState,BillingPostalCode,BillingCountry,Department__c,
                                                 (select name,id,FirstName,LastName,Email,Phone,Actual_Position__c,Head_Of_Project__c,Department,Profile_Pic_Attachment_Id__c from contacts order By createdDate ASC) from account where Proposals__c =:conRec.Proposals__c order By createdDate ASC]; 
@@ -2396,7 +2396,7 @@ mapofIndexByListofExpense.put(exl.Index__c,new list<Expense_Line_Item__c>{exl});
             
             map<string,User_Document__c> idXUserDoc = New Map<string,User_Document__c>();
             map<string,ContentDocumentLink> udIdXcdLink = New Map<string,ContentDocumentLink>();
-            list<User_Document__c> getUserDoc = [select name,id,Status__c from User_Document__c where Proposals__c =:parentId];
+            list<User_Document__c> getUserDoc = [select name,id,Status__c,(select id from attachments) from User_Document__c where Proposals__c =:parentId];
             system.debug('getUserDoc----'+getUserDoc);
             set<string> userDocIdSet = New set<string>();
             for(User_Document__c userDoc:getUserDoc){
@@ -2920,6 +2920,33 @@ mapofIndexByListofExpense.put(exl.Index__c,new list<Expense_Line_Item__c>{exl});
                 return 'SUCCESS';
             }catch(Exception e){
                 return e.getMessage()+e.getLineNumber();
+            }
+        }
+
+        @AuraEnabled
+        public static List<Evaluation_Step__c> getEvaluationRecords(string proposalId){
+            try{
+                if(!String.isBlank(proposalId)){
+                    List<Evaluation_Step__c> evaluationStepList = [SELECT Id,Name,Subject__c,Comments__c,Yes__c,No__c From Evaluation_Step__c WHERE Proposals__c =: proposalId];
+                    if(evaluationStepList.size() > 0){
+                        system.debug('evaluationStepList -----> '+evaluationStepList);
+                        return evaluationStepList;
+                    }
+                }
+                system.debug('null ------> ');
+                return null;
+            }catch(Exception e){
+                return null;
+            }
+        }
+
+        @AuraEnabled
+        public static string saveEvaluationRecords(List<Evaluation_Step__c> evaluationRecordList){
+            try{
+                update evaluationRecordList;
+                return 'SUCCESS';
+            }catch(Exception e){
+                return e.getMessage() + e.getLineNumber();
             }
         }
 }

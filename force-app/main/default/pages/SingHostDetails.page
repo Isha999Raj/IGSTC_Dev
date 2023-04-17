@@ -189,11 +189,17 @@
                             
                             <div class="col-md-4">
                                 <label class="font-if">Country<span class="ms-2 text-danger">*</span></label>
-                                <input ng-focus="removeClass('country')" id="country" type="text" ng-model="hostDetails.BillingCountry" class="form-control" ng-disabled="proposalStage" />
+                                <select class="form-control" aria-label="Default select example" id="country" ng-focus="removeClass('country')" ng-model="hostDetails.BillingCountry" ng-disabled="proposalStage" ng-change="onCountryChange()">
+                                    <option ng-repeat="staff in countrytype">{{staff}}</option>
+                                </select>
+                                <!-- <input ng-focus="removeClass('country')" id="country" type="text" ng-model="hostDetails.BillingCountry" class="form-control" ng-disabled="proposalStage" /> -->
                             </div>
                             <div class="col-md-4">
                                 <label class="font-if">State<span class="ms-2 text-danger">*</span></label>
-                                <input ng-focus="removeClass('state')" id="state" type="text" ng-model="hostDetails.BillingState" class="form-control" ng-disabled="proposalStage" />
+                                <select class="form-control" aria-label="Default select example" ng-model="hostDetails.BillingState" id="state" ng-focus="removeClass('state')" ng-disabled="proposalStage">
+                                    <option ng-repeat="staff in hostDetails.stateList">{{staff}}</option>
+                                </select>
+                                <!-- <input ng-focus="removeClass('state')" id="state" type="text" ng-model="hostDetails.BillingState" class="form-control" ng-disabled="proposalStage" /> -->
                             </div>
                             <div class="col-md-4">
                                 <label class="font-if">Pin Code<span class="ms-2 text-danger">*</span></label>

@@ -54,7 +54,9 @@
                   -webkit-transform: scale(1);
                   -webkit-transform-origin: 0 0;
                 }
-                
+                .heading-tab{
+                    border-bottom: solid 3px #171347;
+                }
                 @media screen and (-webkit-min-device-pixel-ratio:0) {
                   #myIframe {
                     zoom: 1;
@@ -97,26 +99,22 @@
                                 <i class="fa-solid fa-gauge fa-2x"></i>
                                 <span style="display:none;" class="nav_name">Dashboard</span>
                             </span>
-                            <span ng-click="showDraft()" class="nav_link">
-                                <!-- <i class='bx bx-bookmark bx-md ms-2 nav_icon'></i> -->
+                            <!-- <span ng-click="showDraft()" class="nav_link">
                                 <i class="fa-brands fa-firstdraft fa-2x"></i>
                                 <span style="display:none;" class="nav_name">Draft</span>
                             </span>
                             <span ng-click="showPending()" class="nav_link">
-                                <!-- <i class='bx bx-bar-chart-alt-2 bx-md ms-2 nav_icon'></i> -->
                                 <i class="fa-regular fa-pen-to-square fa-2x"></i>
                                 <span style="display:none;" class="nav_name">Pending</span>
                             </span>
                             <span ng-click="showSubmitted()" class="nav_link">
-                                <!-- <i class='bx bx-folder nav_icon bx-md ms-2'></i> -->
                                 <i class="fa-solid fa-file-circle-check fa-2x"></i>
                                 <span style="display:none;" class="nav_name">Submitted</span>
                             </span>
                             <span ng-click="showReviewerReviews()" class="nav_link">
-                                <!-- <i class='bx bx-folder nav_icon bx-md ms-2'></i> -->
                                 <i class="fa-solid fa-list-check fa-2x"></i>
                                 <span style="display:none;" class="nav_name">My Reviews</span>
-                            </span>
+                            </span> -->
                         </div>
                     <span ng-click="signOutReviewer()" class="nav_link">
                         <!-- <i class='bx bx-log-out nav_icon bx-md ms-2'></i> -->
@@ -311,17 +309,17 @@
                         </div> -->
                         <div class="row mt-4">
                             <div class="col-md-12">
-                                <h4>Reviews By Due Date</h4>
+                                <!-- <h4>Reviews By Due Date</h4> -->
                                 <table class="tablefinance w-100">
                                     <thead>
                                         <tr>
                                             <th nowrap="true">Sr. No.</th>
-                                            <th nowrap="true">Application Id</th>
+                                            <th nowrap="true">Application ID</th>
                                             <th>Proposal Title</th>
-                                            <th>Campaign</th>
+                                            <th>Programme</th>
                                             <!-- <th>Proposal Acronym</th> -->
                                             <th>Status</th>
-                                            <th nowrap="true">Due Date</th>
+                                            <!-- <th nowrap="true">Due Date</th> -->
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -335,8 +333,12 @@
                                             <td ng-if="row.Stage__c=='Draft'" class="color-badge-draft">{{row.Stage__c}}</td>
                                             <td ng-if="row.Stage__c=='Submitted'" class="color-badge-submitted">{{row.Stage__c}}</td>
                                             <td ng-if="row.Stage__c=='Pending'" class="color-badge-pending">{{row.Stage__c}}</td>
-                                            <td>{{row.Review_Due_Date__c|date:"dd-MM-yyyy"}}</td>
-                                            <td><button class="btn btn-success w-100 background-theme" ng-click="enableProjectDetails(row.Proposals__r.Id,false)"><i class="fa-solid fa-eye me-3"></i>View</button></td>
+                                            <!-- <td>{{row.Review_Due_Date__c|date:"dd-MM-yyyy"}}</td> -->
+                                            <td>
+                                                <button class="btn btn-success w-100 background-theme" ng-if="row.Stage__c=='Draft'" ng-click="enableProjectDetails(row.Proposals__r.Id,false,row.Stage__c)"><i class="fa-solid fa-eye me-3"></i>Modify</button>
+                                                <button class="btn btn-success w-100 background-theme" ng-if="row.Stage__c=='Submitted'" ng-click="enableProjectDetails(row.Proposals__r.Id,false,row.Stage__c)"><i class="fa-solid fa-eye me-3"></i>Review/Modify</button>
+                                                <button class="btn btn-success w-100 background-theme" ng-if="row.Stage__c=='Pending'" ng-click="enableProjectDetails(row.Proposals__r.Id,false,row.Stage__c)"><i class="fa-solid fa-eye me-3"></i>Review</button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -574,7 +576,7 @@
                                                 </div>
                                                 <span>Reviews</span>
                                             </a>
-                                        </li>  
+                                        </li>                                         
                                         <!-- <li class="active pb-cursor">
                                             <a ng-click="tabToggle('proposalSummary')">
                                                 <div class="icon-circle">
@@ -588,33 +590,42 @@
                                                 <div class="icon-circle">
                                                     <i class="fa-regular fa-address-card"></i>
                                                 </div>
-                                                <span>Proposal</span>
+                                                <span>Proposal Brief</span>
                                             </a>
                                         </li>
                                         <li class="active pb-cursor">
+                                            <a href="{{fileUrl}}" id="hrfAppPDF" style="text-decoration: none;color:black;" target="_blank">
+                                                <div class="icon-circle">
+                                                    <i class="fa-solid fa-file-pdf"></i>
+                                                </div> 
+                                                   <span>View Application</span>                                            
+                                                <!-- <span><a href="{{fileUrl}}" id="hrfAppPDF" style="text-decoration: none;color:black;" target="_blank">View Application</a></span> -->
+                                            </a>
+                                        </li>  
+                                        <!-- <li class="active pb-cursor">
                                             <a ng-click="tabToggle('AccountTable')">
                                                 <div class="icon-circle">
                                                     <i class="fa-regular fa-address-card"></i>
                                                 </div>
                                                 <span>Account</span>
                                             </a>
-                                        </li>
-                                        <li class="active pb-cursor">
+                                        </li> -->
+                                        <!-- <li class="active pb-cursor">
                                             <a ng-click="tabToggle('ContactTable')">
                                                 <div class="icon-circle">
                                                     <i class="fa-regular fa-user"></i>
                                                 </div>
                                                 <span>Contact</span>
                                             </a>
-                                        </li>
-                                        <li class="active pb-cursor" ng-show="showIndustrial">
+                                        </li> -->
+                                        <!-- <li class="active pb-cursor" ng-show="showIndustrial">
                                             <a ng-click="tabToggle('HostTable')">
                                                 <div class="icon-circle">
                                                     <i class="fa-regular fa-user"></i>
                                                 </div>
                                                 <span>Host Details</span>
                                             </a>
-                                        </li>
+                                        </li> -->
                                         <!-- <li class="active pb-cursor" ng-show="show2plus2">
                                             <a ng-click="tabToggle('existingGrants')">
                                                 <div class="icon-circle">
@@ -631,7 +642,7 @@
                                                 <span>Asked Grants</span>
                                             </a>
                                         </li> -->
-                                        <li class="active pb-cursor" ng-show="show2plus2">
+                                        <!-- <li class="active pb-cursor" ng-show="show2plus2">
                                             <a ng-click="tabToggle('workPackages')">
                                                 <div class="icon-circle">
                                                     <i class="fas fa-trophy"></i>
@@ -646,11 +657,40 @@
                                                 </div>
                                                 <span>Files</span>
                                             </a>
-                                        </li>                                        
+                                        </li>                                         -->
                                     </ul>
                                 </div>
-                                <div class="tab-content mt-5" id="myTabContent">
-                                    <div class="review-application">
+                                <div class="tab-content mt-5">
+                                    <div class="row grading-scale alert alert-primary">
+                                        <div class="col-md-6">
+                                        <ul>
+                                            <li>
+                                                <div class="dot excellent"></div>
+                                                Click on Reviews to review the application
+                                            </li>
+                                            <li>
+                                                <div class="dot excellent"></div> 
+                                                Click on Proposal Brief to view the brief of the proposal
+                                            </li>
+                                            <li>
+                                                <div class="dot excellent"></div>
+                                                Click on View Application to view and download the application
+                                            </li>
+                                        </ul>
+                                    </div>
+                                        <!-- <div class="col-md-4">
+                                            <h6>Click on Reviews to review the application</h6>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h6>Click on Proposal Brief to view the brief of the proposal</h6>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h6>Click on View Application to view and download the application</h6>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="tab-content" id="myTabContent">
+                                    <!-- <div class="review-application">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 Review Application - <a href="javascript:void(0)" ng-click="tabToggle('divReview')">Review</a>
@@ -659,12 +699,12 @@
                                                 Download Application - <a href="javascript:void(0)" ng-click="tabToggle('divFiles')">Files</a>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div id="AccountTable" name="divTopTables" style="display: none;">
                                         <table class="tablefinance w-100">
                                             <thead>
                                                 <tr>
-                                                    <th>Application Id</th>
+                                                    <!-- <th>Application ID</th> -->
                                                     <th nowrap="true" class="p-3">Partner Name</th>
                                                     <th>Industry/Academia</th>
                                                     <th>Country</th>
@@ -673,7 +713,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="x in partnersDetail">
-                                                    <td>{{ProposalData.Name}}</td>
+                                                    <!-- <td>{{ProposalData.Name}}</td> -->
                                                     <td class="p-3">{{x.Name}}</td>
                                                     <td ng-if="x.Industry__c==true">Industry</td>
                                                     <td ng-if="x.Industry__c==false">Academia</td>
@@ -698,7 +738,7 @@
                                                     <th nowrap="true">Phone No.</th>
                                                     <th nowrap="true">Email ID</th>
                                                     <th>Address</th>
-                                                    <th nowrap="true">Application Id</th>
+                                                    <th nowrap="true">Application ID</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -722,7 +762,7 @@
                                                     <th nowrap="true">Phone No.</th>
                                                     <th nowrap="true">Email ID</th>
                                                     <th>Address</th>
-                                                    <th nowrap="true">Application Id</th>
+                                                    <th nowrap="true">Application ID</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -744,11 +784,11 @@
                                                     <th nowrap="true" class="p-3">Acount Name</th>
                                                     <th>Contact Name</th>
                                                     <th ng-show="showIndustrial">Fellowship Type</th>
-                                                    <th nowrap="true">Date of Birth</th>
+                                                    <!-- <th nowrap="true">Date of Birth</th>
                                                     <th>Email ID</th>
                                                     <th>Phone Number</th>
-                                                    <th>Contact Address</th>
-                                                    <th nowrap="true">Application Id</th>
+                                                    <th>Contact Address</th> -->
+                                                    <!-- <th nowrap="true">Application ID</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -756,13 +796,13 @@
                                                     <td class="p-3">{{x.AccountName__c}}</td>
                                                     <td>{{x.Name}}</td>
                                                     <td ng-show="showIndustrial">{{x.Industrial_Fellowship_Type__c}}</td>
-                                                    <td>{{x.Birthdate|date:"dd-MM-yyyy"}}</td>
+                                                    <!-- <td>{{x.Birthdate|date:"dd-MM-yyyy"}}</td>
                                                     <td>{{x.Email}}</td>
                                                     <td>{{x.Phone}}</td>
                                                     <td>{{x.MailingAddress.street}}, {{x.MailingAddress.city}}, {{x.MailingAddress.state}}
                                                         , {{x.MailingAddress.country}}, {{x.MailingAddress.postalCode}}
                                                     </td>
-                                                    <td>{{ProposalData.Name}}</td>
+                                                    <td>{{ProposalData.Name}}</td> -->
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -845,46 +885,62 @@
                                     </div>
                                    
                                     <div id="divReview">
+                                        <div class="row grading-scale">
+                                            <div class="col-md-7">
+                                                <h2>Grading Scale:</h2>
+                                                <ul>
+                                                    <li>
+                                                        <div class="dot"></div>
+                                                        1 - 4 [Poor]
+                                                    </li>
+                                                    <li>
+                                                        <div class="dot good"></div> 
+                                                        5 - 7 [Good]
+                                                    </li>
+                                                    <li>
+                                                        <div class="dot excellent"></div>
+                                                        8 - 10 [Excellent]
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <h2>Score</h2>
+                                                <div class="progress-score">
+                                                    <div class="progress">
+                                                        <div class="progress-bar" role="progressbar" style="width: 33.33%" aria-valuenow="33.33" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <div class="progress-bar good" role="progressbar" style="width: 33.33%" aria-valuenow="33.33" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <div class="progress-bar excellent" role="progressbar" style="width: 33.33%" aria-valuenow="33.33" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div> 
+                                                </div>
+                                                <h2>{{ratingScore}}/{{totalRating}}</h2>
+                                            </div>
+                                        </div>
                                         <div class="review-panel">
-                                            <div class="poor">
-                                                <ul>
-                                                    <li>0</li>
-                                                    <li>1</li>
-                                                    <li>2</li>
-                                                    <li>3</li>
-                                                    <li>4</li>
-                                                </ul>
-                                                <span>Poor</span>
-                                            </div>
-                                            <div class="good">
-                                                <ul>
-                                                    <li>5</li>
-                                                    <li>6</li>
-                                                    <li>7</li>
-                                                </ul>
-                                                <span>Good</span>
-                                            </div>
-                                            <div class="excellent">
-                                                <ul>
-                                                    <li>8</li>
-                                                    <li>9</li>
-                                                    <li>10</li>
-                                                </ul>
-                                                <span>Excellent</span>
-                                            </div>
+                                            <ul>
+                                                <li>1</li>
+                                                <li>2</li>
+                                                <li>3</li>
+                                                <li>4</li>
+                                                <li class="good">5</li>
+                                                <li class="good">6</li>
+                                                <li class="good">7</li>
+                                                <li class="excellent">8</li>
+                                                <li class="excellent">9</li>
+                                                <li class="excellent">10</li>
+                                            </ul>
                                         </div>
                                         <!-- <div class="card mt-5"> -->
                                             <!-- <div class="card-header"> -->
-                                                <div class="row">
+                                                <!-- <div class="row">
                                                 <div class="col-md-12">
                                                     <h5 class="p-2">
                                                     <b>Reviewers Details</b>
                                                 </h5>
                                             </div>
-                                            </div>
+                                            </div> -->
                                             <!-- </div> -->
                                             <div class="card-body">
-                                                <div class="row">
+                                                <!-- <div class="row">
                                                     <div class="col-md-3 mb-3" ng-repeat="reviewer in reviewerData">
                                                         <div class="card card-reviewer" ng-click="showReviewerReponse($index)">
                                                             <div class="card-body">
@@ -898,15 +954,15 @@
                                                         </div>
                                                     </div>
                 
-                                                </div>
-                                                <div class="row mt-3" ng-hide="divReviewerResponse">
-                                                    <div class="col-md-8">
+                                                </div> -->
+                                                <div class="row mt-3" ng-show="divReviewerResponse">
+                                                    <!-- <div class="col-md-8">
                                                         <h4 class="color-theme">Reviewer Response</h4>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <button ng-click="divReviewerResponse=true" class="blue-btn float-end" type="button">
                                                             <i class="fa-solid fa-circle-xmark me-2"></i>Hide Response</button>
-                                                    </div>
+                                                    </div> -->
                                                     <div class="col-md-12 review-qa">
                                                         <div class="accordion" id="accordionExample">
                                                             <div class="accordion-item" ng-repeat="quetemp in QuestionTempList">
@@ -914,7 +970,7 @@
                                                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$index}}" aria-expanded="true" aria-controls="collapse{{$index}}}">
                                                                         <div class="row">
                                                                             <div class="col-6">
-                                                                                <label class="pt-3">Q{{$index+1}}) {{quetemp.getQuesLineItemList.Question__c}}</label>
+                                                                                <label class="pt-3">{{quetemp.getQuesLineItemList.Question__c}}</label>
                                                                             </div>
                                                                             <div class="col-3">
                                                                                 <!-- Rating
@@ -982,14 +1038,15 @@
                                                 <div class="col-md-12 review-qa">
                                                     <div class="accordion" id="accordionExample">
                                                         <div class="accordion-item" ng-repeat="quetemp in QuestionTempList">
-                                                            <h2 class="accordion-header mt-0" id="heading{{$index}}">
-                                                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$index}}" aria-expanded="true" aria-controls="collapse{{$index}}}">
-                                                                    <div class="row">
-                                                                        <div class="col-8 font-if">
+                                                            <!-- <h2 class="accordion-header mt-0" id="heading{{$index}}"> -->
+                                                                <!-- <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$index}}" aria-expanded="true" aria-controls="collapse{{$index}}}"> -->
+                                                                    <!-- <div class="row">
+                                                                        <div class="col-8"> -->
                                                                             <!-- <label><b>{{$index+1}}) Question:-</b></label>  -->
                                                                             <!-- <h5 class="ps-3">{{quetemp.getQuesLineItemList.Question__c}}</h5> -->
-                                                                            <label class="pt-3">Q{{$index+1}}) {{quetemp.getQuesLineItemList.Question__c}}</label>
-                                                                        </div>
+                                                                            <!-- <label class="pt-3 font-if">Q{{$index+1}}) {{quetemp.getQuesLineItemList.Question__c}}</label> -->
+                                                                        <!-- </div>
+                                                                    </div> -->
                                                                         <!-- <div class="col-3 font-if">
                                                                             Rating
                                                                             <ul class="rating" ng-model='quetemp.RRLineItemList.Ratings__c'>
@@ -998,13 +1055,14 @@
                                                                                 </li>
                                                                             </ul>
                                                                         </div> -->
+                                                                        <!-- <div class="row">
                                                                         <div class="col-2 font-if">
-                                                                            <label class="forn-if pt-3">Enter Your Grade</label>
-                                                                            </div>
-                                                                        <div class="col-2 font-if">
+                                                                            <label class="forn-if pt-3">Enter Your Grade 2</label>
+                                                                            </div> -->
+                                                                        <!-- <div class="col-2 font-if"> -->
                                                                             <!-- <label class="forn-if">Enter Your Grade</label> -->
-                                                                            <input type="number" number="quetemp.RRLineItemList.Ratings__c" ng-model="quetemp.RRLineItemList.Ratings__c" id="txtRating{{$index}}" ng-change="validateRating($index,quetemp.RRLineItemList.Ratings__c)" class="form-control"/>
-                                                                            <span class="text-danger" id="spnRating{{$index}}" style="display: none;">Please enter rating between 1 to 10</span>
+                                                                            <!-- <input type="number" number="quetemp.RRLineItemList.Ratings__c" ng-model="quetemp.RRLineItemList.Ratings__c" id="txtRating{{$index}}" ng-change="validateRating($index,quetemp.RRLineItemList.Ratings__c)" class="form-control"/>
+                                                                            <span class="text-danger" id="spnRating{{$index}}" style="display: none;">Please enter rating between 1 to 10</span> -->
                                                                             <!-- <select ng-model="quetemp.RRLineItemList.Ratings__c" class="form-control w-25 float-end">
                                                                                 <option ng-selected="{{item==quetemp.RRLineItemList.Ratings__c}}" ng-repeat="item in RatingValues">{{item}}</option>
                                                                             </select> -->
@@ -1014,16 +1072,34 @@
                                                                                     <a href="javascript:void(0)">{{item}}</a>
                                                                                 </li>
                                                                             </ul> -->
-                                                                        </div>
-                                                                    </div>
-                                                                </button>
-                                                            </h2>
+                                                                        <!-- </div> -->
+                                                                    <!-- </div> -->
+                                                                <!-- </button> -->
+                                                            <!-- </h2> -->
                                                             <div id="collapse{{$index}}" class="accordion-collapse show" aria-labelledby="heading{{$index}}" data-bs-parent="#accordionExample">
                                                                 <div class="accordion-body">
+                                                                    <div class="row" ng-show="showPecfar">
+                                                                        <div class="col-md-12 px-5">
+                                                                            <h4><label>Kindly review the applications based on the following criteria's</label></h4>
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="row">
-                                                                        <div class="col-12 font-if px-5">
-                                                                    <label class="forn-if">Comments</label>
-                                                                    <input type="text" class="answer-field font-if" ng-model="quetemp.RRLineItemList.Response__c" ng-disabled="disable" />
+                                                                        <div class="col-md-12 px-5">
+                                                                            <h5><label>{{quetemp.getQuesLineItemList.Question__c}}</label></h5>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row pt-3" ng-show="quetemp.getQuesLineItemList.Is_Rating_Applicable__c">
+                                                                        <div class="col-md-2 px-5"><label>Enter Your Grade</label></div>
+                                                                        <div class="col-md-2">
+                                                                            <input type="number" number="quetemp.RRLineItemList.Ratings__c" ng-model="quetemp.RRLineItemList.Ratings__c" id="txtRating{{$index}}" ng-change="validateRating($index,quetemp.RRLineItemList.Ratings__c)" class="form-control"/>
+                                                                            <span class="text-danger" id="spnRating{{$index}}" style="display: none;">Please enter rating between 1 to 10</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row" ng-show="quetemp.getQuesLineItemList.Is_Comment_Applicable__c">
+                                                                        <div class="col-12 px-5">
+                                                                    <label>Comments</label>
+                                                                    <textarea class="answer-field font-if" rows="10" maxlength="32768" ng-model="quetemp.RRLineItemList.Response__c" ng-disabled="disable"></textarea>
+                                                                    <!-- <input type="text" class="answer-field font-if" ng-model="quetemp.RRLineItemList.Response__c" ng-disabled="disable" /> -->
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1079,10 +1155,168 @@
                                         </div>
                                     </div>
                                     <div id="ProposalTable" name="divTopTables" style="display: none;">
+                                        <div class="row px-5">
+                                            <div class="col-md-12"><h4 class="font-if"><b class="heading-tab">Proposal Details</b></h4></div>
+                                        </div>
+                                        <div class="row px-5">
+                                            <div class="col-md-6">
+                                                <div class="row pt-3">
+                                                    <div class="col-md-6"><label>Application ID</label></div>
+                                                    <div class="col-md-6">{{ProposalData.Name}}</div>
+                                                </div>
+                                                <div class="row  pt-3" ng-show="showIndustrial||showWiser||showWorkshop||show2plus2">
+                                                    <div class="col-md-6"><label>Title of the Proposal</label></div>
+                                                    <div class="col-md-6">{{ProposalData.Title_Of__c}}</div>
+                                                </div>
+                                                <div class="row pt-3" ng-show="show2plus2">
+                                                    <div class="col-md-6"><label>Title In German</label></div>
+                                                    <div class="col-md-6">{{ProposalData.Title_In_German__c}}</div>
+                                                </div>                                                
+                                                <div class="row pt-3" ng-show="showWorkshop||show2plus2">
+                                                    <div class="col-md-6"><label>Acronym</label></div>
+                                                    <div class="col-md-6">{{ProposalData.Acronym__c}}</div>
+                                                </div>
+                                                <div class="row pt-3" ng-show="showIndustrial">
+                                                    <div class="col-md-6"><label>Fellowship Duration</label></div>
+                                                    <div class="col-md-6">{{ProposalData.Duration_In_Months_Max_36__c}} Months</div>
+                                                </div>    
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row pt-3" ng-show="showWiser">
+                                                    <div class="col-md-12">
+                                                        <label>Summary/ Abstract of the Project</label>
+                                                        <p ng-bind-html="ProposalData.Abstract_of_proposed_work__c"></p>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-3" ng-show="show2plus2">
+                                                    <div class="col-md-12">
+                                                        <label>Summary/ Abstract of the Project</label>
+                                                        <p ng-bind-html="ProposalData.Summary__c"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row pt-4 px-5">
+                                            <div class="col-md-12">
+                                                <h4 class="font-if" ng-hide="showPecfar"><b class="heading-tab">Applicant Details</b></h4>
+                                                <h4 class="font-if" ng-show="showPecfar"><b class="heading-tab">Pair Details</b></h4>
+                                            </div>
+                                        </div>
+                                        <div class="row px-5">
+                                            <div class="col-md-12">
+                                                <!-- table contact -->
                                         <table class="tablefinance w-100">
                                             <thead>
                                                 <tr>
-                                                    <th nowrap="true">Application Id</th>
+                                                    
+                                                    <th ng-show="showPecfar">Pair Name</th>
+                                                    <th ng-hide="showPecfar">Applicant Name</th>
+                                                    <th nowrap="true">Institute Name</th>
+                                                    <th ng-show="showIndustrial">Fellowship Type</th>
+                                                    <th ng-show="showPecfar">Fellowship Start Date</th>
+                                                    <th ng-show="showPecfar">Fellowship End date</th>
+                                                    <th ng-show="showPecfar">Applied As</th>
+                                                    <!-- <th nowrap="true">Date of Birth</th>
+                                                    <th>Email ID</th>
+                                                    <th>Phone Number</th>
+                                                    <th>Contact Address</th> -->
+                                                    <!-- <th nowrap="true">Application ID</th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="x in objContact">                                                    
+                                                    <td>{{x.Name}}</td>
+                                                    <td>{{x.AccountName__c}}</td>
+                                                    <td ng-show="showIndustrial">{{x.Industrial_Fellowship_Type__c}}</td>
+                                                    <td ng-show="showPecfar">{{x.Tentative_Start_Date__c|date: "dd-MM-yyyy"}}</td>
+                                                    <td ng-show="showPecfar">{{x.Tentative_End_Date__c|date: "dd-MM-yyyy"}}</td>
+                                                    <td ng-show="showPecfar">
+                                                        <!-- <i ng-if="x.MailingAddress.country=='India'"><apex:image url="{!$Resource.indiaFlag}" styleClass="img-fluid" style="max-width:30px;" /></i>
+                                                        <i ng-if="x.MailingAddress.country=='German'"><apex:image url="{!$Resource.germanyFlag}" styleClass="img-fluid" style="max-width:30px;" /></i>
+                                                        <i ng-if="x.MailingAddress.country=='Germany'"><apex:image url="{!$Resource.germanyFlag}" styleClass="img-fluid" style="max-width:30px;" /></i> -->
+                                                        <span ng-if="x.MailingAddress.country=='India'">Indian counter part</span>
+                                                        <span ng-if="x.MailingAddress.country=='German'">German counter part</span>
+                                                        <span ng-if="x.MailingAddress.country=='Germany'">German counter part</span>
+                                                    </td>
+                                                    <!-- <td>{{x.Birthdate|date:"dd-MM-yyyy"}}</td>
+                                                    <td>{{x.Email}}</td>
+                                                    <td>{{x.Phone}}</td>
+                                                    <td>{{x.MailingAddress.street}}, {{x.MailingAddress.city}}, {{x.MailingAddress.state}}
+                                                        , {{x.MailingAddress.country}}, {{x.MailingAddress.postalCode}}
+                                                    </td>
+                                                    <td>{{ProposalData.Name}}</td> -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="row pt-4 px-5">
+                                            <div class="col-md-12"><h4 class="font-if"><b class="heading-tab">Parent Details</b></h4></div>
+                                        </div>
+                                        <div class="row px-5">
+                                            <div class="col-md-12">
+                                        <table class="tablefinance w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th>Application ID</th>
+                                                    <th nowrap="true" class="p-3">Partner Name</th>
+                                                    <th>Industry/Academia</th>
+                                                    <th>Country</th>
+                                                    <th>Website</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="x in partnersDetail">
+                                                    <td>{{ProposalData.Name}}</td>
+                                                    <td class="p-3">{{x.Name}}</td>
+                                                    <td ng-if="x.Industry__c==true">Industry</td>
+                                                    <td ng-if="x.Industry__c==false">Academia</td>
+                                                    <td>
+                                                        <i ng-if="x.BillingCountry=='India'"><apex:image url="{!$Resource.indiaFlag}" styleClass="img-fluid" style="max-width:30px;" /></i>
+                                                        <i ng-if="x.BillingCountry=='German'"><apex:image url="{!$Resource.germanyFlag}" styleClass="img-fluid" style="max-width:30px;" /></i>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{x.Website}}" target="_blank">{{x.Website}}</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                            </div>
+                                        </div> -->
+                                        <div class="row pt-4 px-5" ng-show="showIndustrial||showWiser">
+                                            <div class="col-md-12"><h4 class="font-if"><b class="heading-tab">Host Details</b></h4></div>
+                                        </div>
+                                        <div class="row px-5" ng-show="showIndustrial||showWiser">
+                                            <div class="col-md-12">
+<!-- table Host ng-show="showIndustrial"-->
+<table class="tablefinance w-100">
+    <thead>
+        <tr>
+            <th nowrap="true">Name of the mentor</th>
+            <th nowrap="true">Industry/organisation name</th>
+            <!-- <th nowrap="true">Phone No.</th>
+            <th nowrap="true">Email ID</th>
+            <th>Address</th>
+            <th nowrap="true">Application ID</th> -->
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="x in objContactHost">
+            <td>{{x.Name_of_Mentor__c}}</td>
+            <td>{{x.Name}}</td>
+            <!-- <td>{{x.Account.Phone}}</td>
+            <td>{{x.Account.Email__c}}</td> -->
+            <!-- <td>{{x.Account.ACCOUNT_ADDRESS_FORMULA__c}}</td> -->
+            <!-- <td>{{ProposalData.Name}}</td> -->
+        </tr>
+    </tbody>
+</table>
+                                            </div>
+                                        </div>
+                                        <!-- <table class="tablefinance w-100">
+                                            <thead>
+                                                <tr>
+                                                    <th nowrap="true">Application ID</th>
                                                     <th ng-show="showIndustrial||showWiser||showWorkshop||show2plus2">Title of the Proposal</th>
                                                     <th ng-show="show2plus2">Title In German</th>
                                                     <th ng-show="showWorkshop||show2plus2">Acronym</th>
@@ -1118,7 +1352,9 @@
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                        </table>
+                                        </table> -->
+                                                                              
+                                        
                                     </div>
                                     <div id="proposalSummary" style="display: none;">
                                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -1482,9 +1718,9 @@
                                                 <div class="col-7">
                                                     <h5 style="font-weight: bold;">Preview</h5>
                                                     <div class="customcard" style="margin-top: 8px;width:100%;height: 40vh;background-color: aliceblue;padding: 5px;border: 0px;border-radius: 10px">
-                                                        <iframe id="myIframe" ng-src="{{fileUrl}}" style="width:100%;height:80vh;border: 0px;border-radius: 10px;"></iframe>
+                                                        <iframe id="myIframe" ng-src="{{fileUrl}}" style="width:100%;height:80vh;border: 0px;border-radius: 10px;"></iframe>                                                        
                                                     </div>
-                                                </div>
+                                                </div>  
                                               </div>
                                         </div>
                                         <!-- <div style="background-color: white;height: 50vh;padding: 3%" ng-show="documents">

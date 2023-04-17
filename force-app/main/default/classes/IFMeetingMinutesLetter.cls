@@ -3,19 +3,7 @@ public with sharing class IFMeetingMinutesLetter {
     @InvocableMethod(label='IF Minutes Letter' description='Send MinutesIF letter.' category='Application_Proposal__c')
     Public Static void ifMinutesRevisedLetter(List<String> proID){
         String proposalId = proID[0];
-        Application_Proposal__c propData = [Select id , IF_minutes_revised__c from Application_Proposal__c where id = :proposalId];
-        system.debug('propData--'+propData);
-        list<contact> conList  =[select id,name,Industrial_Fellowship_Type__c from contact WHERE Proposals__c =:proposalId];
-        system.debug('conList----'+conList);
-        String TempUrl = '';
-        TempUrl = propData.IF_minutes_revised__c;
-        system.debug('TempUrl---+'+TempUrl);
-        CongaDocGeneration.generateCongaTemplate(TempUrl);
-    }
-
-    @future (callout=true)
-    Public static void generateCongaTemplate(String var){
-        String TemplateId = CongaHelperToolLightning.generateReport(var,null,null,null,null);
-        system.debug('TemplateId'+TemplateId);
+        system.debug('proposalId ---->'+proposalId);
+        DynamicCongaTempGeneration.GenerateCongaTemplatesUsingCS(proposalId,'IF minutes revised');
     }
 }

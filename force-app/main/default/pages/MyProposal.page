@@ -123,13 +123,13 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">Application Id</th>
+            <th scope="col" nowrap="true">Application Id</th>
             <th scope="col" ng-hide="showContactNames">Title Of Proposal</th>
             <th scope="col" ng-show="showContactNames">Name of Indian Pair</th>
             <th scope="col" ng-show="showContactNames">Name of German Pair</th>
             <th scope="col">Programme</th>
             <th scope="col">Stage</th>
-            <th scope="col">Action</th>
+            <th scope="col" nowrap="true">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -144,7 +144,7 @@
             </td>
             <td>{{project.Campaign__r.Name}}</td>
             <td>{{propStage}}</td>
-            <td>
+            <td nowrap="true">
               <button type="button" class="blue-btn" ng-click="viewProposal()">{{buttonText}}</button>
                 <a ng-show="project.Document_generated__c" href="{{fileURL}}" target="_blank" class="blue-btn">Download</a>
             </td>

@@ -62,6 +62,10 @@ angular.module('cp_app').controller('revSubmit_ctrl', function($scope,$sce,$root
 
     $scope.saveFinal = function(){
         debugger;
+        if($rootScope.disabledCampaign){
+            swal('Campaign ended','Campaign deadline has been lapsed.','info');
+            return;
+        }
         if($scope.projectData.length==0){
             location.reload();
         }

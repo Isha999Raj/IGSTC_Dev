@@ -1,0 +1,63 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" 
+                access="global" controller="Proposal_Controller" >
+	
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="EvaluationRecordsList" type="List" />
+    <aura:attribute name="SetEvaluationRecordsList" type="List" />
+    <aura:attribute name="commentBox" type="string"/>
+    <aura:attribute name="yesCheck" type="boolean" default="false"/>
+    <aura:attribute name="noCheck" type="boolean" default="false"/>
+    
+    <div class="slds-m-around_xx-large">
+        
+        <table class="slds-table slds-table--bordered slds-table--cell-buffer" role="grid">      
+            <thead>  
+                <tr class="slds-text-title--caps">
+                    <th scope="col">
+                        <div class="slds-truncate" title="Subject"><b>Criteria</b></div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Comments">Comments</div>
+                    </th>
+                     
+                    <th scope="col">
+                        <div class="slds-truncate" title="Yes">Yes</div>
+                    </th>
+                     
+                    <th scope="col">
+                        <div class="slds-truncate" title="No" >No</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>        
+                <aura:iteration items="{!v.EvaluationRecordsList}" var="evaluationRec">
+                    <tr>
+                        <th scope="row">
+                            <div class="slds-truncate">{!evaluationRec.Subject__c}</div>
+                        </th>
+                        <td>
+                            <div class="slds-truncate">
+                                <lightning:input name="Comments" aura:id="comments" value="{!evaluationRec.Comments__c}"/>
+                            </div>
+                        </td>
+                        <th scope="row">
+                            <div class="slds-truncate">
+                                <lightning:input type="checkbox" aura:id="yes" name="Yes" checked="{!v.yesCheck}" onchange="{!c.handleyesCheckboxChange}" value="{!evaluationRec.Yes__c}"/>
+                            </div>
+                        </th>
+                        <td>
+                            <div class="slds-truncate">
+                                <lightning:input type="checkbox" aura:id="no" name="No" checked="{!v.noCheck}" onchange="{!c.handlenoCheckboxChange}" value="{!evaluationRec.No__c}"/>
+                            </div>
+                        </td>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+        <div>
+            <br/>
+            <lightning:button label="Submit" class="slds-button_brand" onclick="{!c.SaveEvaluationRecords }"  />
+        </div>
+    </div>
+    
+</aura:component>

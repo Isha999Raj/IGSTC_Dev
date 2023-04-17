@@ -138,7 +138,8 @@ public withOut sharing class ReviewerPortal_Controller {
         for(Reviewer__c r : rev){
             campaign.add(r.Campaign__c);
         }
-        return [select id,Stage__c, Review_Due_Date__c, Proposals__r.Campaign__r.Name, Proposals__r.Name,Proposals__r.Acronym__c,Proposals__r.Title_Of__c,Proposals__r.Title_In_German__c,Proposals__r.KeyWords__c,Proposals__r.Duration_In_Months_Max_36__c,Proposals__r.Id from Reviewer_Mapping__c where Reviewer__r.Login_Hash_Code__c =: reviewerId and Proposals__r.campaign__r.Id=:campaign];
+        // return [select id,Stage__c, Review_Due_Date__c, Proposals__r.Campaign__r.Name, Proposals__r.Name,Proposals__r.Acronym__c,Proposals__r.Title_Of__c,Proposals__r.Title_In_German__c,Proposals__r.KeyWords__c,Proposals__r.Duration_In_Months_Max_36__c,Proposals__r.Id from Reviewer_Mapping__c where Reviewer__r.Login_Hash_Code__c =: reviewerId and Proposals__r.campaign__r.Id=:campaign];
+        return [select id,Stage__c, Review_Due_Date__c, Proposals__r.Campaign__r.Name, Proposals__r.Name,Proposals__r.Acronym__c,Proposals__r.Title_Of__c,Proposals__r.Title_In_German__c,Proposals__r.KeyWords__c,Proposals__r.Duration_In_Months_Max_36__c,Proposals__r.Id from Reviewer_Mapping__c where Reviewer__r.Login_Hash_Code__c =: reviewerId];
     }
     @RemoteAction
     public static List<Reviewer_Mapping__c> getProposalByDueDate(string reviewerId){
@@ -149,21 +150,22 @@ public withOut sharing class ReviewerPortal_Controller {
             campaign.add(r.Campaign__c);
         }
         // return [select id,Stage__c, Review_Due_Date__c, Proposals__r.Name,Proposals__r.Acronym__c,Proposals__r.Title_Of__c,Proposals__r.Title_In_German__c,Proposals__r.KeyWords__c,Proposals__r.Duration_In_Months_Max_36__c,Proposals__r.Id from Reviewer_Mapping__c where Reviewer__r.Login_Hash_Code__c =: reviewerId and Review_Due_Date__c>=:todayDate];
-        return [select id,Stage__c, Review_Due_Date__c, Proposals__r.Campaign__r.Name,Proposals__r.Name,Proposals__r.Acronym__c,Proposals__r.Title_Of__c,Proposals__r.Title_In_German__c,Proposals__r.KeyWords__c,Proposals__r.Duration_In_Months_Max_36__c,Proposals__r.Id from Reviewer_Mapping__c where Reviewer__r.Login_Hash_Code__c =: reviewerId and Proposals__r.campaign__r.Id=:campaign LIMIT 50];
+        // return [select id,Stage__c, Review_Due_Date__c, Proposals__r.Campaign__r.Name,Proposals__r.Name,Proposals__r.Acronym__c,Proposals__r.Title_Of__c,Proposals__r.Title_In_German__c,Proposals__r.KeyWords__c,Proposals__r.Duration_In_Months_Max_36__c,Proposals__r.Id from Reviewer_Mapping__c where Reviewer__r.Login_Hash_Code__c =: reviewerId and Proposals__r.campaign__r.Id=:campaign LIMIT 50];
+        return [select id,Stage__c, Review_Due_Date__c, Proposals__r.Campaign__r.Name,Proposals__r.Name,Proposals__r.Acronym__c,Proposals__r.Title_Of__c,Proposals__r.Title_In_German__c,Proposals__r.KeyWords__c,Proposals__r.Duration_In_Months_Max_36__c,Proposals__r.Id from Reviewer_Mapping__c where Reviewer__r.Login_Hash_Code__c =: reviewerId LIMIT 50];
     }
     @RemoteAction
     public static WrapperProposalDetails getProposalDetails(String pid) {
-        List<contact> listContact=[select id,name,account.name,AccountId,(select id,name,Bank_IFSC_Code__c,Bank_Account_Number__c,Bank_Name__c,Bank_Address__c from Bank_Details__r),account.Name_of_Mentor__c,account.ACCOUNT_ADDRESS_FORMULA__c,account.Phone,account.Email__c,proposals__c from contact where Proposals__c=:pid];
-        List<string> accountIds=new List<string>();
-        for(Contact acc:listContact){
-            accountIds.add(acc.AccountId);
-        }
+        // List<contact> listContact=[select id,name,account.name,Account_Country_Type__c,Tentative_Start_Date__c,Tentative_End_Date__c,AccountId,(select id,name,Bank_IFSC_Code__c,Bank_Account_Number__c,Bank_Name__c,Bank_Address__c from Bank_Details__r),account.Name_of_Mentor__c,account.ACCOUNT_ADDRESS_FORMULA__c,account.Phone,account.Email__c,proposals__c from contact where Proposals__c=:pid];
+        // List<string> accountIds=new List<string>();
+        // for(Contact acc:listContact){
+        //     accountIds.add(acc.AccountId);
+        // }
         Application_Proposal__c appList = [SELECT Id,Name,Campaign__r.Name,Proposed_Venue__c,Proposed_Date__c,Workshop_Finish_Date__c,Tentative_Start_Date__c,Tentative_End_Date__c,Title_Of__c,Title_In_German__c,Abstract_of_proposed_work__c,Work_plan__c,Background_Concept_Purpose__c,Basis_for_choosing_the_pairing_fellow__c,Tentative_plans_for_networking__c,Specific_Need_For_the_Bilateral_Event__c,Brief_Statement_of_Purpose__c,Proposed_area__c,Awarded_Amount__c,Proposal_Stages__c,Thematic_Topic__c,Equipment__c,Acronym__c,Summary__c,KeyWords__c,Criteria_For_Abandoning_The_Project__c,Current_State_Of_The_Art__c,Expected_Deliverables__c,Duration_In_Months_Max_36__c,Innovative_Aspects__c,Application_Date__c,Research_Scholars__c,Necessity_Of_Funding__c,Research_Approach_Objectives__c,Project_Description__c,Reasons_For_And_Benefits_Of_Cooperation__c,
-        (SELECT  Name,AccountName__c,Department,Email,MailingAddress,Industrial_Fellowship_Type__c,Birthdate,DATE_BIRTH_FORMULA__c,Planned_research_activities_of_the_visit__c,Expected_outcomes__c,Basis_for_choosing_your_paired_member__c,Tentative_plans__c,Tentative_Start_Date__c,Tentative_End_Date__c FROM Contacts__r), (SELECT Name,Title__c,Duration_End_Month__c,Duration_Start_Month__c FROM Work_Package__r), 
+        (SELECT  Name,AccountName__c,Department,Email,MailingAddress,Industrial_Fellowship_Type__c,Birthdate,DATE_BIRTH_FORMULA__c,Planned_research_activities_of_the_visit__c,Expected_outcomes__c,Account_Country_Type__c,Basis_for_choosing_your_paired_member__c,Tentative_plans__c,Tentative_Start_Date__c,Tentative_End_Date__c FROM Contacts__r), (SELECT Name,Title__c,Duration_End_Month__c,Duration_Start_Month__c FROM Work_Package__r), 
         (SELECT Id,ParentId,Name FROM Attachments order by createdDate desc limit 1), (SELECT Name FROM Proposal_Thematic_Areas__r), Question_Template__c,        
         (SELECT Id,Name,Stage__c FROM Reviewer_Mapping__r) FROM Application_Proposal__c WHERE id =: pid limit 1];        
         // List<Account> accountList=[SELECT name,Academia__c,Industry__c,Website,BillingCountry,(select Budget__c,Duration__c,Funding_Agency__c,Starting_Date__c,Title__c from Existing_Grants__r),(select Asked_From_IGSTC__c,IGSTC_Contribution__c,Partner_Name__c,Own_Contribution__c,Total__c from Financial_Contribution__r),(SELECT Id,ParentId,Name FROM Attachments) from Account where Proposals__c=:pid and id not in:accountIds];
-        List<Account> accountList=[SELECT name,Academia__c,Industry__c,Website,BillingCountry,(select Budget__c,Duration__c,Funding_Agency__c,Starting_Date__c,Title__c from Existing_Grants__r),(select Asked_From_IGSTC__c,IGSTC_Contribution__c,Partner_Name__c,Own_Contribution__c,Total__c from Financial_Contribution__r),(SELECT Id,ParentId,Name FROM Attachments) from Account where Proposals__c=:pid];
+        List<Account> accountList=[SELECT name,Name_of_Mentor__c,Academia__c,Industry__c,Host__c,Website,BillingCountry,(select Budget__c,Duration__c,Funding_Agency__c,Starting_Date__c,Title__c from Existing_Grants__r),(select Asked_From_IGSTC__c,IGSTC_Contribution__c,Partner_Name__c,Own_Contribution__c,Total__c from Financial_Contribution__r),(SELECT Id,ParentId,Name FROM Attachments) from Account where Proposals__c=:pid];
         List<Work_Package__c> workPackageList = [SELECT Id,TRL_Level__c,End_TRL_Level__c,WP_Sequence__c,Work_Package_Detail__c,Title__c,External_Id__c,Duration__c,Application__c,Account__c,Account__r.Name,(SELECT Id,Name,Account_Name__c,Account__c FROM Account_Mapping__r),
         (SELECT Id,Name From Accounts__r) From Work_Package__c WHERE Application__c =: pid];
         
@@ -172,7 +174,7 @@ public withOut sharing class ReviewerPortal_Controller {
         instanceWrapper.accountsList=accountList;
         instanceWrapper.proposalData=appList;
         instanceWrapper.workPackagesList=workPackageList;
-        instanceWrapper.contactsList=listContact;
+        // instanceWrapper.contactsList=listContact;
         // instanceWrapper.existingGrantsList=esingGrants;
         return instanceWrapper;
     }    
@@ -182,7 +184,8 @@ public withOut sharing class ReviewerPortal_Controller {
     @RemoteAction
     public static List<Application_Proposal__c> getAllProposal(String hashId){    
         try{
-            List<Reviewer_Mapping__c> ReviewMappingList = [Select Id, Name,Stage__c,Reviewer__r.Name,Reviewer__r.Campaign__c,Reviewer__r.Email__c,Proposals__r.Name,Proposals__r.Title_Of__c,Proposals__r.Id From Reviewer_Mapping__c WHERE Reviewer__r.Login_Hash_Code__c =: hashId and Reviewer__r.Campaign__c!=null];
+            // List<Reviewer_Mapping__c> ReviewMappingList = [Select Id, Name,Stage__c,Reviewer__r.Name,Reviewer__r.Campaign__c,Reviewer__r.Email__c,Proposals__r.Name,Proposals__r.Title_Of__c,Proposals__r.Id From Reviewer_Mapping__c WHERE Reviewer__r.Login_Hash_Code__c =: hashId and Reviewer__r.Campaign__c!=null];
+            List<Reviewer_Mapping__c> ReviewMappingList = [Select Id, Name,Stage__c,Reviewer__r.Name,Reviewer__r.Campaign__c,Reviewer__r.Email__c,Proposals__r.Name,Proposals__r.Title_Of__c,Proposals__r.Id From Reviewer_Mapping__c WHERE Reviewer__r.Login_Hash_Code__c =: hashId];
                // Getting Purposal Which Are present in the Reviewer_Mapping__c object.
             Set<String> PurposalId = new Set<String>();
             Set<String> campaign = new Set<String>();
@@ -204,7 +207,7 @@ public withOut sharing class ReviewerPortal_Controller {
                                                           (SELECT Name FROM Proposal_Thematic_Areas__r), Question_Template__c,
                                                           (SELECT Id,Name,Stage__c FROM Reviewer_Mapping__r 
                                                            WHERE Reviewer__r.Login_Hash_Code__c =: hashId) 
-                                                          FROM Application_Proposal__c WHERE ID =: PurposalId and Campaign__c=:campaign];
+                                                          FROM Application_Proposal__c WHERE ID =: PurposalId];
             // String richTextToPlainText = PurposalList[0].Project_Description__c.stripHtmlTags();
             // System.debug('djsjdshdsjdsgd----'+richTextToPlainText);
             if(PurposalList.size()>0){
@@ -300,7 +303,7 @@ public withOut sharing class ReviewerPortal_Controller {
 //************************************** Getting All Response Line Item DETAIL PAGE ***********************************************
 
     @RemoteAction 
-    public Static string getAllResponseLineItem (List<QuestionLIWrapper> wrapperList, String ReviewerMapId, String param1){
+    public Static string getAllResponseLineItem (List<QuestionLIWrapper> wrapperList, String ReviewerMapId, String param1,Decimal totalScore){
         system.debug('wrapperList---'+wrapperList);
         system.debug('ReviewerMapId---'+ReviewerMapId);
         List<Reviewer_Response_LineItem__c> reviwerResToUpsert = New List<Reviewer_Response_LineItem__c>();
@@ -320,7 +323,8 @@ public withOut sharing class ReviewerPortal_Controller {
             System.debug('The reviwerResToUpsert Result ----> '+reviwerResToUpsert);
         }
         upsert reviwerResToUpsert;
-        Reviewer_Mapping__c revMap = New Reviewer_Mapping__c(Stage__c = param1,Id=ReviewerMapId);
+        Reviewer_Mapping__c revMap = New Reviewer_Mapping__c(Stage__c = param1,Total_Score__c=totalScore,Id=ReviewerMapId);
+
         update revMap;
         
         // return wrapperList;

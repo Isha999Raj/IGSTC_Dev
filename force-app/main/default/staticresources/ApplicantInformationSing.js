@@ -329,6 +329,42 @@ debugger
     $("#txtBirthdate").addClass('border-theme');
     return;
   } 
+
+  if($scope.MailingLine1==null || $scope.MailingLine1==undefined || $scope.MailingLine1=='' || $scope.MailingLine1==' '){
+    swal('info','Please enter Line 1','info');
+    $("input[name=txtLine1]").addClass('border-theme');
+    return;
+  }
+
+  if($scope.objContact.MailingCountry==null || $scope.objContact.MailingCountry==undefined || $scope.objContact.MailingCountry=='' || $scope.objContact.MailingCountry==' '){
+    swal('info','Please enter Country','info');
+    $("input[name=txtCountry]").addClass('border-theme');
+    return;
+  }
+
+  if($scope.objContact.MailingState==null || $scope.objContact.MailingState==undefined || $scope.objContact.MailingState=='' || $scope.objContact.MailingState==' '){
+    swal('info','Please enter State','info');
+    $("input[name=txtState]").addClass('border-theme');
+    return;
+  }
+
+  if($scope.objContact.MailingCity==null || $scope.objContact.MailingCity==undefined || $scope.objContact.MailingCity=='' || $scope.objContact.MailingCity==' '){
+    swal('info','Please enter District/City','info');
+    $("input[name=txtCity]").addClass('border-theme');
+    return;
+  }
+
+  if($scope.objContact.MailingPostalCode==null || $scope.objContact.MailingPostalCode==undefined || $scope.objContact.MailingPostalCode=='' || $scope.objContact.MailingPostalCode==' '){
+    swal('info','Please enter Pin Code/Zip Code','info');
+    $("input[name=txtPin]").addClass('border-theme');
+    return;
+  }
+
+  if($scope.objContact.Phone==null || $scope.objContact.Phone==undefined || $scope.objContact.Phone=='' || $scope.objContact.Phone==' '){
+    swal('info','Please enter Phone','info');
+    $("input[name=txtPhone]").addClass('border-theme');
+    return;
+  }
   var birthYear=0;
     var birthMonth=0;
     var birthDay=0;

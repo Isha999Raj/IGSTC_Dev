@@ -88,6 +88,10 @@ $scope.submitProposalIF=function(saveType){
         $scope.redirectPageURL('Home');
         return; 
     }
+    if($rootScope.disabledCampaign){
+        swal('Campaign ended','Campaign deadline has been lapsed.','info');
+        return;
+    }
     var year=0;
     var month=0;
     var day=0;
@@ -153,7 +157,7 @@ $scope.submitApplicationDetail=function(saveType,year,month,day){
     delete $scope.objContact.Attachments
     IndustrialFellowshipController.submitProposalIF($scope.objContact,saveType,$rootScope.projectId,year,month,day, function (result, event) {
         console.log(result);
-        console.log(event);
+        console.log(event);        
         debugger
         if(event.status){
             if(saveType=='d'){

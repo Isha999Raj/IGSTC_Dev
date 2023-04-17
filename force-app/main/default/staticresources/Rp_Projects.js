@@ -9,13 +9,15 @@ angular.module('rp_app').controller('projects_ctrl', function($scope,$sce,$rootS
     $rootScope.RatingValues = RatingValues;
     $scope.disable = false;
     $rootScope.pid;
-    $scope.divReviewerResponse=true;
+    $scope.divReviewerResponse=false;
     $scope.stageFileterValue = false;
     $scope.PendingProposal=false;
     $scope.DraftProposal=false;
     $scope.SubmittedProposal=false;
     $scope.myReviews=false;
     $scope.flagDashboard=true;
+    $scope.ratingScore=0;
+    $scope.totalRating=0;
     $scope.projectDescriptionShow=false;
     $scope.mainObjectiveShow=false;
     $scope.currentStateArtShow=false;
@@ -247,7 +249,6 @@ angular.module('rp_app').controller('projects_ctrl', function($scope,$sce,$rootS
         {escape:true}
         )  
     }
-    
     $scope.getReviewerDet();
     $scope.showProfileDiv=function(){
         debugger;
@@ -464,11 +465,29 @@ $scope.getOnload();
             console.log('proposal data');
             console.log(result);
             console.log(event);
+            debugger
             if(event.status && result != null){
-                $scope.partnersDetail=result.accountsList;
+                $scope.partnersDetail=[];
+                $scope.objContactHost=[];
                 $scope.ProposalData=result.proposalData;
                 $scope.objContact=result.proposalData.Contacts__r;
-                $scope.objContactHost=result.contactsList;
+                // $scope.objContact=result.contactsList;
+                console.log("proposal data contact");
+                console.log($scope.objContact);
+                if(result.accountsList.length>0){
+                    for(var i=0;i<result.accountsList.length;i++){
+                        if(result.accountsList[i].Host__c!=undefined){
+                            if(result.accountsList[i].Host__c){
+                                $scope.objContactHost.push(result.accountsList[i]);
+                            }else{
+                                $scope.partnersDetail.push(result.accountsList[i]);
+                            }
+                        }
+                    }
+                }
+                console.log('Host details');
+                console.log($scope.objContactHost);
+                // $scope.objContactHost=result.contactsList;
                 for(var i=0;i<$scope.objContact.length;i++){
                     if($scope.objContact[i].MailingAddress!=undefined)
                         if($scope.objContact[i].MailingAddress.street!=undefined)    
@@ -609,14 +628,19 @@ $scope.getOnload();
             })
         }
     }
-    $scope.enableProjectDetails = function(projectId,stageFlag){
+    $scope.enableProjectDetails = function(projectId,stageFlag,stage){
         debugger;
+        // if(stage=="Submitted"){
+        //     $scope.divReviewerResponse=true;
+        // }
+        // else{
+        //     $scope.divReviewerResponse=false;
+        // }
         $scope.reviewShow=stageFlag;
         $scope.DraftProposal=false;
         $scope.PendingProposal=false;
         $scope.SubmittedProposal=false;
         $scope.flagDashboard=false;
-        $scope.divReviewerResponse=true;
         $scope.disable=stageFlag;
         for(var i = 0; i<$scope.getAllProposalFromReviewer.length;i++){
             if($scope.getAllProposalFromReviewer[i].Id == projectId){
@@ -658,23 +682,33 @@ $scope.getOnload();
             debugger
             console.log('all questions');
             console.log(result);
+            var rating=0;
             if(event.status && result !=null){
                 for(var i=0;i<result.length;i++){
                     if(result[i].RRLineItemList!=undefined){
                         if(result[i].RRLineItemList.Ratings__c!=undefined){
                             try{
-                                result[i].RRLineItemList.Ratings__c=parseInt(result[i].RRLineItemList.Ratings__c);
+                                result[i].RRLineItemList.Ratings__c=parseFloat(result[i].RRLineItemList.Ratings__c);
+                                if(result[i].getQuesLineItemList.Is_Rating_Applicable__c){
+                                    rating=parseFloat(rating)+parseFloat(result[i].RRLineItemList.Ratings__c);
+                                }
                             }catch(e){
                                 console.log(e);
                             }
                         }
                     }
+                    if(result[i].getQuesLineItemList.Is_Rating_Applicable__c){
+                        $scope.totalRating=$scope.totalRating+10;
+                    }
                 }
+                // $scope.ratingScore=(rating/result.length).toFixed(2);
+                //$scope.totalRating=(result.length*10);
+                $scope.ratingScore=rating
                 $scope.QuestionTempList =result; 
                 if($scope.QuestionTempList.length>0){
-                if(result[0].rmStage == 'Submitted'){
-                    $scope.disable = true;
-                }                                
+                // if(result[0].rmStage == 'Submitted'){
+                //     $scope.disable = true;
+                // }                                
             }
                 $scope.$apply();
             }
@@ -707,7 +741,8 @@ $scope.getOnload();
         }
     }
     $scope.validateRating=function(index,rating){
-        if(rating<=0){
+        debugger
+        if(rating<=0 || rating==null){
             $("#spnRating"+index+"").show();
             $("#txtRating"+index+"").addClass('border-theme');
         }else if(rating>10){
@@ -718,29 +753,52 @@ $scope.getOnload();
             $("#spnRating"+index+"").hide();
             $("#txtRating"+index+"").removeClass('border-theme');
         }
+        if(rating==null || rating==undefined){
+            rating=0;
+        }
+        var rating=0;
+        for(var i=0;i<$scope.QuestionTempList.length;i++){
+            if($scope.QuestionTempList[i].RRLineItemList!=undefined){
+                if($scope.QuestionTempList[i].RRLineItemList.Ratings__c!=undefined){
+                    try{
+                        if($scope.QuestionTempList.getQuesLineItemList.Is_Rating_Applicable__c)
+                            rating=parseFloat(rating)+parseFloat($scope.QuestionTempList[i].RRLineItemList.Ratings__c);
+                    }catch(e){
+                        console.log(e);
+                    }
+                }
+            }
+        }
+        // $scope.ratingScore=(rating/$scope.QuestionTempList.length).toFixed(2);
+           $scope.ratingScore=rating.toFixed(2)
     }
     $scope.submitResponseDetail = function(param1){
         debugger;
         for(var i=0;i<$scope.QuestionTempList.length;i++){
             if($scope.QuestionTempList[i] != undefined){
                 if(param1 == 'Submitted'){
-            if($scope.QuestionTempList[i].RRLineItemList==undefined){
-                swal('Reviews','Please provide ratings & comments on all questions','error');
-                return
-            }
-                if($scope.QuestionTempList[i].RRLineItemList.Ratings__c==undefined||$scope.QuestionTempList[i].RRLineItemList.Ratings__c==""){
-                swal('Reviews','Please provide ratings & comments on all questions','error');
-                return
-            }else if($scope.QuestionTempList[i].RRLineItemList.Ratings__c<=0){
-                $("#spnRating"+i+"").show();
-                $("#txtRating"+i+"").addClass('border-theme');
-                swal('Reviews','Please enter rating between 1 to 100','error');
-                return;
-            }
-            if($scope.QuestionTempList[i].RRLineItemList.Response__c==undefined||$scope.QuestionTempList[i].RRLineItemList.Response__c==""){
-                swal('Reviews','Please provide ratings & comments on all questions','error');
-                return
-            }
+                    if($scope.QuestionTempList[i].RRLineItemList==undefined){
+                        swal('Reviews','Please provide ratings & comments on all questions','error');
+                        return
+                    }
+                    if($scope.QuestionTempList[i].getQuesLineItemList.Is_Rating_Applicable__c){
+                        if($scope.QuestionTempList[i].RRLineItemList.Ratings__c==undefined||$scope.QuestionTempList[i].RRLineItemList.Ratings__c==""){
+                            swal('Reviews','Please provide ratings & comments on all questions','error');
+                            return
+                        }
+                        if($scope.QuestionTempList[i].RRLineItemList.Ratings__c<=0){
+                            $("#spnRating"+i+"").show();
+                            $("#txtRating"+i+"").addClass('border-theme');
+                            swal('Reviews','Please enter rating between 1 to 100','error');
+                            return;
+                        }
+                    }
+                    if($scope.QuestionTempList[i].getQuesLineItemList.Is_Comment_Applicable__c){
+                        if($scope.QuestionTempList[i].RRLineItemList.Response__c==undefined||$scope.QuestionTempList[i].RRLineItemList.Response__c==""){
+                            swal('Reviews','Please provide ratings & comments on all questions','error');
+                            return
+                        }
+                }
         }
             if($scope.QuestionTempList[i]['$$hashKey'] != undefined){
                 delete($scope.QuestionTempList[i]['$$hashKey']);
@@ -770,7 +828,7 @@ $scope.getOnload();
             console.log("submit data");
             console.log($scope.qtList);
                 console.log(param1)
-        ReviewerPortal_Controller.getAllResponseLineItem( $scope.qtList, $scope.reviewerMapId, param1, function(result, event){
+        ReviewerPortal_Controller.getAllResponseLineItem( $scope.qtList, $scope.reviewerMapId, param1,$scope.ratingScore, function(result, event){
             console.log('submit response');
             console.log(result);
             console.log(event);

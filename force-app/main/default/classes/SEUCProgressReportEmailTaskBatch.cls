@@ -10,18 +10,18 @@ public class SEUCProgressReportEmailTaskBatch implements Database.Batchable<sObj
 
         system.debug('projectList:: ' + projectList);
         Date todayDate = system.today();
-        // List<Task> taskListToInsert = new List<Task>();
+        List<Task> taskListToInsert = new List<Task>();
         List<Messaging.SingleEmailMessage> emailsList = new List<Messaging.SingleEmailMessage>();
         
         for(Application_Proposal__c project : projectList){
             if(project.Next_SEUC_Email_Date__c < = project.Grant_Release_End_Dtae__c){
-            //     Task taskRecord = New Task();
-            //     taskRecord.WhatId = project.id;
-            //     taskRecord.Subject = 'SE/UC Progress Report';
-            //     taskListToInsert.add(taskRecord);
+                Task taskRecord = New Task();
+                taskRecord.WhatId = project.id;
+                taskRecord.Subject = 'SE/UC Progress Report';
+                taskListToInsert.add(taskRecord);
                 for(Contact conRec : project.Contacts__r){
-                    conRec.Login_Hash_Code__c = Utility.generateRandomString();
-                    update conRec;
+                    // conRec.Login_Hash_Code__c = Utility.generateRandomString();
+                    // update conRec;
                     Messaging.SingleEmailMessage contactEmail = new Messaging.SingleEmailMessage();
                     List <String> emailRecipients = new List <String>{conRec.Email};
                     
@@ -43,9 +43,9 @@ public class SEUCProgressReportEmailTaskBatch implements Database.Batchable<sObj
         if(!emailsList.isEmpty()) {
             Messaging.sendEmail(emailsList);
         }
-        // if(!taskListToInsert.isEmpty()){
-        //     insert taskListToInsert;
-        // }
+        if(!taskListToInsert.isEmpty()){
+            insert taskListToInsert;
+        }
     }
     
     public void finish(Database.BatchableContext bc){

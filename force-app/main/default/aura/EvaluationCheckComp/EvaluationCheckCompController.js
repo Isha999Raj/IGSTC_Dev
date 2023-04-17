@@ -13,7 +13,7 @@
             if(response.getState() === "SUCCESS"){
                 
                 var data = response.getReturnValue();
-                
+                $A.get('e.force:refreshView').fire();
             }
         });
         $A.enqueueAction(action);

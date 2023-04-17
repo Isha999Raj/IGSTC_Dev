@@ -68,15 +68,28 @@ $scope.submitSingApp=function(saveType){
         $scope.redirectPageURL('Home');
         return;
     }
+    for(var i=0;i<$scope.allDocs.length;i++){
+        if($scope.allDocs[i].userDocument.Name == 'Signature (date) of the applicant Upload in jpg/jpeg format with size between 30'){
+            if($scope.allDocs[i].userDocument.Status__c != 'Uploaded'){
+                swal('info','Please upload Signature.','info');
+                return;
+            }
+        }
+    }
     debugger
     IndustrialFellowshipController.submitSingApp($rootScope.projectId, function (result, event) {
         debugger
         if(event.status){
             $rootScope.proposalStage=true;
-                CKEDITOR.config.readOnly = true;
-            swal('success','Your proposal has been submitted successfully.','success');
-            $rootScope.proposalStage = true;
-            $scope.redirectPageURL('Home');
+                CKEDITOR.config.readOnly = true;                
+                swal({
+                    title: "Success",
+                    text: "Your proposal has been submitted successfully..",
+                    icon: "success",
+                    button: "ok!",
+                  }).then((value) => {
+                    $scope.redirectPageURL('Home');
+                      });
         }
     });
 }

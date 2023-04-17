@@ -249,8 +249,19 @@
                         </div>
             
                     <div class="row mx-5 mt-3">
-                        <div class="col-md-12">
-                            <h3 class="color-theme"><b>DECLARATION</b></h3>
+
+                        <div class="col-md-12 alert bg-color-list" role="alert">
+                            <ul class="font-if">
+                                <li><h4 class="color-theme pb-4"><b>
+                                    NOTE
+                                    </b></h4></li>
+                              <li><i class="fa-solid fa-circle text-success me-3"></i><b>If there is a problem in submitting the proposal, kindly press "CTRL+Shift+R" in one go and then try to submit. If the problem still<br/>&nbsp;&nbsp;&nbsp;&nbsp; persists, then contact us.</b></li>
+                            </ul>
+                            </div>
+
+
+                        <div class="col-md-12 mt-2">
+                            <h4 class="color-theme"><b>DECLARATION</b></h4>
                         </div>
                         </div>
                         <div class="row mx-5 mt-3">

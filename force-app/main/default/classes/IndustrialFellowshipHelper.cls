@@ -1165,7 +1165,7 @@ public String upsertConsortiaAccountDet(Account instanceAcc, String projectId){
     }
        
     public static List<Expense_Head__c> getExpenseRecords(String ProposalId){
-        list<Expense_Head__c> allExpHead = [select name,id,(select name,Description__c,Currency_Type__c,Expense_Head__c,Expense_Type__c,Year1_Expense__c,Year2_Expense__c,Year3_Expense__c from Expense_Line_Items__r) from Expense_Head__c where Proposals__c =:ProposalId];
+        list<Expense_Head__c> allExpHead = [select name,id,Proposals__c,Proposals__r.Total_funding_requested_from_IGSTC__c,(select name,Description__c,Currency_Type__c,Expense_Head__c,Expense_Type__c,Year1_Expense__c,Year2_Expense__c,Year3_Expense__c from Expense_Line_Items__r) from Expense_Head__c where Proposals__c =:ProposalId];
           
           return allExpHead;
       }
@@ -1175,8 +1175,15 @@ public String upsertConsortiaAccountDet(Account instanceAcc, String projectId){
         return allExpenceHead;
       }
 
-      public static String saveExpenceLineItem(List<Expense_Line_Item__c> expLineItem){
+      public static String saveExpenceLineItem(List<Expense_Line_Item__c> expLineItem, string appId, Integer amount){
         system.debug('expLineItem ---->'+expLineItem);
+        if(amount == null){
+            amount = 0;
+        }
+        Application_Proposal__c appRecordToUpdate = New Application_Proposal__c();
+        appRecordToUpdate.Id = appId;
+        appRecordToUpdate.Total_funding_requested_from_IGSTC__c = string.valueOf(amount);
+        upsert appRecordToUpdate;
         upsert expLineItem;
         try{
             

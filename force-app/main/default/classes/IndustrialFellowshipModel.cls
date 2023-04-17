@@ -167,9 +167,23 @@ public class IndustrialFellowshipModel {
         // return lEduDet;
     }
     public Contact getDocUploadDet(String loginHashCode){
-        // List<Education_Details__c> lEduDet=        
-        return [SELECT Id,Name,Proposals__r.Id,Proposals__r.Name,(select id,name,Bank_Account_Number__c,Bank_Address__c,Bank_Branch_Name__c,Bank_Name__c,Bank_IFSC_Code__c,Bank_SWIFT_Code__c,Bank_Type__c from Bank_Details__r),Proposals__r.Invitation_Letter_Form_Status__c,Proposals__r.Proposal_Stages__c,Proposals__r.Decision_Letter_Sent__c,Proposals__r.Travel_Form_Status__c,Proposals__r.Visa_Stages__c,Proposals__r.Undertaking_Status__c From Contact WHERE Login_Hash_Code__c=: loginHashCode Limit 1];
+        // List<Education_Details__c> lEduDet=     
+        return [SELECT Id,Name,AccountId,Proposals__r.Id,Proposals__r.Name,(select id,name,Bank_Account_Number__c,Bank_Address__c,Bank_Branch_Name__c,Bank_Name__c,Bank_IFSC_Code__c,Bank_SWIFT_Code__c,Bank_Type__c from Bank_Details__r),Proposals__r.Invitation_Letter_Form_Status__c,Proposals__r.Proposal_Stages__c,Proposals__r.Decision_Letter_Sent__c,Proposals__r.Travel_Form_Status__c,Proposals__r.Visa_Stages__c,Proposals__r.Undertaking_Status__c From Contact WHERE Login_Hash_Code__c=: loginHashCode Limit 1];
         // return lEduDet;
+    }
+    public WrapperDocGrant getDocUploadDetPECFAR(String loginHashCode){
+        // List<Education_Details__c> lEduDet=     
+        contact instanceContact = [SELECT Id,Name,AccountId,Proposals__r.Id,Proposals__r.Name,(select id,name,Bank_Account_Number__c,Bank_Address__c,Bank_Branch_Name__c,Bank_Name__c,Bank_IFSC_Code__c,Bank_SWIFT_Code__c,Bank_Type__c from Bank_Details__r),Proposals__r.Invitation_Letter_Form_Status__c,Proposals__r.Proposal_Stages__c,Proposals__r.Decision_Letter_Sent__c,Proposals__r.Travel_Form_Status__c,Proposals__r.Visa_Stages__c,Proposals__r.Undertaking_Status__c From Contact WHERE Login_Hash_Code__c=: loginHashCode Limit 1];
+        account accInstance=[select id,name,(select id,name,Bank_Account_Number__c,Bank_Address__c,Bank_Branch_Name__c,Bank_Name__c,Bank_IFSC_Code__c,Bank_SWIFT_Code__c,Bank_Type__c from Bank_Details__r) from account where id =:instanceContact.AccountId];
+        WrapperDocGrant wrapper=new WrapperDocGrant();
+        wrapper.acc=accInstance;
+        wrapper.con=instanceContact;
+        return wrapper;
+        // return lEduDet;
+    }
+    public class WrapperDocGrant{
+        Account acc;
+        Contact con;
     }
     public list<UserDocumentWrapper> getAllUserDoc(string contactId) {
         try{

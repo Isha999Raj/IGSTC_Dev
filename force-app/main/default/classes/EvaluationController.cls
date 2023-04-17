@@ -80,15 +80,26 @@ public class EvaluationController {
     
     // For Updating the Proposal Record
     public Static void checkEvlautionRecordDetails(String ProposalId, Boolean check){
-        Application_Proposal__c prop = [SELECT Id,Name,Evaluation_Criteria__c FROM Application_Proposal__c WHERe Id =:ProposalId LIMIT 1];
+        Application_Proposal__c prop = [SELECT Id,Name,Evaluation_Criteria__c,RecordType.Name FROM Application_Proposal__c WHERe Id =:ProposalId LIMIT 1];
         if(check == true){
-            if(prop.Evaluation_Criteria__c !=null){
-                System.debug('Inside Not null Condition');
-                Decimal CurrentValue = prop.Evaluation_Criteria__c;
-                prop.Evaluation_Criteria__c = CurrentValue + 20;
+            if(prop.RecordType.Name == 'Industrial Fellowship' || prop.RecordType.Name == 'PECFAR'){
+                if(prop.Evaluation_Criteria__c !=null){
+                    System.debug('Inside Not null Condition');
+                    Decimal CurrentValue = prop.Evaluation_Criteria__c;
+                    prop.Evaluation_Criteria__c = CurrentValue + 11.12;
+                }else{
+                    System.debug('Inside  null Condition');
+                    prop.Evaluation_Criteria__c =  11.12;
+                }
             }else{
-                System.debug('Inside  null Condition');
-                prop.Evaluation_Criteria__c =  20;
+                if(prop.Evaluation_Criteria__c !=null){
+                    System.debug('Inside Not null Condition');
+                    Decimal CurrentValue = prop.Evaluation_Criteria__c;
+                    prop.Evaluation_Criteria__c = CurrentValue + 20;
+                }else{
+                    System.debug('Inside  null Condition');
+                    prop.Evaluation_Criteria__c =  20;
+                } 
             }
         }
         update prop;
@@ -98,10 +109,11 @@ public class EvaluationController {
     // For Checking Criteria True  
     @AuraEnabled
     public Static Evaluation_Step__c updateCriteriaCheck(String recordId){
-        Evaluation_Step__c evStep = [SELECT Id,Name,Proposals__c,Evaluation_Check__c FROM Evaluation_Step__c WHERE Id =: recordId LIMIT 1];
+        Evaluation_Step__c evStep = [SELECT Id,Name,Proposals__c,Status__c,Evaluation_Check__c FROM Evaluation_Step__c WHERE Id =: recordId LIMIT 1];
         if(evStep.Evaluation_Check__c !=true){
             evStep.Evaluation_Check__c = true;
         }
+        evStep.Status__c = 'Completed';
         update evStep;
         System.debug('evStep Update Record ::'+evStep);
         return evStep;

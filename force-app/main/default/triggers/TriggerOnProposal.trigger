@@ -8,6 +8,7 @@ trigger TriggerOnProposal on Application_Proposal__c (after insert,after update,
     if(Trigger.isUpdate && Trigger.isAfter){
         proposalInstance.createMasterExpenseRecord(Trigger.new,Trigger.oldMap);
         proposalInstance.createDisbursmentFRecord(Trigger.newMap,Trigger.oldMap);
+        proposalInstance.createDisbursmentFRecordForPECFAR(Trigger.newMap,Trigger.oldMap);
     }
     
     if(trigger.isBefore && trigger.isUpdate){

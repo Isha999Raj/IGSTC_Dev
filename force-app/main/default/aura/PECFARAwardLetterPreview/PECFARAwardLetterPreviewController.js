@@ -54,12 +54,15 @@
         debugger;
         var action = component.get("c.sendProposal2");
         action.setParams({
-            conId : component.get("v.currentContactId")
+            conId : component.get("v.currentContactId"),
+            attId : component.get("v.fileId")
         });
         
         action.setCallback(this,function(e){
-            var toastEvent = $A.get("e.force:showToast");
-            if(e.getState()==='SUCCESS'){
+            var state = e.getState();
+            if(state === 'SUCCESS'){
+              var toastEvent = $A.get("e.force:showToast");
+            //if(e.getState()==='SUCCESS'){
                 toastEvent.setParams({
                     title : 'Success',
                     message: 'Award letter Sent Successfully',
@@ -68,6 +71,7 @@
                     type: 'success',
                     mode: 'pester'
                 });
+            //}  
             }
             else if(e.getState() ==='ERROR') {
                 var errors= response.getError();

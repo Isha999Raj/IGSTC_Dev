@@ -151,7 +151,7 @@ angular.module('cp_app').controller('ProjectDetailsSing_Ctrl', function($scope,$
                 if (event.status) {
                   $rootScope.projectId=result;
                     swal({
-                      title: "Project Details",
+                      title: "Proposals Details",
                       text: "Details of the Proposed work have been saved successfully.",
                       icon: "success",
                       button: "ok!",
@@ -162,7 +162,7 @@ angular.module('cp_app').controller('ProjectDetailsSing_Ctrl', function($scope,$
                   else
                   {
                     swal({
-                      title: "Basic Details",
+                      title: "Proposals Details",
                       text: "Exception!",
                       icon: "error",
                       button: "ok!",

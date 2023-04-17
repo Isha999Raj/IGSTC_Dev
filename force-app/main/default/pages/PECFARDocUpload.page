@@ -256,7 +256,7 @@
                         <div class="input-group input-group-lg">
                             <input type="file" accept=".pdf" ng-disabled="monthly_stage_disabled" id="fileAttendance" class="form-control " />
                             <span class="input-group-btn" ng-hide="monthly_stage_disabled">
-                                <button class="btn btn-success" ng-click="uploadFile('Upload Attendance',AttendanceReport.userDocument.Id,'','fileAttendance','Create','Check Attendance Report')" type="button">Upload</button>
+                                <button class="btn btn-success" ng-click="uploadFile('Upload Attendance',AttendanceReport.userDocument.Id,'','fileAttendance','Create','Check Attendance Report for ' +applicantName+ ' and Release next tranche')" type="button">Upload</button>
                             </span>
                         </div>
                     </div>

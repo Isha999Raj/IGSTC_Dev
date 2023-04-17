@@ -170,38 +170,29 @@
 
                 <div class="row mt-5 px-2 mx-5">
                     <table class="table basic">
-                        <thead>
-                            <tr>
-                                <th class="pb-3 color-theme" style="width:5%;"></th>
-                                <th class="pb-3 color-theme" style="width:50%;">Description</th>
-                                <th class="pb-3 color-theme" style="width:45%;">Total Grants requested from IGSTC</th>
-                                <!-- <th style="width:5%;"><i style="width:3%; font-size: 24px;"></i></th> -->
-                            </tr>
-                        </thead>
                         <tbody>
+
                             <tr ng-show="conRecord.MailingCountry == 'India'">
-                                <td>Required</td>
-                                <td>All Total Required</td>
-                                <td>Max 9 lakh</td>
+                                <td style="width: 50%">Total Grant Requested</td>
+                                <td style="width: 50%"><input class="form-control" ng-model="year1" ng-disabled="true" /></td>
+                            </tr>
+                            <tr ng-hide="conRecord.MailingCountry == 'India'">
+                                <td>Total Grant Requested</td>
+                                <td><input class="form-control" ng-model="year1Germany" ng-disabled="true" /></td>
+                            </tr>
+
+                            <!-- <tr ng-show="conRecord.MailingCountry == 'India'">
+                                <td style="width: 50%">All Total Required</td>
+                                <td style="width: 50%">Max 9 lakh</td>
                             </tr>
 
                             <tr ng-hide="conRecord.MailingCountry == 'India'">
-                                <td>Required</td>
-                                <td>All Total Required</td>
-                                <td>Max 10000 €</td>
-                            </tr>
-                            <tr ng-show="conRecord.MailingCountry == 'India'">
-                                    <td>Total</td>
-                                    <td>All total Expenses</td>
-                                    <td><input class="form-control" ng-model="year1" ng-disabled="true" /></td>
-                            </tr>
-                            <tr ng-hide="conRecord.MailingCountry == 'India'">
-                                <td>Total</td>
-                                <td>All total Expenses</td>
-                                <td><input class="form-control" ng-model="year1Germany" ng-disabled="true" /></td>
-                        </tr>
+                               <td>All Total Required</td>
+                                <td>Max €10000</td>
+                            </tr> -->
                         </tbody>
                     </table>
+                    <span class="required-asterisk" style="color:red;">***&nbsp;&nbsp;<small class="label-rtf"><b>Max upto € 10000(For German Applicant) / INR 9.0 Lakh (For Indian Applicant)</b></small></span>
                 </div>
 
             <div class="m-5" ng-if="!proposalStage">

@@ -281,8 +281,9 @@
                             <div class="col-md-10">
                                 <form name="formPrjDet1">
                                 <p class="color-theme">Abstract of the proposed work<span class="text-danger me-2">*</span></p>
-                                <input type="text" id="txtProposedWork" ng-disabled="proposalStage" name="txtInputs" maxlength="255" ng-focus="removeClass()" ng-model="objProposal.Abstract_of_proposed__c" class="form-control py-5" />
-                                <span ng-if="!formPrjDet1.txtInputs.$valid" class="text-danger">Please enter a valid email address</span>
+                                <textarea id="txtProposedWork" class="form-control" rows="3" maxlength="255" ng-model="objProposal.Abstract_of_proposed__c" ng-disabled="proposalStage" ng-focus="removeClass()"></textarea>
+                                <!-- <input type="text" id="txtProposedWork" ng-disabled="proposalStage" name="txtInputs" maxlength="255" ng-focus="removeClass()" ng-model="objProposal.Abstract_of_proposed__c" class="form-control py-5" /> -->
+                                <!-- <span ng-if="!formPrjDet1.txtInputs.$valid" class="text-danger">Please enter a valid email address</span> -->
                             </form>
                             </div>
                             </div>
@@ -291,8 +292,9 @@
                                 <div class="col-md-10">
                                 <form name="formPrjDet">
                                     <p class="color-theme">Brief description of the Organisation/Institution/Industry<span class="text-danger me-2">*</span></p>
-                                    <input type="text" id="txtBStatement" ng-disabled="proposalStage" name="txtInputs" maxlength="255" ng-focus="removeClass()" ng-model="objProposal.Brief_Statement_of_Purpose__c" class="form-control py-5" />
-                                    <span ng-if="!formPrjDet.txtInputs.$valid" class="text-danger">Please enter a valid email address</span>
+                                    <textarea id="txtBStatement" class="form-control" rows="3" maxlength="255" ng-model="objProposal.Brief_Statement_of_Purpose__c" ng-disabled="proposalStage" ng-focus="removeClass()"></textarea>
+                                    <!-- <input type="text" id="txtBStatement" ng-disabled="proposalStage" name="txtInputs" maxlength="255" ng-focus="removeClass()" ng-model="objProposal.Brief_Statement_of_Purpose__c" class="form-control py-5" /> -->
+                                    <!-- <span ng-if="!formPrjDet.txtInputs.$valid" class="text-danger">Please enter a valid email address</span> -->
                                 </form>
                                 </div>
                             </div>

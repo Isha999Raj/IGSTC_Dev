@@ -26,17 +26,18 @@ angular.module('cp_app').controller('PECFARDocUpload_Ctrl', function($scope,$roo
     $("#spnBankName,#spnAccNo,#spnIFSC,#spnSWIFTCode").hide();
     $scope.getOnLoad=function(){
         debugger
-        IndustrialFellowshipController.getDocUploadDet($rootScope.userHashId, function (result, event) {
+        IndustrialFellowshipController.getDocUploadDetPECFAR($rootScope.userHashId, function (result, event) {
             console.log('Bank Details');
             console.log(result);
             console.log(event);    
             debugger  
-            $scope.objContact=result;
-            $scope.objProposal=result.Proposals__r;
-            if(result.Bank_Details__r==undefined){
-                $scope.objBank={Contact__c:result.Id};
+            $scope.objContact=result.con;
+            if(result.con.Proposals__r!=undefined)
+                $scope.objProposal=result.con.Proposals__r;
+            if(result.acc.Bank_Details__r==undefined){
+                $scope.objBank={Account__c:result.acc.Id};
             }else{
-                $scope.objBank=result.Bank_Details__r[0];
+                $scope.objBank=result.acc.Bank_Details__r[0];
             }
                   $scope.$apply();
                   if($scope.objProposal.Decision_Letter_Sent__c!=undefined){                    

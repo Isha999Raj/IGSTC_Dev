@@ -309,8 +309,9 @@ $scope.deleteEducationRow = function(eduId){
     for(var i=0;i<$scope.employmentDetails.length;i++){
         delete ($scope.employmentDetails[i]['$$hashKey']); 
     }
-
-        ApplicantPortal_Contoller.SaveWorkshopContactDetails($scope.allDetailList,$scope.educationDetails,$scope.employmentDetails, function(result,event){
+    debugger
+delete $scope.allDetailList.Account;
+        ApplicantPortal_Contoller.SaveWorkshopContactDetails2($scope.allDetailList,$scope.educationDetails,$scope.employmentDetails, function(result,event){
             debugger;
             if(event.status){
                 debugger;

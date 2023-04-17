@@ -159,7 +159,7 @@
                 <div class="row box-shadow-2 mt-5 mx-5 p-3">
                     <div class="row mt-5 pb-5" style="margin-left: -1px">
                         <div class="col-md-5">
-                            <label class="font-if">Consent Letter/No Objection Certificate from the Parent Institution (max size 1 MB) <br/><span style="color:#fff;">.</span></label>
+                            <label class="font-if">Consent Letter/No Objection Certificate from the Parent Institution (max size 1 MB)</label>
                                 <div class="input-group input-group-lg">
                                     <input type="file" accept=".pdf" ng-disabled="proposalStage" id="{{doc.userDocument.Name}}" class="form-control " />
                                     <span class="input-group-btn" ng-hide="proposalStage">
@@ -204,6 +204,7 @@
                         </div>
                         <div class="col-md-1 mt-3">
                             <div ng-show="doc3.userDocument.Status__c=='Uploaded'">
+                                <span style="color:#fff;">.</span>
                                 <!-- <a class="blue-btn py-3 mt-4 float-end" href="{{doc.ContentDistribution.DistributionPublicUrl}}" target="_blank">View</a> -->
                                 <a class="blue-btn py-3 mt-4 float-end" ng-click="filePreviewHandler(doc3)">View</a>
                             </div>

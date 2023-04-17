@@ -28,7 +28,8 @@
         debugger;
         var action = component.get("c.sendProposal");
         action.setParams({
-            propId : component.get("v.recordId")
+            propId : component.get("v.recordId"),
+            attId : component.get("v.fileId")
         });
         
         

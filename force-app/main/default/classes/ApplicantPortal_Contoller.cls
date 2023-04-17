@@ -128,7 +128,7 @@ public withOut sharing class ApplicantPortal_Contoller {
     
     @RemoteAction
     public static List<Campaign> fetchCampaignsPrograms(){
-        List<Campaign> campaignList = [SELECT Id,Name,Description,EndDate,Image_URL__c,RedirectPage__c,Cut_Off_Start_Date__c,Cut_Off_End_Date__c,(select name,id from Attachments order by createdDate DESC),(SELECT Id,Campaign__c,Name,Description__c FROM Campaign_Guidlines__r) FROM Campaign];
+        List<Campaign> campaignList = [SELECT Id,Name,Description,Actual_End_Date__c,Disable_Campaign__c,EndDate,Image_URL__c,RedirectPage__c,Cut_Off_Start_Date__c,Cut_Off_End_Date__c,(select name,id from Attachments order by createdDate DESC),(SELECT Id,Campaign__c,Name,Description__c FROM Campaign_Guidlines__r) FROM Campaign];
         if(!campaignList.isEmpty()){
             return campaignList; 
         }
@@ -1548,10 +1548,12 @@ public withOut sharing class ApplicantPortal_Contoller {
     @RemoteAction
     public static string saveHostDetails(Account accRecord, Contact conRec, string projectId){
         try{
+            accRecord.BillingState = accRecord.Shipping_State__c;
             accRecord.Proposals__c = projectId;
             accRecord.Host__c = true;
             upsert accRecord;
             conRec.AccountId = accRecord.Id;
+            conRec.Proposals__c = projectId;
             upsert conRec;
             return 'success';
 

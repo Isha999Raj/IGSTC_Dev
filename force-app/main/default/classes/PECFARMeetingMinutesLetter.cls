@@ -3,19 +3,8 @@ public with sharing class PECFARMeetingMinutesLetter {
     @InvocableMethod(label='PECFAR Minutes Letter' description='Send MinutesPECFAR letter.' category='Application_Proposal__c')
     Public Static void pecfarMinutesRevisedLetter(List<String> proID){
         String proposalId = proID[0];
-        Application_Proposal__c propData = [Select id , Pecfar_minutes_of_meetings__c from Application_Proposal__c where id = :proposalId];
-        system.debug('propData--'+propData);
-        list<contact> conList  =[select id,name,Industrial_Fellowship_Type__c from contact WHERE Proposals__c =:proposalId];
-        system.debug('conList----'+conList);
-        String TempUrl = '';
-        TempUrl = propData.Pecfar_minutes_of_meetings__c;
-        system.debug('TempUrl---+'+TempUrl);
-        CongaDocGeneration.generateCongaTemplate(TempUrl);
+        system.debug('proposalId ---->'+proposalId);
+        DynamicCongaTempGeneration.GenerateCongaTemplatesUsingCS(proposalId,'Pecfar minutes of meetings');
     }
 
-    @future (callout=true)
-    Public static void generateCongaTemplate(String var){
-        String TemplateId = CongaHelperToolLightning.generateReport(var,null,null,null,null);
-        system.debug('TemplateId'+TemplateId);
-    }
 }

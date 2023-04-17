@@ -406,7 +406,7 @@ input[type=submit] {
                     <div class="text-center">
                         <button type="submit" class="btn btn-success" ng-click="getcampaigntype()">Login</button>
                     </div>
-                    <div class="btn-group mt-5">
+                    <div class="btn-group mt-5" ng-hide="disableRegistration">
                         <a href="#" onclick="myFunctionforgoogle()" id="googleUrlId" class="signin-google">
                             <apex:image url="{!$Resource.google_img}" />Sign in with Google
                         </a>
@@ -687,7 +687,9 @@ input[type=submit] {
             }
             function myFunctionforgoogle() {
                 debugger;
-
+                // if($scope.disableRegistration){
+                //         return;
+                //     }
                 var a = document.getElementById('googleUrlId');
                 a.href = "https://accounts.google.com/AccountChooser?continue=https://accounts.google.com/o/oauth2/auth?redirect_uri=" + "{!$Setup.Google_API_Details__c.Login_Redirect_URI__c}" + "%26prompt%3Dconsent%26response_type%3Dcode%26client_id=" + "{!$Setup.Google_API_Details__c.Client_Id__c}" + "%26scope%3Dhttps://www.googleapis.com/auth/userinfo.email%2Bhttps://www.googleapis.com/auth/userinfo.email%2Bhttps://www.googleapis.com/auth/userinfo.email%2Bhttps://www.googleapis.com/auth/plus.login%2Bhttps://www.googleapis.com/auth/plus.me%2Bhttps://www.googleapis.com/auth/userinfo.email%2Bhttps://www.googleapis.com/auth/userinfo.profile%2Bhttps://www.googleapis.com/auth/plus.login%2Bhttps://www.googleapis.com/auth/userinfo.email%2Bhttps://www.googleapis.com/auth/userinfo.profile%2Bhttps://www.googleapis.com/auth/plus.login%2Bhttps://www.googleapis.com/auth/plus.login%2Bhttps://www.googleapis.com/auth/plus.login%2Bhttps://www.googleapis.com/auth/plus.me%2Bhttps://www.googleapis.com/auth/userinfo.email%2Bhttps://www.googleapis.com/auth/userinfo.profile%2Bhttps://www.googleapis.com/auth/plus.login%2Bhttps://www.googleapis.com/auth/plus.me%2Bhttps://www.googleapis.com/auth/userinfo.email%2Bhttps://www.googleapis.com/auth/userinfo.profile%2Bhttps://www.googleapis.com/auth/userinfo.email%26access_type%3Doffline%26from_login%3D1%26as%3D-270badd61a3e150b&btmpl=authsub&scc=1&oauth=1";
             }
@@ -1115,6 +1117,9 @@ $scope.onPassKeyUp = function() {
                     window.open(url);
                 }
                 $scope.showRegForm = function () {
+                    if($scope.disableRegistration){
+                        return;
+                    }
                     $scope.registrationPage = true;
                     $scope.loginPage = false;
                     $scope.forgetpass = false;
@@ -1136,8 +1141,16 @@ $scope.onPassKeyUp = function() {
                     $scope.userName;
                     $scope.userPassword;
                     $scope.showSpinner = true;
-                    RegistrationForm_Controller.loginUser($scope.loginDetails.userName, $scope.loginDetails.userPassword, function (result, event) {
+                    RegistrationForm_Controller.loginUser($scope.loginDetails.userName, $scope.loginDetails.userPassword,$scope.disableRegistration, function (result, event) {
+                        debugger
+                        console.log('Login user data');
+                        console.log(result);
+                        console.log(event);
                         if (event.status && result != null) { 
+                            if($scope.disableRegistration && result.Proposals__r.Proposal_Stages__c!="Submitted"){
+                                swal('Campaign ended','Campaign deadline has been lapsed.','info');
+                                return;
+                            }
                             $scope.Profile = result;
                             $scope.hashcodeId = result.Login_Hash_Code__c;
                             $scope.userLoggedIn = true;
@@ -1312,6 +1325,7 @@ $scope.onPassKeyUp = function() {
                 $scope.removeClass=function(controlid){
                     $("#"+controlid+"").removeClass('border-theme');
                 }
+                $scope.disableRegistration=true;
         $scope.getFAQLinks=function(){
             var programmeNameLink="Industrial Fellowships";
             if($scope.campaingUrlText=="if"){
@@ -1327,9 +1341,16 @@ $scope.onPassKeyUp = function() {
                 console.log(result);
                 debugger
                 if(event.status && result!=undefined){
-                    $scope.LinkBasicGuidelines=result.Basic_Guidelines__c;
-                    $scope.LinkCallText=result.Call_Text__c;
-                    $scope.LinkFAQs=result.FAQs__c;
+                    $scope.LinkBasicGuidelines=result.link.Basic_Guidelines__c;
+                    $scope.LinkCallText=result.link.Call_Text__c;
+                    $scope.LinkFAQs=result.link.FAQs__c;
+                    $scope.allCampaigns=result.listCampaign;
+                    
+                    for(var i=0;i<$scope.allCampaigns.length;i++){
+                        if($scope.allCampaigns[i].Name.toUpperCase()==programmeNameLink.toUpperCase()){
+                            $scope.disableRegistration=$scope.allCampaigns[i].Disable_Campaign__c;
+                        }
+                    }
                     $scope.$apply();
                 }
             });

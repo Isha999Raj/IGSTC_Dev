@@ -325,6 +325,7 @@ CKEDITOR.addCss( 'border:solid 1px red !important;' );
                 for(var i=0;i<result.length; i++) {
                     if(result[i].Name.toUpperCase()==$scope.programmeHeaderName.toUpperCase()){
                         $rootScope.campaignId=result[i].Id;
+                        $rootScope.disabledCampaign=result[i].Disable_Campaign__c;
                         $rootScope.campaignEndDate=new Date(result[i].EndDate);
                         $rootScope.campaignEndDate=moment($rootScope.campaignEndDate).format('Do MMMM YYYY');
                         if(result[i].Name.toUpperCase() == "WISER" || result[i].Name.toUpperCase() == "WORKSHOP"){

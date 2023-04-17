@@ -567,17 +567,17 @@ public without sharing class RegistrationForm_Controller {
 
 
         @RemoteAction
-        public static contact loginUser(string userName, string password){
+        public static contact loginUser(string userName, string password,boolean campaignDisabled){
             try{
-                list<contact> conRec = [select firstName,LastName,id,email from contact where email =:userName AND Password__c =:password  AND Host__c != true limit 1];
+                list<contact> conRec = [select firstName,proposals__r.proposal_stages__c,LastName,id,email from contact where email =:userName AND Password__c =:password  AND Host__c != true limit 1];
                 system.debug('conRec----'+conRec);
-                if(conRec.size() > 0 ){
-                    Contact Rev = new Contact();
-                    Rev.Login_Hash_Code__c = Utility.generateRandomString();
-                    Rev.Id = conRec[0].Id;
+                if(conRec.size() > 0 ){   
+                    // Contact Rev = new Contact();
+                    conRec[0].Login_Hash_Code__c = Utility.generateRandomString();
+                    //Rev.Id = conRec[0].Id;  
                     System.debug('The Hash Code Value');
-                    update Rev;
-                    return Rev;
+                    update conRec;                    
+                    return conRec[0];
                 }else{
                     return null;
                 }
@@ -596,7 +596,14 @@ public without sharing class RegistrationForm_Controller {
                 return null;
             }
         }
-
+        @RemoteAction
+        public static List<Campaign> fetchCampaignsPrograms(){
+            List<Campaign> campaignList = [SELECT Id,Name,Description,Actual_End_Date__c,Disable_Campaign__c,EndDate,Image_URL__c,RedirectPage__c,Cut_Off_Start_Date__c,Cut_Off_End_Date__c,(select name,id from Attachments order by createdDate DESC),(SELECT Id,Campaign__c,Name,Description__c FROM Campaign_Guidlines__r) FROM Campaign];
+            if(!campaignList.isEmpty()){
+                return campaignList; 
+            }
+            return Null;
+        }
         // Forgot Reset Application Portal
         @RemoteAction
         Public Static String ForgotPassapplication(String emailId){
@@ -712,14 +719,26 @@ public without sharing class RegistrationForm_Controller {
             }
         }
         @RemoteAction
-        public static FAQ_Links__c getFAQLinks(String programme){
+        public static WrapperLinksCampaign getFAQLinks(String programme){
+            WrapperLinksCampaign wrapper=new WrapperLinksCampaign();
             FAQ_Links__c links = New FAQ_Links__c();
             try{
+                
+                List<Campaign> campaignList = [SELECT Id,Name,Description,Actual_End_Date__c,Disable_Campaign__c,EndDate,Image_URL__c,RedirectPage__c,Cut_Off_Start_Date__c,Cut_Off_End_Date__c FROM Campaign];                                
+                wrapper.listCampaign=campaignList;
                 links = [SELECT Id,Name,Basic_Guidelines__c,Call_Text__c,FAQs__c,Programme__c FROM FAQ_Links__c WHERE Programme__c =: programme];
-                return links;
+                if(links!=null)
+                wrapper.link=links;
+                return wrapper;
             }catch(Exception e){
-                return links;
+                system.debug('Error Message::=>'+e.getMessage());
+                system.debug('Error Line No::=>'+e.getLineNumber());
+                wrapper.link=links;
+                return wrapper;
             }
         }
-
+public class WrapperLinksCampaign{
+    FAQ_Links__c link;
+    List<Campaign> listCampaign;
+}
         }

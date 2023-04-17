@@ -632,7 +632,7 @@
                         </div>
                     </div>
 
-                    <div class="card-footer m-5" ng-if="!proposalStage">
+                    <div class="row mb-3 mt-3" ng-if="!proposalStage">
                         <div class="col-md-12">
                             <button class="blue-btn float-end" ng-click="saveCoordCVDetails()" type="button">
                                 <i class="fa-solid fa-check me-2"></i>Save and Next</button>

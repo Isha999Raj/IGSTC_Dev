@@ -270,7 +270,7 @@
                     </div>
 
                     <div class="col-md-12 mt-5">    
-                        <label class="pb-3 color-theme">Project Theme
+                        <label class="pb-3 color-theme">Subtopic
                             <span class="required-asterisk" style="color:red;">*</span>
                         </label>
                         <div class="col-md-12">
@@ -292,14 +292,19 @@
                                 ng-disabled="proposalStage" />
                         </div> 
                     </div>
-
-                        <div class="col-md-12 mt-5">
-                            <label class="pb-3 color-theme">
-                                <b>Keywords</b>
-                                <span class="required-asterisk" style="color:red;">*</span>
+                    <div class="row mt-5">
+                        <div class="col-md-1">
+                            <label class="ps-3 pt-1 color-theme">
+                                <b>Keywords<span class="required-asterisk" style="color:red;">*</span></b>                                
                             </label>
-                            <i ng-click="addKeyword()" class="fa-solid fa-2x text-primary fa-circle-plus mt-2 me-3" ng-if="!proposalStage"></i>
-                            
+                        </div>
+                        <div class="col-md-1">
+                            <div>
+                                <i ng-click="addKeyword()" class="fa-solid fa-2x text-primary fa-circle-plus" ng-if="!proposalStage"></i>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-md-12">                                                        
                             <div ng-repeat="item in objKeyword" ng-switch="true" on="$index % 2">
                                 	<div class="col-md-5" style="display:inline !important" ng-switch-when="0">
                                         <input id="key" ng-focus="removeClass2('key')" type="text" ng-model="item.keyword" class="form-control mb-2" maxlength="255" ng-disabled="proposalStage"  style="display:inline !important"/>
@@ -307,7 +312,7 @@
                                             <i class="fa-solid fa-circle-xmark fa-2x text-danger mt-2" ng-click="removeKeyword($index)" ng-if="!proposalStage" style="display:inline !important"></i>
                                         </span> -->
                                     </div>
-                                    <div class="col-md-1" style="display:inline !important" ng-switch-when="0">
+                                    <div class="col-md-1 mt-2 pt-1" style="display:inline !important" ng-switch-when="0">
                                         <i class="fa-solid fa-circle-xmark fa-2x text-danger mt-2" ng-click="removeKeyword($index)" ng-if="!proposalStage" style="display:inline !important"></i>
                                     </div>
                                   <div class="col-md-5"  style="display:inline !important" ng-show="objKeyword[$index+1]">
@@ -316,7 +321,7 @@
                                             <i class="fa-solid fa-circle-xmark fa-2x text-danger mt-2" ng-click="removeKeyword($index)" ng-if="!proposalStage" style="display:inline !important"></i>
                                         </span> -->
                                     </div>
-                                    <div class="col-md-1" style="display:inline !important" ng-show="objKeyword[$index+1]">
+                                    <div class="col-md-1 mt-2 pt-1" style="display:inline !important" ng-show="objKeyword[$index+1]">
                                         <i class="fa-solid fa-circle-xmark fa-2x text-danger mt-2" ng-click="removeKeyword($index)" ng-if="!proposalStage" style="display:inline !important"></i>  
                                     </div>
                             </div>
@@ -325,7 +330,9 @@
                     <div class="col-md-12 mt-5">
                         <label class="pb-3 color-theme">
                             <b>Summary (Max. characters Limit Without Space 1000)<span class="required-asterisk text-danger">*</span></b>
-                        </label>                                
+                        </label>  
+                        <div>  
+                        <small class="label-rtf"><b>To use below RTF box more efficiently, make sure you write your content in word document first and then copy paste here</b></small></div>
                         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                                 <ng-ckeditor ng-model="applicantDetails.Summary__c" ng-change="readCharacter(applicantDetails.Summary__c,0)" name="ckSummary2" id="ckSummary" ng-config="config" maxlength="1006"></ng-ckeditor>
                                 <span>Total characters : {{objRtf[0].charCount}}</span>

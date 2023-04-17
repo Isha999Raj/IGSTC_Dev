@@ -242,6 +242,11 @@ public withOut sharing class IndustrialFellowshipController {
         return instanceIFM.getDocUploadDet(loginHashCode);
     }
     @RemoteAction
+    public static IndustrialFellowshipModel.WrapperDocGrant getDocUploadDetPECFAR(String loginHashCode){
+        IndustrialFellowshipModel instanceIFM = new IndustrialFellowshipModel();
+        return instanceIFM.getDocUploadDetPECFAR(loginHashCode);
+    }
+    @RemoteAction
     public static Contact getWorkshopDocUpload(String loginHashCode){
         IndustrialFellowshipModel instanceIFM = new IndustrialFellowshipModel();
         return instanceIFM.getWorkshopDocUpload(loginHashCode);
@@ -267,8 +272,8 @@ public withOut sharing class IndustrialFellowshipController {
     }
 
     @RemoteAction
-    public static String saveExpenceLineItem(List<Expense_Line_Item__c> expLineItem){
-        return IndustrialFellowshipHelper.saveExpenceLineItem(expLineItem);
+    public static String saveExpenceLineItem(List<Expense_Line_Item__c> expLineItem, string appId, Integer amount){
+        return IndustrialFellowshipHelper.saveExpenceLineItem(expLineItem, appId, amount);
     }
 
     @RemoteAction

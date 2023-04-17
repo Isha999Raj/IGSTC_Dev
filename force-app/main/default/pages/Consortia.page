@@ -344,7 +344,21 @@
                         </div>
                     </div>
                 </div>
-
+<div class="row mt-4 mx-5 box-shadow-2">
+    <div class="col-md-12 pt-4 ps-5">
+        <h4><label>Choose Coordinator</label></h4>
+    </div>
+    <div class="col-md-12 py-3 ps-5">
+            <div>
+                <input class="form-check-input me-1" type="radio" name="GFG"/>
+                Java
+            </div>
+            <div>
+                <input class="form-check-input me-1" type="radio" name="GFG"/>
+                CSS
+            </div>
+    </div>
+</div>
                 <div class="row m-5" ng-if="!proposalStage">
                     <div class="col-md-12">
                         <button class="blue-btn float-end" ng-click="checkEmail()" type="button">

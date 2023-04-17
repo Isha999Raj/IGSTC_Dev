@@ -5,7 +5,7 @@ public class FetchAttachment {
         system.debug('proIDList ::'+proIDList);
         try{
             String ProId = proIDList[0];
-            Contact conRecord = [SELECT Id,Name,Campaign__c FROM Contact WHERE Proposals__c =: ProId];
+            Contact conRecord = [SELECT Id,Name,FirstName,LastName,Campaign__c,ApplicationId__c FROM Contact WHERE Proposals__c =: ProId];
             String contactEmail = [Select Email From Contact where Proposals__c =: ProId and Is_Primary__c = true].Email; 
             List<String> attachmentsListToBeReturned = new List<String>();
             Emailtemplate emailTempRec = New Emailtemplate();
@@ -33,7 +33,14 @@ public class FetchAttachment {
             //mail.setUseSignature(false);
             mail.setToAddresses(new String[] { contactEmail});//Set To Email Address
             mail.setSubject(emailTempRec.Subject);//Set Subject
-            mail.setHtmlBody(emailTempRec.HtmlValue);//Set HTML Body
+            string emailHtmlValue = emailTempRec.HtmlValue;
+            if(!string.isBlank(conRecord.Name)){
+                emailHtmlValue = emailHtmlValue.replace('{!Contact.Name}', conRecord.Name);
+            }
+            if(!string.isBlank(conRecord.ApplicationId__c)){
+                emailHtmlValue = emailHtmlValue.replace('{!Contact.ApplicationId__c}', conRecord.ApplicationId__c);
+            }
+            mail.setHtmlBody(emailHtmlValue);//Set HTML Body
             mail.setFileAttachments(new Messaging.EmailFileAttachment[] { attach });//Set File Attachment
             Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });//Send Email
             // if(!attList.isEmpty()){

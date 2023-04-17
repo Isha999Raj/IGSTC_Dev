@@ -259,6 +259,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label class="font-if">Line 1</label>
+                                <span class="required-asterisk" style="color:red;">*</span>
                                 <input type="text" ng-disabled="proposalStage" class="form-control" ng-model="MailingLine1" />
                             </div>
                         </div>
@@ -275,6 +276,7 @@
                         
                         <div class="col-md-4">
                             <label class="font-if">Country</label>
+                            <span class="required-asterisk" style="color:red;">*</span>
                             <select type="select" ng-disabled="proposalStage" class="form-control" ng-change="setStateList(objContact.MailingCountry)"
                                 ng-model="objContact.MailingCountry">
                                 <option ng-selected="{{item==objContact.MailingCountry}}" ng-repeat="item in country" value="{{item}}">{{item}}</option>
@@ -282,6 +284,7 @@
                         </div>
                         <div class="col-md-4">
                             <label class="font-if">State</label>
+                            <span class="required-asterisk" style="color:red;">*</span>
                             <select class="form-control" ng-disabled="proposalStage" ng-model="objContact.MailingState">
                                 <option ng-repeat="state in ddStatus" value="{{state}}">{{state}}</option>
                             </select>
@@ -289,19 +292,22 @@
                         </div>
                         <div class="col-md-4">
                             <label class="font-if">District/City</label>
+                            <span class="required-asterisk" style="color:red;">*</span>
                             <input type="text" ng-disabled="proposalStage" class="form-control" ng-model="objContact.MailingCity" />
                         </div>
                     </div>
 
                             <div class="row mt-3">
                                 <div class="col-md-4">
-                                <label class="font-if">Pin Code</label>
-                                <input type="text" ng-disabled="proposalStage" class="form-control" number="objContact.MailingPostalCode" ng-model="objContact.MailingPostalCode"
+                                <label class="font-if">Pin Code/Zip Code</label>
+                                <span class="required-asterisk" style="color:red;">*</span>
+                                <input type="text" ng-disabled="proposalStage" class="form-control" ng-model="objContact.MailingPostalCode"
                                 />
                             </div>
                             <div class="col-md-4">
                                 <label class="font-if">Phone</label>
-                                <input type="text" ng-disabled="proposalStage" class="form-control" number="objContact.Phone" ng-model="objContact.Phone"
+                                <span class="required-asterisk" style="color:red;">*</span>
+                                <input type="text" ng-disabled="proposalStage" class="form-control" ng-model="objContact.Phone"
                                 />
                             </div>
                             <div class="col-md-4">
