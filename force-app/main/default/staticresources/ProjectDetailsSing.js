@@ -21,6 +21,30 @@ angular.module('cp_app').controller('ProjectDetailsSing_Ctrl', function($scope,$
                   for(var k=0;k<keyword.length;k++){
                     $scope.objKeyword.push({"keyword":keyword[k]});
                   }
+                }
+                if(result.Proposals__r.KeyWords__c != undefined || result.Proposals__r.KeyWords__c != ''){
+                  $scope.objContact.Proposals__r.KeyWords__c = $scope.objContact.Proposals__r.KeyWords__c ? $scope.objContact.Proposals__r.KeyWords__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.objContact.Proposals__r.KeyWords__c;  
+                  // $scope.objContact.Proposals__r.Summary__c = $scope.objContact.Proposals__r.Summary__c ? $scope.objContact.Proposals__r.Summary__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.objContact.Proposals__r.Summary__c; 
+                }
+                if(result.Proposals__r.Purpose_for_Applying_Other__c != undefined || result.Proposals__r.Purpose_for_Applying_Other__c != ''){
+                  $scope.objContact.Proposals__r.Purpose_for_Applying_Other__c = $scope.objContact.Proposals__r.Purpose_for_Applying_Other__c ? $scope.objContact.Proposals__r.Purpose_for_Applying_Other__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.objContact.Proposals__r.Purpose_for_Applying_Other__c;  
+                  // $scope.objContact.Proposals__r.Summary__c = $scope.objContact.Proposals__r.Summary__c ? $scope.objContact.Proposals__r.Summary__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.objContact.Proposals__r.Summary__c; 
+                }
+                if(result.Proposals__r.Title_Of__c != undefined || result.Proposals__r.Title_Of__c != ''){
+                  $scope.objContact.Proposals__r.Title_Of__c = $scope.objContact.Proposals__r.Title_Of__c ? $scope.objContact.Proposals__r.Title_Of__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.objContact.Proposals__r.Title_Of__c;  
+                  // $scope.objContact.Proposals__r.Summary__c = $scope.objContact.Proposals__r.Summary__c ? $scope.objContact.Proposals__r.Summary__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.objContact.Proposals__r.Summary__c; 
+                }
+                if(result.Proposals__r.Proposed_area__c != undefined || result.Proposals__r.Proposed_area__c != ''){
+                  $scope.objContact.Proposals__r.Proposed_area__c = $scope.objContact.Proposals__r.Proposed_area__c ? $scope.objContact.Proposals__r.Proposed_area__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.objContact.Proposals__r.Proposed_area__c;  
+                  // $scope.objContact.Proposals__r.Summary__c = $scope.objContact.Proposals__r.Summary__c ? $scope.objContact.Proposals__r.Summary__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.objContact.Proposals__r.Summary__c; 
+                }
+                if(result.Proposals__r.Abstract_of_proposed__c != undefined || result.Proposals__r.Abstract_of_proposed__c != ''){
+                  $scope.objContact.Proposals__r.Abstract_of_proposed__c = $scope.objContact.Proposals__r.Abstract_of_proposed__c ? $scope.objContact.Proposals__r.Abstract_of_proposed__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.objContact.Proposals__r.Abstract_of_proposed__c;  
+                  // $scope.objContact.Proposals__r.Summary__c = $scope.objContact.Proposals__r.Summary__c ? $scope.objContact.Proposals__r.Summary__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.objContact.Proposals__r.Summary__c; 
+                }
+                if(result.Proposals__r.Brief_Statement_of_Purpose__c != undefined || result.Proposals__r.Brief_Statement_of_Purpose__c != ''){
+                  $scope.objContact.Proposals__r.Brief_Statement_of_Purpose__c = $scope.objContact.Proposals__r.Brief_Statement_of_Purpose__c ? $scope.objContact.Proposals__r.Brief_Statement_of_Purpose__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.objContact.Proposals__r.Brief_Statement_of_Purpose__c;  
+                  // $scope.objContact.Proposals__r.Summary__c = $scope.objContact.Proposals__r.Summary__c ? $scope.objContact.Proposals__r.Summary__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.objContact.Proposals__r.Summary__c; 
                 }  
                 if(result.Proposals__r.Summary__c != undefined || result.Proposals__r.Summary__c != ''){
                   $scope.objContact.Proposals__r.Summary__c = $scope.objContact.Proposals__r.Summary__c ? $scope.objContact.Proposals__r.Summary__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.objContact.Proposals__r.Summary__c;  
@@ -76,14 +100,13 @@ angular.module('cp_app').controller('ProjectDetailsSing_Ctrl', function($scope,$
       }
       $scope.objProposal.Campaign__c = $rootScope.tagCampaignId;
 
+      if($scope.objProposal.Purpose_for_applying__c==undefined || $scope.objProposal.Purpose_for_applying__c=='' || $scope.objProposal.Purpose_for_applying__c==' '){
+        swal('info','Please select purpose for applying to SING.','info');
+        return;
+      }
       if($scope.objProposal.Purpose_for_applying__c == "Other" && $scope.objProposal.Purpose_for_Applying_Other__c == undefined){
         swal('info','Please specify purpose for applying.','info');
         $("#other").addClass('border-theme');
-        return;
-      }
-      if($scope.objProposal.Brief_Statement_of_Purpose__c==undefined || $scope.objProposal.Brief_Statement_of_Purpose__c=='' || $scope.objProposal.Brief_Statement_of_Purpose__c==' '){
-        swal('info','Please enter brief description of the organization.','info');
-        $("#txtBStatement").addClass('border-theme');
         return;
       }
       if($scope.objProposal.Title_Of__c==undefined || $scope.objProposal.Title_Of__c=='' || $scope.objProposal.Title_Of__c==' '){
@@ -98,20 +121,50 @@ angular.module('cp_app').controller('ProjectDetailsSing_Ctrl', function($scope,$
       }
       if($scope.objProposal.Abstract_of_proposed__c==undefined || $scope.objProposal.Abstract_of_proposed__c=='' || $scope.objProposal.Abstract_of_proposed__c==' '){
         swal('info','Please enter abstract of proposed work.','info');
-        $("#txtProposedWork").addClass('border-theme');
+        //$("#txtProposedWork").addClass('border-theme');
+        return;
+      }
+      if($scope.objProposal.Brief_Statement_of_Purpose__c==undefined || $scope.objProposal.Brief_Statement_of_Purpose__c=='' || $scope.objProposal.Brief_Statement_of_Purpose__c==' '){
+        swal('info','Please enter brief description of the organization.','info');
+        $("#txtBStatement").addClass('border-theme');
         return;
       }
       if($scope.objProposal.Research_Approach_Objectives__c==undefined || $scope.objProposal.Research_Approach_Objectives__c=='' || $scope.objProposal.Research_Approach_Objectives__c==' '){
         swal('info','Please enter enhance Indo-German Colloboration.','info');
-        $("#txtIndoGerman").addClass('border-theme');
+        //$("#txtIndoGerman").addClass('border-theme');
         return;
       }
-      if($scope.objProposal.Purpose_for_applying__c==undefined || $scope.objProposal.Purpose_for_applying__c=='' || $scope.objProposal.Purpose_for_applying__c==' '){
-        swal('info','Please select purpose for applying to SING.','info');
+
+      if($scope.objProposal.Title_Of__c.length > 255){
+        swal('info','Maxlength for Title of the Proposed Work is 255 characters only.','info');
+        $("#txtTitle").addClass('border-theme');
         return;
       }
-      if($scope.objRtf[0].charCount > $scope.objRtf[0].maxCharLimit){
-        swal('info','Max characters limit for Project Description is '+$scope.objRtf[0].maxCharLimit+' only','info');
+
+      if($scope.objProposal.Proposed_area__c.length > 255){
+        swal('info','Maxlength for Broad area of work is 255 characters only.','info');
+        $("#txtBrdAreaResearch").addClass('border-theme');
+        return;
+      }
+
+      if($scope.objProposal.Abstract_of_proposed__c.length > 255){
+        swal('info','Maxlength for Abstract of the proposed work is 255 characters only.','info');
+        // $("#txtBrdAreaResearch").addClass('border-theme');
+        return;
+      }
+
+      if($scope.objProposal.Brief_Statement_of_Purpose__c.length > 255){
+        swal('info','Maxlength for Brief description of the Organisation/Institution/Industry is 255 characters only.','info');
+        // $("#txtBrdAreaResearch").addClass('border-theme');
+        return;
+      }
+      
+      if($scope.objRtf[0].charCount > 2500){
+        swal('info','Max characters limit for Project Description is 2500 only','info');
+        return;
+      }
+      if($scope.objRtf[1].charCount > 1000){
+        swal('info','Max characters limit for enhance the Indo-German Collaboration is 1000 only','info');
         return;
       }
         delete $scope.objContact.Proposals__r;
@@ -151,7 +204,7 @@ angular.module('cp_app').controller('ProjectDetailsSing_Ctrl', function($scope,$
                 if (event.status) {
                   $rootScope.projectId=result;
                     swal({
-                      title: "Proposals Details",
+                      title: "SUCCESS",
                       text: "Details of the Proposed work have been saved successfully.",
                       icon: "success",
                       button: "ok!",

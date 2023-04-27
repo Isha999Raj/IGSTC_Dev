@@ -109,7 +109,15 @@
                     $scope.$apply();
                 }
 
-
+                $scope.showHideLoginPassword = function(controlid){
+                    debugger;
+                    var x = document.getElementById(controlid);
+                    if (x.type === "password") {
+                        x.type = "text";
+                    } else {
+                        x.type = "password";
+                    }
+                }
                 $scope.forgotpass = function (flag) {
                     if(flag=='f'){
                         $scope.loginPage = true;
@@ -167,8 +175,9 @@
                         <div class="mb-3">
                             <input type="text" class="form-control" ng-model="userName" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"/>
                         </div>
-                        <div class="mb-1">
-                            <input type="password" class="form-control" ng-model="userPassword" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1"/>
+                        <div class="mb-1 position-relative">
+                            <i class="fa fa-eye" ng-click="showHideLoginPassword('txtPassword')"></i>
+                            <input type="password" class="form-control" id="txtPassword" ng-model="userPassword" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1"/>
                         </div>
                         <div class="text-end mt-1 mb-3">
                             <a href="#" ng-click="forgotpass('f')" class="link">

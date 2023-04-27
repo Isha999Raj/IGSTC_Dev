@@ -421,7 +421,7 @@
                         </div>
                             <div class="row mb-3" ng-if="!proposalStage">
                                 <div class="col-md-12">
-                                    <button class="blue-btn float-end" ng-click="saveAllDetails()" type="button">
+                                    <button class="blue-btn float-end" id="btnSubmit" ng-click="saveAllDetails()" type="button">
                                         <i class="fa-solid fa-check me-2"></i>Save and Next</button>
                                     <button class="btn btn-secondary float-end me-2" style="padding: 8px 20px !important;font-size: 16px !important;" ng-click="redirectPageURL('ConsortiaAddress')" type="button">
                                         <i class="fa-solid fa-arrow-left me-2"></i>Back</button>

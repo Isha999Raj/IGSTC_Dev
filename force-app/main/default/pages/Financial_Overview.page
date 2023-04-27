@@ -277,7 +277,7 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="x in input">
-                                    <td>{{x.Name}}</td>
+                                    <td>{{x.Name|specialChar}}</td>
                                     <td>{{x.BillingCountry}}</td>
                                     <td>
                                         <input ng-focus="removeClass('own',$index)" id="own{{$index}}" type="text" class="form-control" ng-keyup="calculateOtherField($index)" ng-change="calculateOtherField($index)" ng-keypress="calculateOtherField($index)" number="x.Financial_Contribution__r[0].Own_Contribution__c" ng-model="x.Financial_Contribution__r[0].Own_Contribution__c"
@@ -302,7 +302,7 @@
 
                 <div class="row m-5">
                     <div class="col-md-12" ng-if="!proposalStage">
-                        <button class="blue-btn float-end" ng-click="submitFinancialDetails()" type="button">
+                        <button class="blue-btn float-end" id="btnSubmit" ng-click="submitFinancialDetails()" type="button">
                             <i class="fa-solid fa-check me-2"></i>Save and Next</button>
                         <button class="blue-bordered-btn float-end me-2" ng-click="redirectPageURL('ConsortiaContacts')" type="button">
                             <i class="fa-solid fa-arrow-left me-2"></i>Previous</button>
@@ -428,6 +428,7 @@
                     </div>
                 </div>
             </div> -->
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         </body>
     </div>
 

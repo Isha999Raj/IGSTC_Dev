@@ -471,7 +471,7 @@ public withOut sharing class ApplicantPortal_Contoller {
     @RemoteAction
     public static string SaveWorkshopContactDetails2(Contact conDataList, List<Education_Details__c> eduDetails, List<Employment_Details__c> empDetails){
         try{
-            // conDataList.MailingState = conDataList.State__c;
+            conDataList.MailingState = conDataList.State__c;
             upsert conDataList;
             upsert eduDetails;
             upsert empDetails;
@@ -1427,7 +1427,7 @@ public withOut sharing class ApplicantPortal_Contoller {
             Application_Proposal__c appProposal = New Application_Proposal__c();
             Contact conRec = [SELECT Id,Proposals__c FROM Contact Where Id =: contactId];
             if(!string.isBlank(conRec.Proposals__c)){
-                appProposal = [SELECT Id,Tentative_Start_Date__c,Tentative_End_Date__c FROM Application_Proposal__c WHERE Id=: conRec.Proposals__c];
+                appProposal = [SELECT Id,Tentative_Start_Date__c,Tentative_End_Date__c,Intimation_Letter_Accepted__c FROM Application_Proposal__c WHERE Id=: conRec.Proposals__c];
             }
             return appProposal;
         }catch(Exception e){

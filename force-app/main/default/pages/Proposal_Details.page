@@ -172,18 +172,20 @@
                         
                         <div class="row mt-5 mx-5">
                             <div class="col-md-12 mb-5">
-                                    <h4 class="pb-3 color-theme"><b>Background, concept and purpose in detail (Max 3000 characters):</b>
+                                    <h4 class="pb-3 color-theme"><b>Background, concept and purpose in detail (Max 4500 characters):</b>
                                         <span class="required-asterisk" style="color:red;">*</span></h4>
                                         <small class="label-rtf"><b>To use the below RTF box more efficiently, make sure you write your content in word document first and then copy paste here</b></small>
                                     <ng-ckeditor id="txtSummary" read-Only="true" ng-change="readCharacter(proposalDetails.Background_Concept_Purpose__c,0)" ng-model="proposalDetails.Background_Concept_Purpose__c" name="ckEditor" ng-config="config" required="true" ng-required="proposalDetails.Background_Concept_Purpose__c"></ng-ckeditor>
                                     <span>Total characters : {{objRtf[0].charCount}}</span>
+                                    <span class="text-danger" ng-if="objRtf[0].errorStatus">maximum character limit is 4500</span>
                             </div>
                             <div class="col-md-12 mb-5">
-                                    <h4 class="pb-3 color-theme"><b>Specific need for the bilateral event, its relevance and mutual benefits (Max 1500 characters):</b>
+                                    <h4 class="pb-3 color-theme"><b>Specific need for the bilateral event, its relevance and mutual benefits (Max 3000 characters):</b>
                                         <span class="required-asterisk" style="color:red;">*</span></h4>
                                         <small class="label-rtf"><b>To use the below RTF box more efficiently, make sure you write your content in word document first and then copy paste here</b></small>
                                     <ng-ckeditor id="txtSummary" read-Only="true" ng-change="readCharacter(proposalDetails.Specific_Need_For_the_Bilateral_Event__c,1)" ng-model="proposalDetails.Specific_Need_For_the_Bilateral_Event__c" name="ckEditor" ng-config="config" required="true" ng-required="proposalDetails.Specific_Need_For_the_Bilateral_Event__c"></ng-ckeditor>
                                     <span>Total characters : {{objRtf[1].charCount}}</span>
+                                    <span class="text-danger" ng-if="objRtf[1].errorStatus">maximum character limit is 3000</span>
                             </div>
                         </div>
                         </div>

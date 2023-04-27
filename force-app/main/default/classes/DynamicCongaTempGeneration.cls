@@ -26,7 +26,7 @@ public class DynamicCongaTempGeneration {
         List<String> docCategoriesToBeExcluded =  exCategoriesCustomLable.split(',');
         SYSTEM.debug('docCategoriesToBeExcluded---'+docCategoriesToBeExcluded);
         system.debug('contactsByPropID'+contactsByPropID);
-        
+          String proposalRecordID='';
         List<String> UserDocumentIds = new List<String>();
         
         List<User_Document__c> UserDocList = [Select Id,Name from User_Document__c where Proposal_Id__c = :recordId AND Name NOT IN :docCategoriesToBeExcluded];
@@ -49,11 +49,13 @@ public class DynamicCongaTempGeneration {
         system.debug('Attachment Ids Are ' + attIds); 
         system.debug('contactsByPropID.get(propRec.Id)[0]'+contactsByPropID.get(propRec.Id));
         if(propRec.RecordType.Name == 'Industrial Fellowship'){
+             proposalRecordID=propRec.id;
             tempName = propRec.Name+'_IF_2023_'+contactsByPropID.get(propRec.Id)[0].Firstname +'_'+contactsByPropID.get(propRec.Id)[0].LastName;
             CongaQuery = (String)propRec.get(TempInfoRec.Formula_Field_Name__c);
             CongaQuery = CongaQuery.replace('AttachmentId=00P1y000003a34i','AttachmentId='+attIds );
             system.debug('IF CONGA'+CongaQuery);
         }else if(propRec.RecordType.Name == 'PECFAR'){
+             proposalRecordID=propRec.id;
             //german and indian logic included
             if(contactsByPropID.get(propRec.Id)[0].Account.BillingCountry == 'India'){
                 system.debug('propRec------'+contactsByPropID.get(propRec.Id)[0].Account.BillingCountry);
@@ -70,11 +72,13 @@ public class DynamicCongaTempGeneration {
             system.debug('PECFAR CONGA'+CongaQuery);
             
         }else if(propRec.RecordType.Name == 'WISER'){
+             proposalRecordID=propRec.id;
             tempName = propRec.Name+'_WISER_2023_'+contactsByPropID.get(propRec.Id)[0].Firstname +'_'+contactsByPropID.get(propRec.Id)[0].LastName;
             CongaQuery = (String)propRec.get(TempInfoRec.Formula_Field_Name__c);
             CongaQuery = CongaQuery.replace('AttachmentId=00P1y000003a34i','AttachmentId='+attIds );
             system.debug('Wiser_Conga_Url__c CONGA'+CongaQuery);
         }else if(propRec.RecordType.Name == 'SING'){
+             proposalRecordID=propRec.id;
             tempName = propRec.Name+'_SING_2023_'+contactsByPropID.get(propRec.Id)[0].Firstname +'_'+contactsByPropID.get(propRec.Id)[0].LastName;
             system.debug('Attachment Ids Are ' + attIds); 
             CongaQuery = (String)propRec.get(TempInfoRec.Formula_Field_Name__c);
@@ -82,6 +86,7 @@ public class DynamicCongaTempGeneration {
             system.debug('SING CONGA'+CongaQuery);
         }else{
             //added by Shiva !!!!!
+             proposalRecordID=propRec.id;
             string DynamcName =TempInfoRec.Formula_Field_Name__c+'_';
             tempName = DynamcName+propRec.Name+contactsByPropID.get(propRec.Id)[0].Firstname +'_'+contactsByPropID.get(propRec.Id)[0].LastName;
             system.debug('Attachment Ids Are ' + attIds); 
@@ -90,14 +95,17 @@ public class DynamicCongaTempGeneration {
             system.debug('SING CONGA'+CongaQuery);
         }
         system.debug('tempName-----'+tempName);
-        generateCongaTemplate(CongaQuery,tempName);	
+        generateCongaTemplate(CongaQuery,tempName,proposalRecordID);	
     }
     
     //This is asynchronous method which will be used to generate template for the proided URL.
     @future (callout=true)
-    Public static void generateCongaTemplate(String var,String TemplateName){
+    Public static void generateCongaTemplate(String var,String TemplateName,String propoID){
         system.debug('var ::'+var);
         String TemplateId = CongaHelperToolLightning.generateReport(var,TemplateName,null,null,null);
+        Application_Proposal__c propRecord=[select id,name,Submitted__c,Document_generated__c from Application_Proposal__c where id=:propoID];
+        propRecord.Document_generated__c=true;
+        update propRecord;
         system.debug('TemplateId'+TemplateId);
     }
 }

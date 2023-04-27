@@ -184,6 +184,11 @@ $scope.uploadAttachment = function (type, userDocId, fileId) {
             if(event.status) {
                 debugger;
                 $scope.addressDetails = result;
+                $scope.addressDetails.Name=$scope.addressDetails.Name.replace(/&amp;/g,'&').replace(/&#39;/g,'\'').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'');
+                $scope.addressDetails.Contacts[0].Department=$scope.addressDetails.Contacts[0].Department.replace(/&amp;/g,'&').replace(/&#39;/g,'\'').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'');
+                $scope.addressDetails.BillingStreet=$scope.addressDetails.BillingStreet.replace(/&amp;/g,'&').replace(/&#39;/g,'\'').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'');
+                $scope.addressDetails.BillingCity=$scope.addressDetails.BillingCity.replace(/&amp;/g,'&').replace(/&#39;/g,'\'').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'');
+                
                     if($scope.addressDetails.BillingCountry == 'India'){
                         $scope.stateList = $scope.indianStates;
                     }else if($scope.addressDetails.BillingCountry == 'Germany'){
@@ -308,18 +313,36 @@ $scope.uploadAttachment = function (type, userDocId, fileId) {
         delete ($scope.addressDetails['Contacts']);
         delete ($scope.addressDetails['$$hashKey']);
         delete ($scope.addressDetails['stateList']);
+        $("#btnSubmit").html('<i class="fa-solid fa-spinner fa-spin-pulse me-3"></i>Please wait...');
          debugger;
         ApplicantPortal_Contoller.saveAddressDetails($scope.addressDetails,$scope.contactList, function(result,event){
             debugger;
+            $("#btnSubmit").html('<i class="fa-solid fa-check me-2"></i>Save and Next');
             if(event.status){
                 debugger;
-                Swal.fire(
-                    'Success',
-                    'Consortia Details has been saved successfully.',
-                    'success'
-                );
-                $scope.disableSubmit = true; 
+                swal({
+                    title: "Success",
+                    text: "Consortia Details has been saved successfully.",
+                    icon: "success",
+                    buttons: true,
+                    dangerMode: false,
+                }).then((willDelete) => {
+                    if (willDelete) {                    
+                        $scope.disableSubmit = true; 
                 $scope.redirectPageURL('ConsortiaContacts');
+                 $scope.$apply(); 
+                    } else {
+                     return;
+                    }
+                  });
+    
+                // Swal.fire(
+                //     'Success',
+                //     'Consortia Details has been saved successfully.',
+                //     'success'
+                // );
+                // $scope.disableSubmit = true; 
+                // $scope.redirectPageURL('ConsortiaContacts');
             }
         },
         {escape:true}

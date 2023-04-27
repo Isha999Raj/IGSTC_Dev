@@ -380,18 +380,34 @@ $scope.validateFinacialDet=function(index){
         //         swal("Financial Details", "IGSTC Contribution should be greate than 0");
         //     }
         // }
-
+        $("#btnSubmit").html('<i class="fa-solid fa-spinner fa-spin-pulse me-3"></i>Please wait...');
         ApplicantPortal_Contoller.insertFinancialDetails($scope.finance, function (result, event) {
+            $("#btnSubmit").html('<i class="fa-solid fa-check me-2"></i>Save and Next');
             if (event.status) {
                 debugger;
-                Swal.fire(
-                    'Financial Detail',
-                    'Your Financial detail has been saved successfully.',
-                    'success'
-                );
-                $scope.redirectPageURL('ProjectDetail');
-                $scope.finance = result;
-                $scope.$apply();
+                swal({
+                    title: "Success",
+                    text: "Your Financial detail has been saved successfully.",
+                    icon: "success",
+                    buttons: true,
+                    dangerMode: false,
+                }).then((willDelete) => {
+                    if (willDelete) {                    
+                 $scope.redirectPageURL('ProjectDetail');
+                 $scope.finance = result;
+                 $scope.$apply(); 
+                    } else {
+                     return;
+                    }
+                  });
+                // Swal.fire(
+                //     'Financial Detail',
+                //     'Your Financial detail has been saved successfully.',
+                //     'success'
+                // );
+                // $scope.redirectPageURL('ProjectDetail');
+                // $scope.finance = result;
+                // $scope.$apply();
             }
         },
             { escape: true }

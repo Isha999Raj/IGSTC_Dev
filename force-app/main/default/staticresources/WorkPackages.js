@@ -18,6 +18,9 @@ angular.module('cp_app').controller('workPackageCtrl', function ($scope, $rootSc
                 if ($scope.AccountList != undefined) {
                     for (var i = 0; i < $scope.AccountList.length; i++) {
                         accountIdXaccount.set($scope.AccountList[i].Id, $scope.AccountList[i]);
+                        if($scope.AccountList[i].title!=undefined){
+                            $scope.AccountList[i].title=$scope.AccountList[i].titlereplace(/&amp;/g,'&').replace(/&#39;/g,'\'').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'');
+                        }
                     }
 
                     for (var i = 0; i < $scope.AccountList.length; i++) {
@@ -245,25 +248,46 @@ angular.module('cp_app').controller('workPackageCtrl', function ($scope, $rootSc
         }
 
         console.log(objData);
+        $("#btnSubmit").html('<i class="fa-solid fa-spinner fa-spin-pulse me-3"></i>Please wait...');
         debugger;
         IndustrialFellowshipController.saveWorkPackageDet(objData, $rootScope.projectId, function (result, event) {
             debugger
+            $("#btnSubmit").html('<i class="fa-solid fa-check me-2"></i>Save and Next');
             console.log('save contact details');
             console.log(result);
             console.log(event);
-            if (event.status) {
-                Swal.fire(
-                    'Success',
-                    'your Work Package details have been saved successfully..',
-                    'success'
-                );
-            if($rootScope.secondStage){
-                $scope.redirectPageURL('PIDeliverables');     
-            }else{
-                $scope.redirectPageURL('PrivacyPolicyAcceptance');     
-            }
-            $scope.$apply();
-            }
+            swal({
+                title: "Success",
+                text: "your Work Package details have been saved successfully.",
+                icon: "success",
+                buttons: true,
+                dangerMode: false,
+            }).then((willDelete) => {
+                if (willDelete) {                    
+                    if($rootScope.secondStage){
+                        $scope.redirectPageURL('PIDeliverables');     
+                    }else{
+                        $scope.redirectPageURL('PrivacyPolicyAcceptance');     
+                    }
+                    $scope.$apply();
+                } else {
+                 return;
+                }
+              });
+
+            // if (event.status) {
+            //     Swal.fire(
+            //         'Success',
+            //         'your Work Package details have been saved successfully..',
+            //         'success'
+            //     );
+            // if($rootScope.secondStage){
+            //     $scope.redirectPageURL('PIDeliverables');     
+            // }else{
+            //     $scope.redirectPageURL('PrivacyPolicyAcceptance');     
+            // }
+            // $scope.$apply();
+            // }
 
         });
     }

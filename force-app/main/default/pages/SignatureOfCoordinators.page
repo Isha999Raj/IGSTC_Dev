@@ -184,7 +184,8 @@
                                         <b class="me-2">NOTE - </b>
                                         <ul>
                                         <!-- <i class="fa-solid fa-circle-info text-success me-2"></i>Before Submission, please make sure that all partners have filled all their details.<br/> -->
-                                        <i class="fa-solid fa-circle-info text-success me-2"></i>Once submitted, you would be able to edit any information.
+                                        <i class="fa-solid fa-circle-info text-success me-2"></i>Once submitted, you won’t be able to edit the application.<br/>
+                                        <i class="fa-solid fa-circle-info text-success me-2"></i>Click on upload button to upload your signature.
                                         </ul>
                                   </div>
                             </div>
@@ -197,7 +198,7 @@
                                     
                             <div class="col-md-6">
                                 <div ng-hide="proposalStage" style="margin-right: -100px;">
-                                <label class="font-if">{{checkbox.Contacts__r[0].Name}} Signature (jpg/jpeg, Max 1 Mb)</label>
+                                <label class="font-if">{{checkbox.Contacts__r[0].Name}} Signature (jpg/jpeg, Max 1 Mb)<span class="text-danger ms-2">*</span></label>
                                 <div class="input-group input-group-lg float-end">
                                 <input type="file" accept=".png,.jpg,.jpeg" ng-disabled="proposalStage" id="{{doc.userDocument.Name}}" class="form-control float-end"/>
                                 <span class="input-group-btn" ng-hide="proposalStage">
@@ -218,7 +219,7 @@
                                     
                             <div class="col-md-6">
                                 <div ng-hide="proposalStage" style="margin-right: -100px;">
-                                <label class="font-if">{{checkbox.Contacts__r[1].Name}} Signature (jpg/jpeg, Max 1 Mb)</label>
+                                <label class="font-if">{{checkbox.Contacts__r[1].Name}} Signature (jpg/jpeg, Max 1 Mb)<span class="text-danger ms-2">*</span></label>
                                 <div class="input-group input-group-lg float-end">
                                 <input type="file" accept=".png,.jpg,.jpeg" ng-disabled="proposalStage" id="{{doc2.userDocument.Name}}" class="form-control float-end"/>
                                 <span class="input-group-btn" ng-hide="proposalStage">

@@ -225,7 +225,7 @@
                             <!-- <div class="row mt-4 mx-5"> -->
                                 <div class="col-md-6 mt-3 mb-3">
                                     <label class="font-if">
-                                        Workshop Proposed Date
+                                        Workshop Start Date
                                     </label>
                                     <span class="required-asterisk" style="color:red;">*</span>
                                     <input ng-focus="removeClass2('proposedDate')" id="proposedDate" name="Proposed Date" placeholder="Proposed Date" class="form-control" ng-init="proposedDate=(proposedDate | date:'yyyy-MM-dd')"

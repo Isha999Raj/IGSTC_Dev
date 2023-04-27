@@ -27,12 +27,12 @@ global class BulkAssignReviewerController {
     
     @RemoteAction
     global static finalWrapper getProposalAndReviewer(string campaignNName){
-        List<Reviewer__c> reviewerList = [select Id ,Name From Reviewer__c WHERE Campaign__c=: campaignNName];
+        List<Reviewer__c> reviewerList = [select Id ,Name From Reviewer__c];
         Set<Id> allReviewer = new Set<Id>(); 
         for(Reviewer__c IndiRev: reviewerList){
             allReviewer.add( IndiRev.Id);
         }
-        List<Application_Proposal__c> applicationList = [select Id,Name,Title_Of__c,(select name from contacts__r),(Select id,Name,Proposals__c,isSelected__c,Reviewer__c from Reviewer_Mapping__r) From Application_Proposal__c WHERE Campaign__c=: campaignNName and Submitted__c=true];
+        List<Application_Proposal__c> applicationList = [select Id,Name,Title_Of__c,(select name from contacts__r),(Select id,Name,Proposals__c,isSelected__c,Reviewer__c from Reviewer_Mapping__r) From Application_Proposal__c WHERE Campaign__c=: campaignNName and Proposal_Stages__c = 'Under Eligibility Check'];
         List<reviewerWrapper> reviewerWrapperList = new List<reviewerWrapper>(); 
         for(Application_Proposal__c app :applicationList){
             List<Reviewer_Mapping__c> reviewerMappingListToBeInserted = new List<Reviewer_Mapping__c>();

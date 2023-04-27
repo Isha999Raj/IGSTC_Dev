@@ -2254,7 +2254,7 @@ mapofIndexByListofExpense.put(exl.Index__c,new list<Expense_Line_Item__c>{exl});
             map<string,ContentDocumentLink> udIdXcdLink = New Map<string,ContentDocumentLink>();
             list<User_Document__c> getUserDoc;
             if(parentId.getSObjectType().getDescribe().getName() == 'Contact'){
-                getUserDoc = [select name,id,Status__c,(select id from attachments) from User_Document__c where Contact__c =:parentId];
+                getUserDoc = [select name,id,Status__c,(select id from attachments order by createdDate DESC) from User_Document__c where Contact__c =:parentId];
             }
             // if(parentId.getSObjectType().getDescribe().getName() == 'Application_Proposal__c'){
             //     getUserDoc = [select name,id,Status__c from User_Document__c where Proposals__c =:parentId];

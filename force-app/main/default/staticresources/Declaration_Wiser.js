@@ -28,24 +28,20 @@ angular.module('cp_app').controller('declarationwiser_ctrl', function($scope,$sc
 
     $scope.selectedFile;
 
-    $scope.filePreviewHandler = function(fileContent){
-        debugger;
-        $scope.selectedFile = fileContent;
-    
-        console.log('selectedFile---', $scope.selectedFile);
-        var jhj=$scope.selectedFile.userDocument.Attachments[0].Id;
-        console.log(jhj);
-        $scope.filesrec = $sce.trustAsResourceUrl(window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.selectedFile.userDocument.Attachments[0].Id);
-        //$scope.filesrec = window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.selectedFile.userDocument.Attachments[0].Id;
-        // $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
-        $('#file_frame').attr('src', $scope.filesrec);
-    
-        var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
-        myModal.show('slow') ;
-        $scope.$apply();
-    
-        //.ContentDistribution.DistributionPublicUrl
-    }
+$scope.filePreviewHandler = function(fileContent){
+    debugger;
+    $scope.selectedFile = fileContent;
+
+    console.log('selectedFile---', $scope.selectedFile);
+
+    $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
+
+    var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
+    myModal.show('slow') ;
+    $scope.$apply();
+
+    //.ContentDistribution.DistributionPublicUrl
+}
 
     $scope.getProjectdetils = function () {
         debugger;
@@ -251,7 +247,7 @@ angular.module('cp_app').controller('declarationwiser_ctrl', function($scope,$sc
         debugger;
         $scope.showSpinnereditProf = true;
         var file;
-
+    
         file = document.getElementById(type).files[0];
         fileName = file.name;
         var typeOfFile = fileName.split(".");
@@ -290,7 +286,7 @@ angular.module('cp_app').controller('declarationwiser_ctrl', function($scope,$sc
                     return;
                     // alert("Base 64 Encoded file is too large.  Maximum size is " + maxStringSize + " your file is " + fileSize + ".");
                 }
-
+    
             }
             fileReader.onerror = function (e) {
                 swal('info','There was an error reading the file.  Please try again.','info');
@@ -302,9 +298,9 @@ angular.module('cp_app').controller('declarationwiser_ctrl', function($scope,$sc
                 return;
                 // alert("There was an error reading the file.  Please try again.");
             }
-
+    
             fileReader.readAsBinaryString(file);  //Read the body of the file
-
+    
         } else {
             swal('info','Your file is too large.  Please try again.','info');
             return;
@@ -317,8 +313,8 @@ angular.module('cp_app').controller('declarationwiser_ctrl', function($scope,$sc
         // alert("You must choose a file before trying to upload it");
         $scope.showSpinnereditProf = false;
     }
-}
-
+    }
+    
         $scope.uploadAttachment = function (type, userDocId, fileId) {
             debugger;
             var attachmentBody = "";
@@ -333,7 +329,7 @@ angular.module('cp_app').controller('declarationwiser_ctrl', function($scope,$sc
                 attachmentBody = attachment.substring(positionIndex, positionIndex + chunkSize);
             }
             console.log("Uploading " + attachmentBody.length + " chars of " + fileSize);
-            ApplicantPortal_Contoller.doCUploadAttachmentAa(
+            ApplicantPortal_Contoller.doCUploadAttachmentSignature(
                 attachmentBody, attachmentName,fileId, userDocId, 
                 function (result, event) {
                     console.log(result);

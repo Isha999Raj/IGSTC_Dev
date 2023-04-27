@@ -264,9 +264,9 @@
                                     <th style="width:8%" nowrap="true">No.</th>
                                     <th style="width:30%" nowrap="true">Partner<span class="required-asterisk" style="color:red;">*</span></th>
                                     <th style="width:8%" nowrap="true">Start
-                                        TRL Level<span class="required-asterisk" style="color:red;">*</span></th>
+                                        TRL<span class="required-asterisk" style="color:red;">*</span></th>
                                     <th style="width:8%" nowrap="true">End
-                                        TRL Level<span class="required-asterisk" style="color:red;">*</span></th>
+                                        TRL<span class="required-asterisk" style="color:red;">*</span></th>
                                     <th style="width:32%">Title<span class="required-asterisk" style="color:red;">*</span></th>
                                     <th style="width:12%">Duration<span class="required-asterisk" style="color:red;">*</span></th>
                                     <th></th>
@@ -336,7 +336,7 @@
                 </div>
 
                 <div class="m-5" ng-if="!proposalStage">
-                    <button type="button" class="blue-btn float-end me-4" ng-click="saveWorkPackageDet()">Save and Next
+                    <button type="button" id="btnSubmit" class="blue-btn float-end me-4" ng-click="saveWorkPackageDet()">Save and Next
                         <i class="fa-solid fa-arrow-right ms-3"></i>
                     </button>
                     <button class="btn btn-secondary float-end me-2" style="padding: 8px 20px !important;font-size: 16px !important;" ng-click="redirectPageURL('ProjectDetail')" type="button">
@@ -440,7 +440,7 @@
             </div>
         </div>
             </div> -->
-           
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
               <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
               <script>
               $(document).ready(function(){

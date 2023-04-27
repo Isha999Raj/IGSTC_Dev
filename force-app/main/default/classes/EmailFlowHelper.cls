@@ -1,20 +1,70 @@
 public class EmailFlowHelper {
     @InvocableMethod(label='Generate Conga Template' description='Get template Id to send an Attachment' category='Application_Proposal__c')
     Public Static Void generateIFTemplateFromProposal(List<Id> recordId){
-        String recordIdVar = recordId[0];        
+        system.debug('recordId ::'+recordId);
+        String recordIdVar = recordId[0];
+        system.debug('recordIdVar ::'+recordIdVar);        
         
         Application_Proposal__c appProposalRec = [SELECT Id,Name,Conga_URL__c,Document_generated__c,Pecfar_Conga_Url__c,IF_conga_Url__c,Wiser_Conga_Url__c,Sing_Conga_url__c,RecordTypeId,RecordType.Name  FROM Application_Proposal__c WHERE Id = :recordIdVar];
-        system.debug('recordtypeId'+appProposalRec.RecordTypeId);
+        system.debug('appProposalRec ::'+appProposalRec);
         
         if(appProposalRec.RecordType.Name == 'Industrial Fellowship'){
-            DynamicCongaTempGeneration.GenerateCongaTemplatesUsingCS(recordIdVar,'IF Conga Url');
+            system.debug('IF');
+            //Platform Event
+            GenerateCongaTemplate__e GenerateCongaTemplateRec = new GenerateCongaTemplate__e( Proposal_Id__c=recordIdVar, Proposal_RecordType_Name__c='IF Conga Url' );           
+            Database.SaveResult result = EventBus.publish(GenerateCongaTemplateRec);
+            if (result.isSuccess()) {
+                System.debug('Successfully published event.');
+                
+            } else {
+                for(Database.Error err : result.getErrors()) {
+                    System.debug('Error returned: ' + err.getStatusCode() );
+                }
+            }
+            //DynamicCongaTempGeneration.GenerateCongaTemplatesUsingCS(recordIdVar,'IF Conga Url');
         }else if(appProposalRec.RecordType.Name == 'PECFAR'){
-            DynamicCongaTempGeneration.GenerateCongaTemplatesUsingCS(recordIdVar,'Pecfar Conga Url');
+            system.debug('PECFAR');
+            //Platform Event
+            GenerateCongaTemplate__e GenerateCongaTemplateRec = new GenerateCongaTemplate__e( Proposal_Id__c=recordIdVar, Proposal_RecordType_Name__c='Pecfar Conga Url' );           
+            Database.SaveResult result = EventBus.publish(GenerateCongaTemplateRec);
+            if (result.isSuccess()) {
+                System.debug('Successfully published event.');
+                
+            } else {
+                for(Database.Error err : result.getErrors()) {
+                    System.debug('Error returned: ' + err.getStatusCode() );
+                }
+            }
+            // DynamicCongaTempGeneration.GenerateCongaTemplatesUsingCS(recordIdVar,'Pecfar Conga Url');
             
         }else if(appProposalRec.RecordType.Name == 'WISER'){
-            DynamicCongaTempGeneration.GenerateCongaTemplatesUsingCS(recordIdVar,'Wiser Conga Url');
+            system.debug('WISER');
+            //Platform Event
+            GenerateCongaTemplate__e GenerateCongaTemplateRec = new GenerateCongaTemplate__e( Proposal_Id__c=recordIdVar, Proposal_RecordType_Name__c='Wiser Conga Url' );           
+            Database.SaveResult result = EventBus.publish(GenerateCongaTemplateRec);
+            if (result.isSuccess()) {
+                System.debug('Successfully published event.');
+                
+            } else {
+                for(Database.Error err : result.getErrors()) {
+                    System.debug('Error returned: ' + err.getStatusCode() );
+                }
+            }
+            // DynamicCongaTempGeneration.GenerateCongaTemplatesUsingCS(recordIdVar,'Wiser Conga Url');
         }else if(appProposalRec.RecordType.Name == 'SING'){
-            DynamicCongaTempGeneration.GenerateCongaTemplatesUsingCS(recordIdVar,'Sing Conga url');
+            system.debug('SING');
+            //Platform Event
+            GenerateCongaTemplate__e GenerateCongaTemplateRec = new GenerateCongaTemplate__e( Proposal_Id__c=recordIdVar, Proposal_RecordType_Name__c='Sing Conga url' );           
+            Database.SaveResult result = EventBus.publish(GenerateCongaTemplateRec);
+            if (result.isSuccess()) {
+                System.debug('Successfully published event.');
+                
+            } else {
+                for(Database.Error err : result.getErrors()) {
+                    System.debug('Error returned: ' + err.getStatusCode() );
+                }
+            }
+            // DynamicCongaTempGeneration.GenerateCongaTemplatesUsingCS(recordIdVar,'Sing Conga url');
         }
     }
  

@@ -5,7 +5,7 @@ public class FetchAttachment {
         system.debug('proIDList ::'+proIDList);
         try{
             String ProId = proIDList[0];
-            Contact conRecord = [SELECT Id,Name,FirstName,LastName,Campaign__c,ApplicationId__c FROM Contact WHERE Proposals__c =: ProId];
+            Contact conRecord = [SELECT Id,Name,FirstName,LastName,Campaign__c,ApplicationId__c FROM Contact WHERE Proposals__c =: ProId and Is_Primary__c = true];
             String contactEmail = [Select Email From Contact where Proposals__c =: ProId and Is_Primary__c = true].Email; 
             List<String> attachmentsListToBeReturned = new List<String>();
             Emailtemplate emailTempRec = New Emailtemplate();

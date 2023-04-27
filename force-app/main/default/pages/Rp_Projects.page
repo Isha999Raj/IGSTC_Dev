@@ -315,7 +315,7 @@
                                         <tr>
                                             <th nowrap="true">Sr. No.</th>
                                             <th nowrap="true">Application ID</th>
-                                            <th>Proposal Title</th>
+                                            <!-- <th>Proposal Title</th> -->
                                             <th>Programme</th>
                                             <!-- <th>Proposal Acronym</th> -->
                                             <th>Status</th>
@@ -327,7 +327,7 @@
                                         <tr ng-repeat="row in proposalListByDueDate">
                                             <td>{{$index+1}}</td>
                                             <td>{{row.Proposals__r.Name}}</td>
-                                            <td>{{row.Proposals__r.Title_Of__c}}</td>
+                                            <!-- <td>{{row.Proposals__r.Title_Of__c}}</td> -->
                                             <td>{{row.Proposals__r.Campaign__r.Name}}</td>
                                             <!-- <td>{{row.Proposals__r.Acronym__c}}</td> -->
                                             <td ng-if="row.Stage__c=='Draft'" class="color-badge-draft">{{row.Stage__c}}</td>
@@ -336,7 +336,7 @@
                                             <!-- <td>{{row.Review_Due_Date__c|date:"dd-MM-yyyy"}}</td> -->
                                             <td>
                                                 <button class="btn btn-success w-100 background-theme" ng-if="row.Stage__c=='Draft'" ng-click="enableProjectDetails(row.Proposals__r.Id,false,row.Stage__c)"><i class="fa-solid fa-eye me-3"></i>Modify</button>
-                                                <button class="btn btn-success w-100 background-theme" ng-if="row.Stage__c=='Submitted'" ng-click="enableProjectDetails(row.Proposals__r.Id,false,row.Stage__c)"><i class="fa-solid fa-eye me-3"></i>Review/Modify</button>
+                                                <button class="btn btn-success w-100 background-theme" ng-if="row.Stage__c=='Submitted'" ng-click="enableProjectDetails(row.Proposals__r.Id,false,row.Stage__c)"><i class="fa-solid fa-eye me-3"></i>View/Modify</button>
                                                 <button class="btn btn-success w-100 background-theme" ng-if="row.Stage__c=='Pending'" ng-click="enableProjectDetails(row.Proposals__r.Id,false,row.Stage__c)"><i class="fa-solid fa-eye me-3"></i>Review</button>
                                             </td>
                                         </tr>
@@ -346,36 +346,46 @@
                         </div>
                         </div>
                         <div ng-show="DraftProposal">
-                        <div class="row">
-                            <div class="col-md-12 mt-4">
-                                <span class="c-badge bg-color-badge-draft">Draft</span>
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <button type="button" class="blue-bordered-btn" ng-click="showAllProposals()">
+                                    <i class="fa-solid fa-arrow-left i-padding"></i>Back</button>
                             </div>
+                            <div class="col-md-6">
+                                <span class="c-badge bg-color-badge-draft float-end">Draft</span>
+                            </div>                            
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <table class="tablefinance w-100">
                                     <thead>
                                         <tr>
-                                        <th nowrap="true" class="p-3">Name</th>
-                                        <th>Acronym</th>
+                                        <th>Sr. No.</th>
+                                        <th nowrap="true" class="p-3">Application ID</th>
+                                        <th>Programme</th>
+                                        <th>Status</th>
+                                        <!-- <th>Acronym</th>
                                         <th>Title of Proposal</th>
                                         <th>Title in German</th>
                                         <th>Duration</th>
-                                        <th>Due Date</th>
+                                        <th>Due Date</th> -->
                                         <!-- <th>Total Funding Asked</th> -->
                                         <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="rev in draftList">
+                                            <td>{{$index+1}}</td>
                                             <td nowrap="true" class="p-3">{{rev.Proposals__r.Name}}</td>
-                                            <td>{{rev.Proposals__r.Acronym__c}}</td>
+                                            <td>{{rev.Proposals__r.Campaign__r.Name}}</td>
+                                            <td>{{rev.Stage__c}}</td>
+                                            <!-- <td>{{rev.Proposals__r.Acronym__c}}</td>
                                             <td>{{rev.Proposals__r.Title_Of__c}}</td>
                                             <td>{{rev.Proposals__r.Title_In_German__c}}</td>
                                             <td>{{rev.Proposals__r.Duration_In_Months_Max_36__c}}</td>
-                                            <td>{{rev.Review_Due_Date__c}}</td>
+                                            <td>{{rev.Review_Due_Date__c}}</td> -->
                                             <!-- <th>{{rev.Proposals__r.Total_Amount__c}}</th> -->
-                                            <td><button class="btn btn-success w-100 background-theme" ng-click="enableProjectDetails(rev.Proposals__r.Id,false)"><i class="fa-solid fa-eye me-3"></i>View</button></td>
+                                            <td><button class="btn btn-success w-100 background-theme" ng-click="enableProjectDetails(rev.Proposals__r.Id,false)"><i class="fa-solid fa-eye me-3"></i>Modify</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -383,9 +393,13 @@
                         </div>
                         </div>
                         <div ng-show="PendingProposal">
-                            <div class="row">
-                                <div class="col-md-12 mt-4">
-                                    <span class="c-badge bg-color-badge-pending">Pending</span>
+                            <div class="row mt-4">                                
+                                <div class="col-md-6">
+                                    <button type="button" class="blue-bordered-btn" ng-click="showAllProposals()">
+                                        <i class="fa-solid fa-arrow-left i-padding"></i>Back</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="c-badge bg-color-badge-pending float-end">Pending</span>
                                 </div>
                             </div>
                             <div class="row">
@@ -393,26 +407,32 @@
                                     <table class="tablefinance w-100">
                                         <thead>
                                             <tr>
-                                            <th nowrap="true" class="p-3">Name</th>
-                                            <th>Acronym</th>
-                                            <th>Title of Proposal</th>
-                                            <th>Title in German</th>
-                                            <th>Duration</th>
-                                            <th>Due Date</th>
-                                            <!-- <th>Total Funding Asked</th> -->
-                                            <th>Action</th>
+                                                <th>Sr. No.</th>
+                                                <th nowrap="true" class="p-3">Application ID</th>
+                                                <th>Programme</th>
+                                                <th>Status</th>
+                                                <!-- <th>Acronym</th>
+                                                <th>Title of Proposal</th>
+                                                <th>Title in German</th>
+                                                <th>Duration</th>
+                                                <th>Due Date</th> -->
+                                                <!-- <th>Total Funding Asked</th> -->
+                                                <th>Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="rev in pendingList">
-                                                <td nowrap="true" class="p-3">{{rev.Proposals__r.Name}}</td>
-                                                <td>{{rev.Proposals__r.Acronym__c}}</td>
-                                                <td>{{rev.Proposals__r.Title_Of__c}}</td>
-                                                <td>{{rev.Proposals__r.Title_In_German__c}}</td>
-                                                <td>{{rev.Proposals__r.Duration_In_Months_Max_36__c}}</td>
-                                                <td>{{rev.Review_Due_Date__c}}</td>
-                                                <!-- <th>{{rev.Proposals__r.Total_Amount__c}}</th> -->
-                                                <td><button class="btn btn-success w-100 background-theme" ng-click="enableProjectDetails(rev.Proposals__r.Id,false)"><i class="fa-solid fa-eye me-3"></i>View</button></td>
+                                            <td>{{$index+1}}</td>
+                                            <td nowrap="true" class="p-3">{{rev.Proposals__r.Name}}</td>
+                                            <td>{{rev.Proposals__r.Campaign__r.Name}}</td>
+                                            <td>{{rev.Stage__c}}</td>
+                                            <!-- <td>{{rev.Proposals__r.Acronym__c}}</td>
+                                            <td>{{rev.Proposals__r.Title_Of__c}}</td>
+                                            <td>{{rev.Proposals__r.Title_In_German__c}}</td>
+                                            <td>{{rev.Proposals__r.Duration_In_Months_Max_36__c}}</td>
+                                            <td>{{rev.Review_Due_Date__c}}</td> -->
+                                            <!-- <th>{{rev.Proposals__r.Total_Amount__c}}</th> -->
+                                            <td><button class="btn btn-success w-100 background-theme" ng-click="enableProjectDetails(rev.Proposals__r.Id,false)"><i class="fa-solid fa-eye me-3"></i>Review</button></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -420,36 +440,46 @@
                             </div>
                         </div>
                         <div ng-show="SubmittedProposal">
-                            <div class="row">
-                                <div class="col-md-12 mt-4">
-                                    <span class="c-badge bg-color-badge-submitted">Submitted</span>
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <button type="button" class="blue-bordered-btn" ng-click="showAllProposals()">
+                                        <i class="fa-solid fa-arrow-left i-padding"></i>Back</button>
                                 </div>
+                                <div class="col-md-6">
+                                    <span class="c-badge bg-color-badge-submitted float-end">Submitted</span>
+                                </div>                               
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <table class="tablefinance w-100">
                                         <thead>
                                             <tr>
-                                            <th nowrap="true" class="p-3">Name</th>
-                                            <th>Acronym</th>
-                                            <th>Title of Proposal</th>
-                                            <th>Title in German</th>
-                                            <th>Duration</th>
-                                            <th>Due Date</th>
-                                            <!-- <th>Total Funding Asked</th> -->
-                                            <th>Action</th>
-                                        </tr>
+                                                <th>Sr. No.</th>
+                                                <th nowrap="true" class="p-3">Application ID</th>
+                                                <th>Programme</th>
+                                                <th>Status</th>
+                                                <!-- <th>Acronym</th>
+                                                <th>Title of Proposal</th>
+                                                <th>Title in German</th>
+                                                <th>Duration</th>
+                                                <th>Due Date</th> -->
+                                                <!-- <th>Total Funding Asked</th> -->
+                                                <th>Action</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="rev in submittedList">
-                                                <td nowrap="true" class="p-3">{{rev.Proposals__r.Name}}</td>
-                                                <td>{{rev.Proposals__r.Acronym__c}}</td>
-                                                <td>{{rev.Proposals__r.Title_Of__c}}</td>
-                                                <td>{{rev.Proposals__r.Title_In_German__c}}</td>
-                                                <td>{{rev.Proposals__r.Duration_In_Months_Max_36__c}}</td>
-                                                <td>{{rev.Review_Due_Date__c}}</td>
-                                                <!-- <th>{{rev.Proposals__r.Total_Amount__c}}</th> -->
-                                                <td><button class="btn btn-success w-100 background-theme" ng-click="enableProjectDetails(rev.Proposals__r.Id,false)"><i class="fa-solid fa-eye me-3"></i>View</button></td>
+                                                <td>{{$index+1}}</td>
+                                            <td nowrap="true" class="p-3">{{rev.Proposals__r.Name}}</td>
+                                            <td>{{rev.Proposals__r.Campaign__r.Name}}</td>
+                                            <td>{{rev.Stage__c}}</td>
+                                            <!-- <td>{{rev.Proposals__r.Acronym__c}}</td>
+                                            <td>{{rev.Proposals__r.Title_Of__c}}</td>
+                                            <td>{{rev.Proposals__r.Title_In_German__c}}</td>
+                                            <td>{{rev.Proposals__r.Duration_In_Months_Max_36__c}}</td>
+                                            <td>{{rev.Review_Due_Date__c}}</td> -->
+                                            <!-- <th>{{rev.Proposals__r.Total_Amount__c}}</th> -->
+                                            <td><button class="btn btn-success w-100 background-theme" ng-click="enableProjectDetails(rev.Proposals__r.Id,false)"><i class="fa-solid fa-eye me-3"></i>View/Modify</button></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -663,6 +693,7 @@
                                 <div class="tab-content mt-5">
                                     <div class="row grading-scale alert alert-primary">
                                         <div class="col-md-6">
+
                                         <ul>
                                             <li>
                                                 <div class="dot excellent"></div>
@@ -1037,6 +1068,11 @@
                                                 <div class="row mt-5">
                                                 <div class="col-md-12 review-qa">
                                                     <div class="accordion" id="accordionExample">
+                                                        <div class="row" ng-show="showPecfar">
+                                                            <div class="col-md-12 px-5">
+                                                                <h4><label>Kindly review the applications based on the following criteria's</label></h4>
+                                                            </div>
+                                                        </div>
                                                         <div class="accordion-item" ng-repeat="quetemp in QuestionTempList">
                                                             <!-- <h2 class="accordion-header mt-0" id="heading{{$index}}"> -->
                                                                 <!-- <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$index}}" aria-expanded="true" aria-controls="collapse{{$index}}}"> -->
@@ -1077,21 +1113,16 @@
                                                                 <!-- </button> -->
                                                             <!-- </h2> -->
                                                             <div id="collapse{{$index}}" class="accordion-collapse show" aria-labelledby="heading{{$index}}" data-bs-parent="#accordionExample">
-                                                                <div class="accordion-body">
-                                                                    <div class="row" ng-show="showPecfar">
-                                                                        <div class="col-md-12 px-5">
-                                                                            <h4><label>Kindly review the applications based on the following criteria's</label></h4>
-                                                                        </div>
-                                                                    </div>
+                                                                <div class="accordion-body">                                                                   
                                                                     <div class="row">
                                                                         <div class="col-md-12 px-5">
-                                                                            <h5><label>{{quetemp.getQuesLineItemList.Question__c}}</label></h5>
+                                                                            <label class="font-reviewer-question">{{quetemp.getQuesLineItemList.Question__c}}</label>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row pt-3" ng-show="quetemp.getQuesLineItemList.Is_Rating_Applicable__c">
                                                                         <div class="col-md-2 px-5"><label>Enter Your Grade</label></div>
-                                                                        <div class="col-md-2">
-                                                                            <input type="number" number="quetemp.RRLineItemList.Ratings__c" ng-model="quetemp.RRLineItemList.Ratings__c" id="txtRating{{$index}}" ng-change="validateRating($index,quetemp.RRLineItemList.Ratings__c)" class="form-control"/>
+                                                                        <div class="col-md-3">
+                                                                            <input type="number" number="quetemp.RRLineItemList.Ratings__c" maxlength="5" ng-model="quetemp.RRLineItemList.Ratings__c" id="txtRating{{$index}}" ng-change="validateRating($index,quetemp.RRLineItemList.Ratings__c)" class="form-control"/>
                                                                             <span class="text-danger" id="spnRating{{$index}}" style="display: none;">Please enter rating between 1 to 10</span>
                                                                         </div>
                                                                     </div>

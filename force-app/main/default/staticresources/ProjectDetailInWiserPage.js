@@ -19,24 +19,22 @@ angular.module('cp_app').controller('ProjectDetailInWiserCtrl', function ($scope
      $scope.objRtf.push({charCount:0,maxCharLimit:4500,errorStatus:false});
      debugger;
 
-     $scope.filePreviewHandler = function(fileContent){
-        debugger;
-        $scope.selectedFile = fileContent;
-    
-        console.log('selectedFile---', $scope.selectedFile);
-        var jhj=$scope.selectedFile.userDocument.Attachments[0].Id;
-        console.log(jhj);
-        $scope.filesrec = $sce.trustAsResourceUrl(window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.selectedFile.userDocument.Attachments[0].Id);
-        //$scope.filesrec = window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.selectedFile.userDocument.Attachments[0].Id;
-        // $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
-        $('#file_frame').attr('src', $scope.filesrec);
-    
-        var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
-        myModal.show('slow') ;
-        $scope.$apply();
-    
-        //.ContentDistribution.DistributionPublicUrl
-    }
+     $scope.selectedFile;
+
+$scope.filePreviewHandler = function(fileContent){
+    debugger;
+    $scope.selectedFile = fileContent;
+
+    console.log('selectedFile---', $scope.selectedFile);
+
+    $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
+
+    var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
+    myModal.show('slow') ;
+    $scope.$apply();
+
+    //.ContentDistribution.DistributionPublicUrl
+}
 
      $scope.getProjectdetils = function () {
           debugger;
@@ -163,7 +161,7 @@ angular.module('cp_app').controller('ProjectDetailInWiserCtrl', function ($scope
               attachmentBody = attachment.substring(positionIndex, positionIndex + chunkSize);
           }
           console.log("Uploading " + attachmentBody.length + " chars of " + fileSize);
-          ApplicantPortal_Contoller.doCUploadAttachmentAa(
+          ApplicantPortal_Contoller.doCUploadAttachmentSignature(
               attachmentBody, attachmentName,fileId, userDocId,
               function (result, event) {
                   console.log(result);

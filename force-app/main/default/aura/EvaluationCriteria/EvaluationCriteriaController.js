@@ -40,7 +40,7 @@
     handleyesCheckboxChange : function(component, event, helper) {
         debugger;
         var yesCheck = event.getSource().get("v.value");
-        component.set("v.yesCheck", !yesCheck);
+        component.set("v.yesCheck", yesCheck);
 	},
     
     showInfo : function(component, event, helper) {

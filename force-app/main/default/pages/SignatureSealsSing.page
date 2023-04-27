@@ -151,7 +151,7 @@
                         <div class="modal-header">
                             <h4 class="modal-title">
                                 <div class="d-flex" style="background:unset;">
-                                    <!-- <h3 style="text-align: center"><b>{{selectedFile.userDocument.Name}}</b></h3> -->
+                                    <h3 style="text-align: center"><b>{{selectedFile.userDocument.Name}}</b></h3>
                                 </div>
                             </h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -238,7 +238,7 @@ compensation in lieu thereof.
                                             <input type="file" accept=".jpg,.jpeg" ng-disabled="proposalStage" id="{{noObjection.userDocument.Name}}" class="form-control "
                                     />
                                     <span class="input-group-btn" ng-hide="proposalStage">
-                                        <button class="btn btn-success" ng-click="uploadFile(noObjection.userDocument.Name,noObjection.userDocument.Id,'',51200,'30720')"
+                                        <button class="btn btn-success" ng-click="uploadFile(noObjection.userDocument.Name,noObjection.userDocument.Id,'',51200,30720)"
                                             type="button">Upload</button>
                                     </span>
                                         </div>

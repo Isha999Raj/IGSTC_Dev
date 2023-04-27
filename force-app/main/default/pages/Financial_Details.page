@@ -173,6 +173,10 @@
                                 break)</li>
                             <li>
                                 <i class="fa-solid fa-circle text-success me-3"></i><b>Other:</b> Printing, Technical equipment, Other (please specify)</li>
+                            <li>
+                                <i class="fa-solid fa-circle text-success me-3"></i><b>Currency:</b> For workshops in Germany, use currency type – Euro; For workshops in India, use currency type – INR</li>
+                            <li>
+                                <i class="fa-solid fa-circle text-success me-3"></i>Kindly refer to <a href="https://www.igstc.org/home/open_call" target="_blank"> call text</a> for more guidelines</li>
                         </ul>
                     </div>
                 </div>

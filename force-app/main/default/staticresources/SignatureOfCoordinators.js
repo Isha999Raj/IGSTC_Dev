@@ -345,10 +345,24 @@ angular.module('cp_app').controller('sign_Ctrl', function($scope,$sce,$rootScope
         $scope.submit = function(){
             debugger;
             delete($scope.checkbox.Contacts__r);
-            if($scope.checkbox.Privacy_Policy_Accepted__c == false){
-                swal("Required", "Please accept privacy policy.")
-                    return;
+
+            for(var i=0;i<$scope.allDocs.length;i++){
+                if($scope.allDocs[i].userDocument.Name == 'Coordinator 1 Signature'){
+                    if($scope.allDocs[i].userDocument.Status__c != 'Uploaded'){
+                        swal('info','Please upload Signature.','info');
+                        return;
+                    }
+                }else if($scope.allDocs[i].userDocument.Name == 'Coordinator 2 Signature'){
+                    if($scope.allDocs[i].userDocument.Status__c != 'Uploaded'){
+                        swal('info','Please upload Signature.','info');
+                        return;
+                    }
+                }
             }
+            // if($scope.checkbox.Privacy_Policy_Accepted__c == false){
+            //     swal("Required", "Please accept privacy policy.")
+            //         return;
+            // }
             ApplicantPortal_Contoller.upsertCheckbox($scope.checkbox, function(result,event){
                 if(event.status){
                     debugger;
@@ -372,7 +386,12 @@ angular.module('cp_app').controller('sign_Ctrl', function($scope,$sce,$rootScope
             ApplicantPortal_Contoller.saveAsDraftWorkshop($scope.checkbox, function(result,event){
                 if(event.status){
                     debugger;
-                    swal("Draft", "Your proposal has been saved as Draft.");
+                    Swal.fire(
+                        'Success',
+                        'Your proposal has been saved as Draft.',
+                        'success'
+                    );
+                    // swal("Draft", "Your proposal has been saved as Draft.","");
                     $scope.redirectPageURL('Home');
                     $scope.checkbox = result;
                     $scope.$apply();

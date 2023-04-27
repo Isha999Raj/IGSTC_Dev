@@ -13,10 +13,17 @@ angular.module('cp_app').controller('ConsortiaContacts_Ctrl', function($scope,$r
             debugger;
             if(event.status && result != null){
                 debugger;
+                // if(result.India==undefined){
+                //     if(result[0].Name=="WISER" || result[0].Name=="SING" || result[0].Name=="PECFAR" || result[0].Name=="2+2 Call" || result[0].Name=="Industrial Fellowships" || result[0].Name=="Workshop"){
+                //       $scope.getDependentPicklistValues();
+                //     }
+                //   }else{
                 $scope.indianStates = result.India;
                 $scope.germanStates = result.Germany;
                 debugger;
                 $scope.$apply();
+                //$scope.gerCoordDetails();
+                //   }
             }
         }
         )  
@@ -160,7 +167,16 @@ $scope.deleteEducationRow = function(eduId){
                 debugger;
                 $scope.allDetailList = result;
                 if($scope.allDetailList.Publications_Patents__c != undefined || $scope.allDetailList.Publications_Patents__c != ""){
-                    $scope.allDetailList.Publications_Patents__c = $scope.allDetailList.Publications_Patents__c ? $scope.allDetailList.Publications_Patents__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.allDetailList.Publications_Patents__c;
+                    $scope.allDetailList.Publications_Patents__c = $scope.allDetailList.Publications_Patents__c ? $scope.allDetailList.Publications_Patents__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replace(/&#39;/g,'\'').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.allDetailList.Publications_Patents__c;
+                }
+                if($scope.allDetailList.Actual_Position__c != undefined || $scope.allDetailList.Actual_Position__c != ""){
+                    $scope.allDetailList.Actual_Position__c = $scope.allDetailList.Actual_Position__c ? $scope.allDetailList.Actual_Position__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replace(/&#39;/g,'\'').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.allDetailList.Actual_Position__c;
+                }
+                if($scope.allDetailList.MailingStreet != undefined || $scope.allDetailList.MailingStreet != ""){
+                    $scope.allDetailList.MailingStreet = $scope.allDetailList.MailingStreet ? $scope.allDetailList.MailingStreet.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replace(/&#39;/g,'\'').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.allDetailList.MailingStreet;
+                }
+                if($scope.allDetailList.MailingCity != undefined || $scope.allDetailList.MailingCity != ""){
+                    $scope.allDetailList.MailingCity = $scope.allDetailList.MailingCity ? $scope.allDetailList.MailingCity.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replace(/&#39;/g,'\'').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.allDetailList.MailingCity;
                 }
                 if($scope.allDetailList.Education_Details__r == undefined){
                     var rec = {
@@ -170,6 +186,18 @@ $scope.deleteEducationRow = function(eduId){
                     $scope.allDetailList.Education_Details__r = [];
                         debugger;
                     $scope.allDetailList.Education_Details__r.push(rec);
+                }else{
+                    for(var i=0;i<$scope.allDetailList.Education_Details__r.length;i++){
+                        if($scope.allDetailList.Education_Details__r[i].Degree__c != undefined || $scope.allDetailList.Education_Details__r[i].Degree__c != ""){
+                            $scope.allDetailList.Education_Details__r[i].Degree__c = $scope.allDetailList.Education_Details__r[i].Degree__c ? $scope.allDetailList.Education_Details__r[i].Degree__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replace(/&#39;/g,'\'').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.allDetailList.Education_Details__r[i].Degree__c;
+                        } 
+                        if($scope.allDetailList.Education_Details__r[i].Institution_Name__c != undefined || $scope.allDetailList.Education_Details__r[i].Institution_Name__c != ""){
+                            $scope.allDetailList.Education_Details__r[i].Institution_Name__c = $scope.allDetailList.Education_Details__r[i].Institution_Name__c ? $scope.allDetailList.Education_Details__r[i].Institution_Name__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replace(/&#39;/g,'\'').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.allDetailList.Education_Details__r[i].Institution_Name__c;
+                        } 
+                        if($scope.allDetailList.Education_Details__r[i].Area_of_specialization__c != undefined || $scope.allDetailList.Education_Details__r[i].Area_of_specialization__c != ""){
+                            $scope.allDetailList.Education_Details__r[i].Area_of_specialization__c = $scope.allDetailList.Education_Details__r[i].Area_of_specialization__c ? $scope.allDetailList.Education_Details__r[i].Area_of_specialization__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replace(/&#39;/g,'\'').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.allDetailList.Education_Details__r[i].Area_of_specialization__c;
+                        }  
+                    }
                 }
                 if($scope.allDetailList.Employment_Details__r == undefined){
                     var emprec = {
@@ -179,6 +207,15 @@ $scope.deleteEducationRow = function(eduId){
                     $scope.allDetailList.Employment_Details__r = [];
                     debugger;
                     $scope.allDetailList.Employment_Details__r.push(emprec);
+                }else{
+                    for(var i=0;i<$scope.allDetailList.Employment_Details__r.length;i++){
+                        if($scope.allDetailList.Employment_Details__r[i].Organization_Name__c != undefined || $scope.allDetailList.Employment_Details__r[i].Organization_Name__c != ""){
+                            $scope.allDetailList.Employment_Details__r[i].Organization_Name__c = $scope.allDetailList.Employment_Details__r[i].Organization_Name__c ? $scope.allDetailList.Employment_Details__r[i].Organization_Name__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replace(/&#39;/g,'\'').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.allDetailList.Employment_Details__r[i].Organization_Name__c;
+                        } 
+                        if($scope.allDetailList.Employment_Details__r[i].Position__c != undefined || $scope.allDetailList.Employment_Details__r[i].Position__c != ""){
+                            $scope.allDetailList.Employment_Details__r[i].Position__c = $scope.allDetailList.Employment_Details__r[i].Position__c ? $scope.allDetailList.Employment_Details__r[i].Position__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replace(/&#39;/g,'\'').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : $scope.allDetailList.Employment_Details__r[i].Position__c;
+                        } 
+                    }
                 }
                 if($scope.allDetailList.MailingCountry == 'India'){
                         $scope.allDetailList.stateList = $scope.indianStates;
@@ -309,19 +346,36 @@ $scope.deleteEducationRow = function(eduId){
     for(var i=0;i<$scope.employmentDetails.length;i++){
         delete ($scope.employmentDetails[i]['$$hashKey']); 
     }
+    $("#btnSubmit").html('<i class="fa-solid fa-spinner fa-spin-pulse me-3"></i>Please wait...');
     debugger
 delete $scope.allDetailList.Account;
         ApplicantPortal_Contoller.SaveWorkshopContactDetails2($scope.allDetailList,$scope.educationDetails,$scope.employmentDetails, function(result,event){
             debugger;
+            $("#btnSubmit").html('<i class="fa-solid fa-check me-2"></i>Save and Next');
             if(event.status){
                 debugger;
-                Swal.fire(
-                    'Success',
-                    'your Contact Details has been Saved successfully.',
-                    'success'
-                );
-               $scope.redirectPageURL('Financial_Overview');
-               $scope.$apply();
+                swal({
+                    title: "Success",
+                    text: "your Contact Details has been Saved successfully.",
+                    icon: "success",
+                    buttons: true,
+                    dangerMode: false,
+                }).then((willDelete) => {
+                    if (willDelete) {                    
+                        $scope.redirectPageURL('Financial_Overview');
+                       $scope.$apply();
+                    } else {
+                     return;
+                    }
+                  });
+    
+            //     Swal.fire(
+            //         'Success',
+            //         'your Contact Details has been Saved successfully.',
+            //         'success'
+            //     );
+            //    $scope.redirectPageURL('Financial_Overview');
+            //    $scope.$apply();
             }
         })
     }

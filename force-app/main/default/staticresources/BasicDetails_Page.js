@@ -46,8 +46,24 @@ angular.module('cp_app').controller('basicDetails_ctrl',function($scope, $rootSc
                         $scope.endDate = new Date(result.Workshop_Finish_Date__c);
                     }
                     $scope.applicantDetails = result;
+
+                    if(result.Thematic_Area__c != undefined || result.Thematic_Area__c != ''){
+                        $scope.applicantDetails.Thematic_Area__c = result.Thematic_Area__c ? result.Thematic_Area__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : result.Thematic_Area__c;  
+                    }
+                    if(result.Title_Of__c != undefined || result.Title_Of__c != ''){
+                        $scope.applicantDetails.Title_Of__c = result.Title_Of__c ? result.Title_Of__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : result.Title_Of__c;  
+                    }
+                    if(result.Title_In_German__c != undefined || result.Title_In_German__c != ''){
+                        $scope.applicantDetails.Title_In_German__c = result.Title_In_German__c ? result.Title_In_German__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : result.Title_In_German__c;  
+                    }
+                    if(result.Acronym__c != undefined || result.Acronym__c != ''){
+                        $scope.applicantDetails.Acronym__c = result.Acronym__c ? result.Acronym__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : result.Acronym__c;  
+                    }
+                    if(result.Proposed_Venue__c != undefined || result.Proposed_Venue__c != ''){
+                        $scope.applicantDetails.Proposed_Venue__c = result.Proposed_Venue__c ? result.Proposed_Venue__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : result.Proposed_Venue__c;  
+                    }
                     if(result.Summary__c != undefined || result.Summary__c != ""){
-                        result.Summary__c = result.Summary__c ? result.Summary__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result.Summary__c;
+                        $scope.applicantDetails.Summary__c = result.Summary__c ? result.Summary__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : result.Summary__c;
                     }
                     $scope.$apply();
                 }

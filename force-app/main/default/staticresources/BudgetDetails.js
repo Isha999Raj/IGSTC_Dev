@@ -45,6 +45,12 @@ angular.module('cp_app').controller('budget_ctrl', function($scope, $rootScope){
                         }else{
                             $scope.year1Germany = result[0].Proposals__r.Total_funding_requested_from_IGSTC__c;
                         }
+                           
+                           for(var j=0;j<result[i].Expense_Line_Items__r.length;j++){
+                            if(result[i].Expense_Line_Items__r[j].Description__c != undefined || result[i].Expense_Line_Items__r[j].Description__c != ''){
+                                result[i].Expense_Line_Items__r[j].Description__c = result[i].Expense_Line_Items__r[j].Description__c ? result[i].Expense_Line_Items__r[j].Description__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : result[i].Expense_Line_Items__r[j].Description__c;  
+                              }
+                           }
                            result[i].Expense_Line_Items__r = result[i].Expense_Line_Items__r;
                        }
                       }
@@ -100,6 +106,10 @@ $scope.saveExpenceLineitems = function(){
             swal("info", "Total Grants asked by IGSTC should not be more than 10000 €.","info");
             return;
         }
+   }
+
+   if($scope.expenseList[0].Proposals__r.Total_funding_requested_from_IGSTC__c == undefined){
+    $scope.expenseList[0].Proposals__r.Total_funding_requested_from_IGSTC__c = 0;
    }
 
    IndustrialFellowshipController.saveExpenceLineItem($scope.expLineItem,$scope.expenseList[0].Proposals__c,$scope.expenseList[0].Proposals__r.Total_funding_requested_from_IGSTC__c,function(result,event){

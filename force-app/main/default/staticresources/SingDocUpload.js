@@ -20,13 +20,11 @@ $scope.filePreviewHandler = function(fileContent){
     $scope.selectedFile = fileContent;
 
     console.log('selectedFile---', $scope.selectedFile);
-    var jhj=$scope.selectedFile.userDocument.Attachments[0].Id;
-    console.log(jhj);
-    $scope.filesrec = $sce.trustAsResourceUrl(window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.selectedFile.userDocument.Attachments[0].Id);
-    $('#file_frame').attr('src', $scope.filesrec);
 
-    var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
-    myModal.show('slow') ;
+    $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
+
+    var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
+    myModal.show('slow') ;
     $scope.$apply();
 
 }

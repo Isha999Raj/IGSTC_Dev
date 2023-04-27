@@ -655,8 +655,14 @@ public String upsertConsortiaAccountDet(Account instanceAcc, String projectId){
             return 'Error Occured';
             }
        }
-       public String submitSingApp(String projectId){
+       public String submitSingApp(String projectId, Integer year, Integer month, Integer day){
         try{
+            Contact conRec = [Select Id,Name,Declaration_Sign_Date__c,Proposals__c FROM Contact WHERE Proposals__c =:projectId AND Is_Primary__c = true];
+            if(year!=0){
+                Date newDate=Date.newInstance(year,month,day);
+                conRec.Declaration_Sign_Date__c=newDate;
+            }
+            update conRec;
             Application_Proposal__c updateProposal=new Application_Proposal__c(Id=projectId);
             updateProposal.Proposal_Stages__c='Submitted';
             updateProposal.Submitted__c = true;
@@ -1176,17 +1182,35 @@ public String upsertConsortiaAccountDet(Account instanceAcc, String projectId){
       }
 
       public static String saveExpenceLineItem(List<Expense_Line_Item__c> expLineItem, string appId, Integer amount){
-        system.debug('expLineItem ---->'+expLineItem);
-        if(amount == null){
-            amount = 0;
-        }
-        Application_Proposal__c appRecordToUpdate = New Application_Proposal__c();
-        appRecordToUpdate.Id = appId;
-        appRecordToUpdate.Total_funding_requested_from_IGSTC__c = string.valueOf(amount);
-        upsert appRecordToUpdate;
-        upsert expLineItem;
+        
         try{
-            
+            system.debug('expLineItem ---->'+expLineItem);
+            // if(amount == null){
+            //     amount = 0;
+            // }
+            Application_Proposal__c appRecordToUpdate = New Application_Proposal__c();
+            appRecordToUpdate.Id = appId;
+            appRecordToUpdate.Total_funding_requested_from_IGSTC__c = string.valueOf(amount);
+            if(!string.isBlank(appRecordToUpdate.Total_funding_requested_from_IGSTC__c)){
+                upsert appRecordToUpdate;
+            }
+
+            if(!expLineItem.isEmpty()){
+                upsert expLineItem;
+            }
+            return 'success';
+        }catch(Exception e){
+            return 'error';
+        }
+    }
+
+    public static String saveExpenceLineItemWISER(List<Expense_Line_Item__c> expLineItem){
+        
+        try{
+            system.debug('expLineItem ---->'+expLineItem);
+            if(!expLineItem.isEmpty()){
+                upsert expLineItem;
+            }
             return 'success';
         }catch(Exception e){
             return 'error';

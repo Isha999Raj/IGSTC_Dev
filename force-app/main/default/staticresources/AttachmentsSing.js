@@ -21,7 +21,7 @@ angular.module('cp_app').controller('Attachments_Ctrl', function($scope,$sce,$ro
                         if($scope.allDocs[i].userDocument.Status__c == 'Uploaded'){
                             uploadCount=uploadCount+1;
                         }
-                    }if($scope.allDocs[i].userDocument.Name == 'Supporting documents in favour of your application  (max 10 MB)'){
+                    }if($scope.allDocs[i].userDocument.Name == 'Supporting documents in favour of your application (max 10 MB)'){
                         $scope.doc2=$scope.allDocs[i];
                         if($scope.allDocs[i].userDocument.Status__c == 'Uploaded'){
                             uploadCount=uploadCount+1;
@@ -69,7 +69,7 @@ angular.module('cp_app').controller('Attachments_Ctrl', function($scope,$sce,$ro
       }
     $scope.submitSingApp=function(){
         swal({
-            title: "Attachments",
+            title: "SUCCESS",
             text: 'Your Attachments have been successfully saved',
             icon: "success",
             button: "ok!",

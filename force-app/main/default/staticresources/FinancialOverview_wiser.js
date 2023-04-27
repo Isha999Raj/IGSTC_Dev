@@ -302,7 +302,7 @@ $scope.saveExpenceLineitems = function(){
         }
     }
 
-    IndustrialFellowshipController.saveExpenceLineItem($scope.expLineItem,function(result,event){
+    IndustrialFellowshipController.saveExpenceLineItemWISER($scope.expLineItem,function(result,event){
         if(event.status && result != null){
                 console.log(result);                    
             swal({

@@ -37,8 +37,65 @@
                         </ul>
                     </div>
                 </div>
+
+                <div class="modal" id="filePreview">
+                    <div class="modal-dialog" style="min-width:120rem">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">
+                                    <div class="d-flex" style="background:unset;">
+                                        <h3 style="text-align: center"><b>{{selectedFile.userDocument.Name}}</b></h3>
+                                    </div>
+                                </h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <iframe style="width:100%;height:75vh;border: 0px;border-radius: 10px;" id="file_frame" title="File"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="row mt-3" ng-hide="decision_letter">
-                    <div class="col-md-5 offset-1 mt-3">
+
+                    <!-- <div class="row mx-5 mt-5">
+                        <div class="col-md-12">
+                            <p class="ps-5 ms-5 font-if">
+                                I hereby declare that the information furnished above is true, complete and correct to the
+best of my knowledge and belief. I understand that in the event of my information being found false or
+incorrect at any stage, my fellowship / award shall be liable to cancellation / termination without notice or any
+compensation in lieu thereof.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row mx-5 mt-5">
+                        <div class="col-md-5 mt-2">
+                            <Label class="font-if" style="margin-left: 60px">Intimation Letter Accepted ? </Label> <input type="checkbox" ng-model="applicantDetails.Intimation_Letter_Accepted__c"/>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="row">
+                          </div>
+                          </div>
+                    </div> -->
+
+
+                    <!-- <div class="col md-2 mt-3"></div> -->
+                    <div class="row mt-5">
+                    <div class="col-md-4 offset-1">
+                        <label>Tentative Start Date</label>
+                        <input class="form-control" ng-init="tentitiveStartDate=(tentitiveStartDate | date:'yyyy-MM-dd')" type="date" ng-model="tentitiveStartDate" />
+                    </div>
+
+                    <div class="col-md-4 offset-1">
+                        <label>Tentative End Date</label>
+                        <input class="form-control" ng-init="tentitiveEndDate=(tentitiveEndDate | date:'yyyy-MM-dd')" type="date" ng-model="tentitiveEndDate" />
+                    </div>
+                </div>
+
+                    <div class="row mt-5">
+                    <div class="col-md-4 offset-1 mt-3">
                         <label>{{Traveller.userDocument.Name}}</label>
                         <div class="input-group input-group-lg">
                             <input type="file" accept=".pdf" ng-disabled="decision_letter_disabled" id="{{Traveller.userDocument.Name}}" class="form-control " />
@@ -46,21 +103,13 @@
                                 <button class="btn btn-success" ng-click="uploadFile(Traveller.userDocument.Name,Traveller.userDocument.Id,'','','')" type="button">Upload</button>
                             </span>
                         </div>
-                    </div>
-                    <div class="col-md-1" ng-show="Traveller.ContentDistribution.PreferencesAllowPDFDownload">
-                        <a class="btn btn-primary btn-lg background-theme border-theme mt-5" href="{{Traveller.ContentDistribution.DistributionPublicUrl}}"
-                            target="_blank">
-                            <i class="fa-solid fa-eye pe-2"></i>View</a>
-                    </div>
-                    <div class="col md-2 mt-3"></div>
-                    <div class="col-md-4 offset-1 mt-3">
-                        <label>Tentative Start Date</label>
-                        <input class="form-control" ng-init="tentitiveStartDate=(tentitiveStartDate | date:'yyyy-MM-dd')" type="date" ng-model="tentitiveStartDate" />
-                    </div>
 
-                    <div class="col-md-4 offset-1 mt-3">
-                        <label>Tentative End Date</label>
-                        <input class="form-control" ng-init="tentitiveEndDate=(tentitiveEndDate | date:'yyyy-MM-dd')" type="date" ng-model="tentitiveEndDate" />
+                </div>
+
+                <div class="col-md-1" ng-show="Traveller.userDocument.Status__c=='Uploaded'">
+                    <a class="btn btn-primary btn-lg background-theme border-theme mt-5" ng-click="filePreviewHandler(Traveller)" >
+                        <i class="fa-solid fa-eye pe-2"></i>View</a>
+                </div>
                     </div>
 
                     <div class="row m-5">

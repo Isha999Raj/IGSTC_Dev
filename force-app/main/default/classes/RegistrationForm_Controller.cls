@@ -641,6 +641,7 @@ public without sharing class RegistrationForm_Controller {
 
             List<Messaging.SingleEmailMessage> mailList = new List<Messaging.SingleEmailMessage>();
             EmailTemplate temp = [SELECT Id,Name,HTMLValue,Subject, Body FROM EmailTemplate WHERE Name =: emailTempName];
+            Id orgWideEmailAddressId = [SELECT Id FROM OrgWideEmailAddress ].Id;
             system.debug('temp ::'+temp);
             String htmlBody = temp.HTMLValue;
             String subject = temp.Subject;
@@ -659,6 +660,7 @@ public without sharing class RegistrationForm_Controller {
             System.debug('comingEmail--------->'+comingEmail);
 
             Messaging.SingleEmailMessage mailTemp = new Messaging.SingleEmailMessage();
+            mailTemp.setOrgWideEmailAddressId(orgWideEmailAddressId);
             mailTemp.setHtmlBody(htmlBody);
             mailTemp.setSubject(subject);
             mailTemp.setPlainTextBody(plainTextBody);

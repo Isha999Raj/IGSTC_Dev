@@ -217,9 +217,9 @@ public withOut sharing class IndustrialFellowshipController {
         return instanceIFH.UploadAttachments(attachmentBody,attachmentName, cvId, udId);
     }
     @RemoteAction
-    public static String submitSingApp(String projectId) {
+    public static String submitSingApp(String projectId,Integer year, Integer month, Integer day) {
         IndustrialFellowshipHelper instanceIFH = new IndustrialFellowshipHelper();
-        return instanceIFH.submitSingApp(projectId);
+        return instanceIFH.submitSingApp(projectId,year,month,day);
     }
     @RemoteAction
     public static Account getAccountBankDetails(String accountId) {
@@ -274,6 +274,11 @@ public withOut sharing class IndustrialFellowshipController {
     @RemoteAction
     public static String saveExpenceLineItem(List<Expense_Line_Item__c> expLineItem, string appId, Integer amount){
         return IndustrialFellowshipHelper.saveExpenceLineItem(expLineItem, appId, amount);
+    }
+
+    @RemoteAction
+    public static String saveExpenceLineItemWISER(List<Expense_Line_Item__c> expLineItem){
+        return IndustrialFellowshipHelper.saveExpenceLineItemWISER(expLineItem);
     }
 
     @RemoteAction

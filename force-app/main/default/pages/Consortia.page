@@ -235,9 +235,15 @@
                 </div>
 
                 <div class="row mt-5 mx-5" ng-if="!proposalStage">
-                    <div class="col-md-12 float-end">
+                    <div class="col-md-7">
+                        <div class="alert bg-color-list font-if" role="alert">
+                                <li class="ps-4"><i class="fa-solid fa-circle text-success me-3"></i>Final Application should be sumited by co-ordinator only</li>
+                          </div>
+                    </div>
+                    
+                    <div class="col-md-3 float-end">
                         <button type="button" ng-click="addAccount()" class="blue-btn pull-right">
-                            <i class="fa-sharp fa-solid fa-plus me-2"></i>Add Coordinator
+                            <i class="fa-sharp fa-solid fa-plus me-2"></i>Add Partner
                         </button>
                     </div>
                 </div>
@@ -349,19 +355,15 @@
         <h4><label>Choose Coordinator</label></h4>
     </div>
     <div class="col-md-12 py-3 ps-5">
-            <div>
-                <input class="form-check-input me-1" type="radio" name="GFG"/>
-                Java
-            </div>
-            <div>
-                <input class="form-check-input me-1" type="radio" name="GFG"/>
-                CSS
+            <div ng-repeat="acc in allCoordinatorDetails" class="pb-3">
+                <input class="form-check-input me-1" ng-checked="acc.Is_Coordinator__c" ng-click="setCoordinator($index)" type="radio" name="radioGroupAccount"/>
+                {{acc.Name}}
             </div>
     </div>
 </div>
                 <div class="row m-5" ng-if="!proposalStage">
                     <div class="col-md-12">
-                        <button class="blue-btn float-end" ng-click="checkEmail()" type="button">
+                        <button class="blue-btn float-end" id="btnPreview" ng-click="checkEmail()" type="button">
                             <i class="fa-solid fa-check me-2"></i>Save and Next</button>
                             <button class="btn btn-secondary float-end me-2" style="padding: 8px 20px !important;font-size: 16px !important;" ng-click="redirectPageURL('ProjectDetailPage')" type="button">
                                 <i class="fa-solid fa-arrow-left me-2"></i>Back</button>

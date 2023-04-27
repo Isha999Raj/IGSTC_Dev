@@ -829,15 +829,16 @@ $scope.uploadAttachment = function (type, userDocId, fileId) {
                         "Proposals__c": $rootScope.projectId
                     });
                 } else {
-                    for(var i=0;i<result.length;i++){
+                    // for(var i=0;i<result.length;i++){
                         
-                    }
+                    // }
                     $scope.allCoordinatorDetails = result; 
                     for(var i=0;i<$scope.allCoordinatorDetails.length;i++){
                         if($scope.allCoordinatorDetails[i].Contacts[0].Department!=undefined){
                             console.log("before replace=>"+$scope.allCoordinatorDetails[i].Contacts[0].Department);
-                            $scope.allCoordinatorDetails[i].Contacts[0].Department=$scope.allCoordinatorDetails[i].Contacts[0].Department.replaceAll('&amp;','&');
+                            $scope.allCoordinatorDetails[i].Contacts[0].Department=$scope.allCoordinatorDetails[i].Contacts[0].Department.replace(/&amp;/g,'&').replace(/&#39;/g,'\'').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'');
                             console.log("after replace=>"+$scope.allCoordinatorDetails[i].Contacts[0].Department);
+                            $scope.allCoordinatorDetails[i].Name=$scope.allCoordinatorDetails[i].Name.replace(/&amp;/g,'&').replace(/&#39;/g,'\'').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'');
                         }
                     }                         
                 }
@@ -858,7 +859,18 @@ $scope.uploadAttachment = function (type, userDocId, fileId) {
         })
     }
     $scope.getPatnerDetails();
-
+    $scope.setCoordinator=function(index){
+        debugger
+     for(var i=0;i<$scope.allCoordinatorDetails.length;i++){
+        if(i==index){
+            $scope.allCoordinatorDetails[i].Is_Coordinator__c=true;
+            $scope.allCoordinatorDetails[i].Is_Primary__c=true;
+        }else{
+            $scope.allCoordinatorDetails[i].Is_Coordinator__c=false;
+            $scope.allCoordinatorDetails[i].Is_Primary__c=false;
+        }
+     }   
+    }
     $scope.submitDetails = function(){
         debugger;
         var IndianCount = 0;
@@ -1008,19 +1020,36 @@ $scope.uploadAttachment = function (type, userDocId, fileId) {
                 delete ($scope.allCoordinatorDetails[i]['Contacts']);
                 // delete ($scope.allCoordinatorDetails[i]['stateList']);
             }
-
+            $("#btnPreview").html('<i class="fa-solid fa-spinner fa-spin-pulse me-3"></i>Please wait...');
         ApplicantPortal_Contoller.insertCoordinatorsInformation($scope.allCoordinatorDetails,$scope.contactList, function(result, event){
+            $("#btnPreview").html('<i class="fa-solid fa-check me-2"></i>Save and Next');
             if(event.status){
              debugger;
-             Swal.fire(
-                 'Success',
-                 'Co-Ordinators detail has been saved successfully.',
-                 'success'
-             );
-             $scope.disableSubmit = true; 
+             swal({
+                title: "Success",
+                text: "Co-Ordinators detail has been saved successfully.",
+                icon: "success",
+                buttons: true,
+                dangerMode: false,
+            }).then((willDelete) => {
+                if (willDelete) {                    
+                    $scope.disableSubmit = true; 
              $scope.redirectPageURL('ConsortiaAddress');
              $scope.accList = result;
-             $scope.$apply();  
+             $scope.$apply(); 
+                } else {
+                 return;
+                }
+              });
+            //  Swal.fire(
+            //      'Success',
+            //      'Co-Ordinators detail has been saved successfully.',
+            //      'success'
+            //  );
+            //  $scope.disableSubmit = true; 
+            //  $scope.redirectPageURL('ConsortiaAddress');
+            //  $scope.accList = result;
+            //  $scope.$apply();  
          }
         },
         {escape:true}
@@ -1046,7 +1075,17 @@ $scope.uploadAttachment = function (type, userDocId, fileId) {
       }
 
 
-      $scope.checkEmail = function(){
+    $scope.checkEmail = function(){
+        var coordinatiorStatus=false;
+        for(var i=0;i<$scope.allCoordinatorDetails.length;i++){
+                if($scope.allCoordinatorDetails[i].Is_Coordinator__c){
+                    coordinatiorStatus=true;
+                }
+         }
+if(!coordinatiorStatus){
+    swal('info','Please select coordinator.','info');
+    return;
+}
         $scope.emailList = [];
         debugger;
         $scope.emailCheck = false;

@@ -84,12 +84,30 @@ angular.module('cp_app').controller('coordinators_ctrl',function($scope,$rootSco
                 } else {
                     
                     $scope.allCoordinatorDetails = result;
+
+                    for(var i=0;i<result.length;i++){
+                        if(result[i].Contacts[0].Department != undefined || result[i].Contacts[0].Department != ''){
+                            $scope.allCoordinatorDetails[i].Contacts[0].Department = result[i].Contacts[0].Department ? result[i].Contacts[0].Department.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : result[i].Contacts[0].Department;  
+                        }
+                        if(result[i].Name != undefined || result[i].Name != ''){
+                            $scope.allCoordinatorDetails[i].Name = result[i].Name ? result[i].Name.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : result[i].Name;  
+                        }
+                        if(result[i].BillingStreet != undefined || result[i].BillingStreet != ''){
+                            $scope.allCoordinatorDetails[i].BillingStreet = result[i].BillingStreet ? result[i].BillingStreet.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : result[i].BillingStreet;  
+                        }
+                        if(result[i].BillingCity != undefined || result[i].BillingCity != ''){
+                            $scope.allCoordinatorDetails[i].BillingCity = result[i].BillingCity ? result[i].BillingCity.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : result[i].BillingCity;  
+                        }
+                    }
+
                     for(var i=0;i<$scope.allCoordinatorDetails.length;i++){
+
                         if($scope.allCoordinatorDetails[i].BillingStreet != undefined && $scope.allCoordinatorDetails[i].BillingStreet != ""){
                             splitStreet = $scope.allCoordinatorDetails[i].BillingStreet.split(";");
                             $scope.allCoordinatorDetails[i].BillingStreet1 = splitStreet[0];
                             $scope.allCoordinatorDetails[i].BillingStreet2 = splitStreet[1];
                         }
+
                     }                        
                 }
                 for(var i=0;i<$scope.allCoordinatorDetails.length;i++){

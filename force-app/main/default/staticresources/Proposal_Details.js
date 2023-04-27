@@ -4,8 +4,8 @@ angular.module('cp_app').controller('proposal_ctrl', function($scope, $rootScope
     $rootScope.proposalDetails = {};
     $scope.config.height=500;
 
-    $scope.objRtf=[{charCount:0,maxCharLimit:0,errorStatus:false}];
-    $scope.objRtf.push({charCount:0,maxCharLimit:0,errorStatus:false});
+    $scope.objRtf=[{charCount:0,maxCharLimit:4500,errorStatus:false}];
+    $scope.objRtf.push({charCount:0,maxCharLimit:3000,errorStatus:false});
 
     $scope.readCharacter=function(event,index){
         debugger
@@ -34,16 +34,12 @@ angular.module('cp_app').controller('proposal_ctrl', function($scope, $rootScope
             if(event.status){
                 $scope.proposalDetails = result;
                 if(result.Background_Concept_Purpose__c != undefined || result.Background_Concept_Purpose__c != ""){
-                    result.Background_Concept_Purpose__c = result.Background_Concept_Purpose__c ? result.Background_Concept_Purpose__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result.Background_Concept_Purpose__c;
+                    $scope.proposalDetails.Background_Concept_Purpose__c = result.Background_Concept_Purpose__c ? result.Background_Concept_Purpose__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : result.Background_Concept_Purpose__c;
                 }
                 if(result.Specific_Need_For_the_Bilateral_Event__c != undefined || result.Specific_Need_For_the_Bilateral_Event__c != ""){
-                    result.Specific_Need_For_the_Bilateral_Event__c = result.Specific_Need_For_the_Bilateral_Event__c ? result.Specific_Need_For_the_Bilateral_Event__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result.Specific_Need_For_the_Bilateral_Event__c;
+                    $scope.proposalDetails.Specific_Need_For_the_Bilateral_Event__c = result.Specific_Need_For_the_Bilateral_Event__c ? result.Specific_Need_For_the_Bilateral_Event__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : result.Specific_Need_For_the_Bilateral_Event__c;
                 }
                 $scope.$apply();
-                
-                if(result.Specific_Need_For_the_Bilateral_Event__c != undefined || result.Specific_Need_For_the_Bilateral_Event__c != ""){
-                    result.Specific_Need_For_the_Bilateral_Event__c = result.Specific_Need_For_the_Bilateral_Event__c ? result.Specific_Need_For_the_Bilateral_Event__c.replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result.Specific_Need_For_the_Bilateral_Event__c;
-                }
             }
         },
         {escape: true}
@@ -63,14 +59,14 @@ angular.module('cp_app').controller('proposal_ctrl', function($scope, $rootScope
               return;
         }
         if($scope.proposalDetails.Background_Concept_Purpose__c != undefined || $scope.proposalDetails.Background_Concept_Purpose__c != ""){
-            if($scope.objRtf[0].charCount > 3000){
-                swal("info", "Background, concept and purpose maxlength will be 3000 characters only.","info");
+            if($scope.objRtf[0].charCount > 4500){
+                swal("info", "Background, concept and purpose maxlength will be 4500 characters only.","info");
                 return;
             }
         }
         if($scope.proposalDetails.Specific_Need_For_the_Bilateral_Event__c != undefined || $scope.proposalDetails.Specific_Need_For_the_Bilateral_Event__c != ""){
-            if($scope.objRtf[1].charCount > 1500){
-                swal("info", "Specific need for the bilateral event, its relevance and mutual benefits maxlength will be 1500 characters only.","info");
+            if($scope.objRtf[1].charCount > 3000){
+                swal("info", "Specific need for the bilateral event, its relevance and mutual benefits maxlength will be 3000 characters only.","info");
                 return;
             }
         }

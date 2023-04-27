@@ -162,8 +162,8 @@
                     <div class="row mt-5 mx-5">
                         <div class="col-md-12 alert bg-color-list" role="alert">
                             <ul class="font-if">  
-                              <li><i class="fa-solid fa-circle text-success me-3"></i>Two coordinators – one from India and Germany are necessary for the application.</li><br/>
-                              <li><i class="fa-solid fa-circle text-success me-3"></i>Persons holding regular positions in public or private non-profit research organisations, institutions of higher education and universities are<br/>&nbsp;&nbsp;&nbsp;&nbsp; eligible to submit applications. The application should be submitted by the coordinating host institution / coordinator.</li><br/>
+                              <li><i class="fa-solid fa-circle text-success me-3"></i>Two coordinators – one from India and Germany are necessary for the application.</li>
+                              <li><i class="fa-solid fa-circle text-success me-3"></i>Persons holding regular positions in public or private non-profit research organisations, institutions of higher education and universities are<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; eligible to submit applications. The application should be submitted by the coordinating host institution / coordinator.</li>
                               <li><i class="fa-solid fa-circle text-success me-3"></i>Only ONE Coordinator from each country, co-Coordinators NOT ALLOWED.</li>
                             </ul>
                         </div>

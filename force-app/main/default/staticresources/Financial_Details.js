@@ -25,6 +25,12 @@ angular.module('cp_app').controller('financialdetails_ctrl', function($scope, $r
                     if($scope.expenseAllList[i].Expense_Line_Items__r == undefined){
                         $scope.expenseAllList[i].Expense_Line_Items__r = [];
                        $scope.expenseAllList[i].Expense_Line_Items__r.push({"Multiplier__c":"","Expense_Head__c":$scope.expenseAllList[i].Id,"Total_Expense__c":""}) 
+                    }else{
+                        for(var j=0;j<$scope.expenseAllList[i].Expense_Line_Items__r.length;j++){
+                            if($scope.expenseAllList[i].Expense_Line_Items__r[j].Description__c != undefined || $scope.expenseAllList[i].Expense_Line_Items__r[j].Description__c != ""){
+                                $scope.expenseAllList[i].Expense_Line_Items__r[j].Description__c = $scope.expenseAllList[i].Expense_Line_Items__r[j].Description__c ? $scope.expenseAllList[i].Expense_Line_Items__r[j].Description__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.expenseAllList[i].Expense_Line_Items__r[j].Description__c;
+                            }
+                        }
                     }
                 }
             }

@@ -269,7 +269,7 @@
                                 <label class="font-if color-theme"><b>Keywords</b><span class="text-danger me-2">*</span></label>
                                 <!-- <input type="text" ng-model="objKeyword.Keyword" class="form-control" /> -->
                                 <div class="row" ng-repeat="key in objKeyword">
-                                    <div class="col-md-9"><input type="text" ng-disabled="proposalStage" name="txtInputs" id="txtKeyword{{$index}}" ng-model="key.keyword" class="form-control mb-2" /></div>
+                                    <div class="col-md-9"><input type="text" ng-disabled="proposalStage" name="txtInputs" id="txtKeyword{{$index}}" ng-model="key.keyword" maxlength="255" class="form-control mb-2" /></div>
                                     <div class="col-md-3">
                                         <i ng-click="addKeyword()" class="fa-solid fa-2x color-theme-o float-end fa-circle-plus me-2 mt-2" ng-if="!proposalStage"></i>
                                         <i class="fa-solid fa-circle-xmark fa-2x text-danger float-start mt-2" ng-click="removeKeyword($index)" ng-if="!proposalStage"></i>

@@ -37,6 +37,18 @@ angular.module('cp_app').controller('participant_ctrl', function($scope,$rootSco
                             $scope.germanList.push(result[i]);
                         }
                     }
+
+                    for(var i=0;i<$scope.indianList.length;i++){
+                        if($scope.indianList[i].Affiliation__c != undefined || $scope.indianList[i].Affiliation__c != ""){
+                            $scope.indianList[i].Affiliation__c = $scope.indianList[i].Affiliation__c ? $scope.indianList[i].Affiliation__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.indianList[i].Affiliation__c;
+                        }
+                    }
+
+                    for(var i=0;i<$scope.germanList.length;i++){
+                        if($scope.germanList[i].Affiliation__c != undefined || $scope.germanList[i].Affiliation__c != ""){
+                            $scope.germanList[i].Affiliation__c = $scope.germanList[i].Affiliation__c ? $scope.germanList[i].Affiliation__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.germanList[i].Affiliation__c;
+                        }
+                    }
                 }        
                 $scope.$apply();                    
                        

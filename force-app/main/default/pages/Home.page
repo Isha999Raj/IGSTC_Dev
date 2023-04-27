@@ -271,9 +271,9 @@
             </li>
             <li>Please ensure your eligibility before filling the application.</li>
             <li>Documents required for application submission:<br/><br/>
-            <i class="fa-solid fa-circle text-success2 me-3" style="font-size: 10px"></i>No Objection Certificate from the Parent Institution.<br/>
-            <i class="fa-solid fa-circle text-success2 me-3" style="font-size: 10px"></i>Consent letter from the Host Organisation/Institution.<br/>
-            <i class="fa-solid fa-circle text-success2 me-3" style="font-size: 10px"></i>Supporting documents in favour of your application.<br/>
+            <i class="fa-solid fa-circle text-success2 me-3" style="font-size: 10px"></i>Consent Letter/No Objection Certificate from the Parent Institution.<br/>
+            <i class="fa-solid fa-circle text-success2 me-3" style="font-size: 10px"></i>Invitation/Support Letter from the Host Institution.<br/>
+            <i class="fa-solid fa-circle text-success2 me-3" style="font-size: 10px"></i>Supporting documents in favour of your application, including CV.<br/>
 
             </li>
             <li>Queries, if any, should be addressed to
@@ -923,7 +923,7 @@
             </li>
             <li>Please ensure your eligibility before filling the application.</li>
             <li>Queries, if any, should be addressed to
-              <a href="mailto:industrial.fellowship@igstc.org">industrial.fellowship@igstc.org</a>
+              <a href="mailto:info.igstc@igstc.org">info.igstc@igstc.org</a>
             </li>
             <li>Application Deadline: {{dealLinedate}}</li>
             <li>You may note that any false information given in the application can lead to disqualification of your candidature

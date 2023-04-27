@@ -164,17 +164,35 @@ $scope.config.removeButtons = 'BGColor,Anchor,Subscript,Superscript,Paste,Copy,C
             );
                 return;
         }
+        $("#btnSubmit").html('<i class="fa-solid fa-spinner fa-spin-pulse me-3"></i>Please wait...');
         ApplicantPortal_Contoller.insertProjectDetails($scope.proposalDetails, function(result,event){
+            $("#btnSubmit").html('<i class="fa-solid fa-check me-2"></i>Save and Next');
             if(event.status){
                 debugger;
-                Swal.fire(
-                    'Success',
-                    'Project Details have been saved successfully.',
-                    'success'
-                );
-                $scope.redirectPageURL('WorkPackages');
+                swal({
+                    title: "Success",
+                    text: "Project Details have been saved successfully.",
+                    icon: "success",
+                    buttons: true,
+                    dangerMode: false,
+                }).then((willDelete) => {
+                    if (willDelete) {                    
+                        $scope.redirectPageURL('WorkPackages');
                 $scope.proposalDetails = result;
                 $scope.$apply();
+                    } else {
+                     return;
+                    }
+                  });
+    
+                // Swal.fire(
+                //     'Success',
+                //     'Project Details have been saved successfully.',
+                //     'success'
+                // );
+                // $scope.redirectPageURL('WorkPackages');
+                // $scope.proposalDetails = result;
+                // $scope.$apply();
             }
         },
        {escape: true}

@@ -18,6 +18,23 @@ angular.module('cp_app').controller('IFDocUploads_Ctrl', function($scope,$rootSc
     $scope.showTravellerCheck=false;
     $scope.showVisaCheck=false;
     $scope.showUndertakingCheck=false;
+
+    $scope.selectedFile;
+
+    $scope.filePreviewHandler = function(fileContent){
+        debugger;
+        $scope.selectedFile = fileContent;
+    
+        console.log('selectedFile---', $scope.selectedFile);
+    
+        $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
+    
+        var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
+        myModal.show('slow') ;
+        $scope.$apply();
+    
+    }
+
     $scope.getOnLoad=function(){
         debugger
         IndustrialFellowshipController.getDocUploadDet($rootScope.userHashId, function (result, event) {
@@ -201,7 +218,7 @@ angular.module('cp_app').controller('IFDocUploads_Ctrl', function($scope,$rootSc
                     console.log("exception");
                     console.log(event);
                 } else if (event.status) {
-                    if (doneUploading == true) {
+                    // if (doneUploading == true) {
                         swal(
                             'success',
                             'Uploaded Successfully!',
@@ -211,7 +228,7 @@ angular.module('cp_app').controller('IFDocUploads_Ctrl', function($scope,$rootSc
                         $scope.updateProposal(type);
                         // $scope.disableSubmit = false;
                             
-                        }
+                        // }
                         $scope.showUplaodUserDoc = false;
                        // $scope.getCandidateDetails();
     

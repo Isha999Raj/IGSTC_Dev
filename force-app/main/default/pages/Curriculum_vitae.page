@@ -161,14 +161,23 @@
                     </div>
 
                     <div class="row mx-5">
-                        <div class="col-md-12 mt-5 box-shadow-1 mb-3" style="padding-bottom: 7px; padding-top: 7px;">
+                        <div class="accordion" stle="background-color: white !important" id="accordionPanelsStayOpenExample">
+                            <div class="col-md-12 box-shadow-1 mb-5 accordion-header" id="panelsStayOpen-heading" style="padding: none !important;">
+                                <button class="accordion-button" style="background-color: white !important; box-shadow: none !important;" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpencollapse{{$index}}"
+                                aria-expanded="true" aria-controls="panelsStayOpencollapse">
+                                <i ng-if="pairingDetails.Account.BillingCountry=='India'"><apex:image url="{!$Resource.indiaFlag}" styleClass="img-fluid" style="max-width:30px;" /></i>
+                                <i ng-if="pairingDetails.Account.BillingCountry=='Germany'"><apex:image url="{!$Resource.germanyFlag}" styleClass="img-fluid" style="max-width:30px;" /></i>
+                                <h4 class="pb-3 color-theme ms-3 pt-3">{{pairingDetails.Name}}</h4>
+                                </button>
+                            </div>
+                        <!-- <div class="col-md-12 mt-5 box-shadow-1 mb-3" style="padding-bottom: 7px; padding-top: 7px;">
                             <i ng-if="pairingDetails.Account.BillingCountry=='India'"><apex:image url="{!$Resource.indiaFlag}" styleClass="img-fluid" style="max-width:30px;" /></i>
                             <i ng-if="pairingDetails.Account.BillingCountry=='Germany'"><apex:image url="{!$Resource.germanyFlag}" styleClass="img-fluid" style="max-width:30px;" /></i>
                             <span class="pb-3 h4 color-theme ms-3"><b>{{pairingDetails.Name}}</b></span>
-                        </div>
-                    </div>
-    
-                    <div class="row box-shadow-2 mt-5 mx-5 p-3">
+                        </div> -->
+                    <!-- </div> -->
+                    <div id="panelsStayOpencollapse" ng-clock="true" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading">
+                    <div class="row box-shadow-2 mt-5 mx-1 p-3">
                         <div class="col-12">
                             <div class="vertical-scroll">
                                 <div class="progress-icon">
@@ -417,17 +426,29 @@
                                 </div>     -->
                         </div>
                     </div>
+                    </div>
+                </div>
+            </div>
 
 
-                    <div class="row mx-5">
-                        <div class="col-md-12 mt-5 box-shadow-1 mb-3" style="padding-bottom: 7px; padding-top: 7px;">
+                    <div class="row mx-5 mt-5">
+                        <div class="accordion" stle="background-color: white !important" id="accordionPanelsStayOpenExample2">
+                            <div class="col-md-12 box-shadow-1 mb-5 accordion-header" id="panelsStayOpen-heading2" style="padding: none !important;">
+                                <button class="accordion-button" style="background-color: white !important; box-shadow: none !important;" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpencollapse2"
+                                aria-expanded="true" aria-controls="panelsStayOpencollapse2">
+                                <i ng-if="pairList.Account.BillingCountry=='India'"><apex:image url="{!$Resource.indiaFlag}" styleClass="img-fluid" style="max-width:30px;" /></i>
+                                <i ng-if="pairList.Account.BillingCountry=='Germany'"><apex:image url="{!$Resource.germanyFlag}" styleClass="img-fluid" style="max-width:30px;" /></i>
+                                <h4 class="pb-3 color-theme ms-3 pt-3">{{pairList.Name}}</h4>
+                                </button>
+                            </div>
+                        <!-- <div class="col-md-12 mt-5 box-shadow-1 mb-3" style="padding-bottom: 7px; padding-top: 7px;">
                             <i ng-if="pairList.Account.BillingCountry=='India'"><apex:image url="{!$Resource.indiaFlag}" styleClass="img-fluid" style="max-width:30px;" /></i>
                             <i ng-if="pairList.Account.BillingCountry=='Germany'"><apex:image url="{!$Resource.germanyFlag}" styleClass="img-fluid" style="max-width:30px;" /></i>
                             <span class="pb-3 h4 color-theme ms-3"><b>{{pairList.Name}}</b></span>
-                        </div>
-                    </div>
-
-                    <div class="row box-shadow-2 mt-5 mx-5 p-3">
+                        </div> -->
+                    <!-- </div> -->
+                    <div id="panelsStayOpencollapse2" ng-clock="true" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading2">
+                    <div class="row box-shadow-2 mt-5 mx-1 p-3">
                         <div class="col-12">
                             <div class="vertical-scroll">
                                 <div class="progress-icon">
@@ -631,6 +652,9 @@
                             </div>    
                         </div>
                     </div>
+                    </div>
+                    </div>
+                </div>
 
                     <div class="row mb-3 mt-3" ng-if="!proposalStage">
                         <div class="col-md-12">

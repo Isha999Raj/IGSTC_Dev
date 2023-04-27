@@ -184,6 +184,11 @@ ul, li {
     padding-left: 0;
     border-bottom: 1px solid #DADADA;
 }
+.login.reviewer .login-form .fa-eye {
+    position: absolute;
+    top: 12px;
+    right: 10px;
+}
 .eye-icon {
     position: absolute;
     right: 10px;
@@ -807,4 +812,7 @@ ul, li {
 }
 .custom-file-upload .btn-success {
     background: #138808;
+}
+.font-reviewer-question{
+    font-size: 1.6rem;
 }

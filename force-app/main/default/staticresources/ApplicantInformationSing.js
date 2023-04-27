@@ -29,30 +29,44 @@ $scope.getContactSingh=function(){
             $scope.accountDet=$scope.objContact.Account;
             $scope.doc = $scope.objContact.Profile_Pic_Attachment_Id__c;
             $scope.nationality=$rootScope.nationality;
-                $scope.country=$rootScope.country;
-                if(result.Birthdate!=undefined && result.Birthdate!=''){
-                    $scope.Birthdate=new Date(result.Birthdate);
-                  }
-                  var mailingAddress=result.MailingStreet;
-                if(mailingAddress!=undefined && mailingAddress!=''){
-                  var arrMA =mailingAddress.split(';');
-                  $scope.MailingLine1=arrMA[0];
-                  if(arrMA.length>0){
-                    $scope.MailingLine2=arrMA[1];
-                  }
-                }
-                if($scope.objContact.MailingCountry!=undefined){
-                  if($scope.objContact.MailingCountry=="India"){
-                    $scope.ddStatus=$scope.indianStates;
-                  }else{
-                    $scope.ddStatus=$scope.germanStates;
-                  }
-                }
-                if($scope.objContact.Attachments != undefined && $scope.objContact.Attachments.length > 0){
-                  $scope.doc = $scope.objContact.Attachments[0];
-                  $scope.imageSrc = window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.objContact.Profile_Pic_Attachment_Id__c;
-                  delete  $scope.objContact.Attachments;
+            $scope.country=$rootScope.country;
+
+            if(result.Account.Name != undefined || result.Account.Name != ''){
+              $scope.objContact.Account.Name = $scope.objContact.Account.Name ? $scope.objContact.Account.Name.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.objContact.Account.Name;  
+            }
+            if(result.Designation__c != undefined || result.Designation__c != ''){
+              $scope.objContact.Designation__c = $scope.objContact.Designation__c ? $scope.objContact.Designation__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.objContact.Designation__c;  
+            }
+            if(result.MailingStreet != undefined || result.MailingStreet != ''){
+              $scope.objContact.MailingStreet = $scope.objContact.MailingStreet ? $scope.objContact.MailingStreet.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.objContact.MailingStreet;  
+            }
+            if(result.MailingCity != undefined || result.MailingCity != ''){
+              $scope.objContact.MailingCity = $scope.objContact.MailingCity ? $scope.objContact.MailingCity.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.objContact.MailingStreet;  
+            }
+
+            if(result.Birthdate!=undefined && result.Birthdate!=''){
+                $scope.Birthdate=new Date(result.Birthdate);
               }
+              var mailingAddress=result.MailingStreet;
+            if(mailingAddress!=undefined && mailingAddress!=''){
+              var arrMA =mailingAddress.split(';');
+              $scope.MailingLine1=arrMA[0];
+              if(arrMA.length>0){
+                $scope.MailingLine2=arrMA[1];
+              }
+            }
+            if($scope.objContact.MailingCountry!=undefined){
+              if($scope.objContact.MailingCountry=="India"){
+                $scope.ddStatus=$scope.indianStates;
+              }else{
+                $scope.ddStatus=$scope.germanStates;
+              }
+            }
+            if($scope.objContact.Attachments != undefined && $scope.objContact.Attachments.length > 0){
+              $scope.doc = $scope.objContact.Attachments[0];
+              $scope.imageSrc = window.location.origin +'/ApplicantDashboard/servlet/servlet.FileDownload?file='+$scope.objContact.Profile_Pic_Attachment_Id__c;
+              delete  $scope.objContact.Attachments;
+          }
             $scope.$apply();
     });
 };
@@ -405,7 +419,7 @@ debugger
             console.log(event);
             if (event.status) {
                 swal({
-                  title: "Personal Information",
+                  title: "SUCCESS",
                   text: 'Your Personal Information have been successfully saved',
                   icon: "success",
                   button: "ok!",

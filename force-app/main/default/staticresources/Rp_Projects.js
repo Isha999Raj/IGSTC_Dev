@@ -440,6 +440,8 @@ angular.module('rp_app').controller('projects_ctrl', function($scope,$sce,$rootS
                     $scope.infoCardWorkshop=true;
                 }
                 $scope.myReviewsList=$scope.draftList;
+                console.log('draft proposals');
+                console.log($scope.draftList);
                 $scope.$apply();
             }
         })
@@ -683,6 +685,7 @@ $scope.getOnload();
             console.log('all questions');
             console.log(result);
             var rating=0;
+            $scope.totalRating=0;
             if(event.status && result !=null){
                 for(var i=0;i<result.length;i++){
                     if(result[i].RRLineItemList!=undefined){
@@ -696,7 +699,14 @@ $scope.getOnload();
                                 console.log(e);
                             }
                         }
-                    }
+                        if(result[i].RRLineItemList.Response__c!=undefined){
+                            try{
+                                result[i].RRLineItemList.Response__c = result[i].RRLineItemList.Response__c ? result[i].RRLineItemList.Response__c.replace(/&amp;/g,'&').replace(/&#39;/g,'\'').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result[i].RRLineItemList.Response__c;
+                            }catch(e){
+                                console.log(e);
+                            }
+                        }                        
+                    }                    
                     if(result[i].getQuesLineItemList.Is_Rating_Applicable__c){
                         $scope.totalRating=$scope.totalRating+10;
                     }
@@ -704,6 +714,7 @@ $scope.getOnload();
                 // $scope.ratingScore=(rating/result.length).toFixed(2);
                 //$scope.totalRating=(result.length*10);
                 $scope.ratingScore=rating
+                $scope.ratingScore=$scope.ratingScore.toFixed(1);
                 $scope.QuestionTempList =result; 
                 if($scope.QuestionTempList.length>0){
                 // if(result[0].rmStage == 'Submitted'){
@@ -742,7 +753,7 @@ $scope.getOnload();
     }
     $scope.validateRating=function(index,rating){
         debugger
-        if(rating<=0 || rating==null){
+        if(rating<1 || rating==null){
             $("#spnRating"+index+"").show();
             $("#txtRating"+index+"").addClass('border-theme');
         }else if(rating>10){
@@ -753,6 +764,13 @@ $scope.getOnload();
             $("#spnRating"+index+"").hide();
             $("#txtRating"+index+"").removeClass('border-theme');
         }
+        var arrRat=rating.toString().split('.');
+        if(arrRat.length>1){
+            var decimalval=arrRat[1].toString()[0];
+            // var wholeNo=arrRat[0].toString();
+            rating= parseFloat(arrRat[0].toString()+'.'+decimalval);
+            $scope.QuestionTempList[index].RRLineItemList.Ratings__c=rating;
+        }
         if(rating==null || rating==undefined){
             rating=0;
         }
@@ -761,7 +779,7 @@ $scope.getOnload();
             if($scope.QuestionTempList[i].RRLineItemList!=undefined){
                 if($scope.QuestionTempList[i].RRLineItemList.Ratings__c!=undefined){
                     try{
-                        if($scope.QuestionTempList.getQuesLineItemList.Is_Rating_Applicable__c)
+                        if($scope.QuestionTempList[i].getQuesLineItemList.Is_Rating_Applicable__c)
                             rating=parseFloat(rating)+parseFloat($scope.QuestionTempList[i].RRLineItemList.Ratings__c);
                     }catch(e){
                         console.log(e);
@@ -770,7 +788,7 @@ $scope.getOnload();
             }
         }
         // $scope.ratingScore=(rating/$scope.QuestionTempList.length).toFixed(2);
-           $scope.ratingScore=rating.toFixed(2)
+           $scope.ratingScore=rating.toFixed(1);
     }
     $scope.submitResponseDetail = function(param1){
         debugger;
@@ -786,10 +804,10 @@ $scope.getOnload();
                             swal('Reviews','Please provide ratings & comments on all questions','error');
                             return
                         }
-                        if($scope.QuestionTempList[i].RRLineItemList.Ratings__c<=0){
+                        if($scope.QuestionTempList[i].RRLineItemList.Ratings__c<1){
                             $("#spnRating"+i+"").show();
                             $("#txtRating"+i+"").addClass('border-theme');
-                            swal('Reviews','Please enter rating between 1 to 100','error');
+                            swal('Reviews','Please enter rating between 1 to 10','error');
                             return;
                         }
                     }

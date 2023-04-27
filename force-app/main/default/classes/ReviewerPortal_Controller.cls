@@ -151,6 +151,7 @@ public withOut sharing class ReviewerPortal_Controller {
         }
         // return [select id,Stage__c, Review_Due_Date__c, Proposals__r.Name,Proposals__r.Acronym__c,Proposals__r.Title_Of__c,Proposals__r.Title_In_German__c,Proposals__r.KeyWords__c,Proposals__r.Duration_In_Months_Max_36__c,Proposals__r.Id from Reviewer_Mapping__c where Reviewer__r.Login_Hash_Code__c =: reviewerId and Review_Due_Date__c>=:todayDate];
         // return [select id,Stage__c, Review_Due_Date__c, Proposals__r.Campaign__r.Name,Proposals__r.Name,Proposals__r.Acronym__c,Proposals__r.Title_Of__c,Proposals__r.Title_In_German__c,Proposals__r.KeyWords__c,Proposals__r.Duration_In_Months_Max_36__c,Proposals__r.Id from Reviewer_Mapping__c where Reviewer__r.Login_Hash_Code__c =: reviewerId and Proposals__r.campaign__r.Id=:campaign LIMIT 50];
+        List<contact> sskk= [select id,Proposals__r.Campaign__r.Name,Proposals__r.Name,Proposals__r.Acronym__c,Proposals__r.Title_Of__c,Proposals__r.Title_In_German__c,Proposals__r.KeyWords__c,Proposals__r.Duration_In_Months_Max_36__c,Proposals__r.Id from contact ];
         return [select id,Stage__c, Review_Due_Date__c, Proposals__r.Campaign__r.Name,Proposals__r.Name,Proposals__r.Acronym__c,Proposals__r.Title_Of__c,Proposals__r.Title_In_German__c,Proposals__r.KeyWords__c,Proposals__r.Duration_In_Months_Max_36__c,Proposals__r.Id from Reviewer_Mapping__c where Reviewer__r.Login_Hash_Code__c =: reviewerId LIMIT 50];
     }
     @RemoteAction

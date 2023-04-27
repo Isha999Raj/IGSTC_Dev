@@ -238,6 +238,13 @@ $scope.deleteEducationRow = function(eduId){
                 }else{
                 
                     for(var i=0;i<result.length;i++){
+
+                        if(result[i].Actual_Position__c != undefined || result[i].Actual_Position__c != ""){
+                            result[i].Actual_Position__c = result[i].Actual_Position__c ? result[i].Actual_Position__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result[i].Actual_Position__c;
+                        }
+                        if(result[i].MailingStreet != undefined || result[i].MailingStreet != ""){
+                            result[i].MailingStreet = result[i].MailingStreet ? result[i].MailingStreet.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result[i].MailingStreet;
+                        }
                         if(result[i].Publications_Patents__c != undefined || result[i].Publications_Patents__c != ""){
                             result[i].Publications_Patents__c = result[i].Publications_Patents__c ? result[i].Publications_Patents__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result[i].Publications_Patents__c;
                         }
@@ -251,6 +258,18 @@ $scope.deleteEducationRow = function(eduId){
                                 $scope.pairingDetails.Education_Details__r = [];
                                     debugger;
                                 $scope.pairingDetails.Education_Details__r.push(rec);
+                            }else{
+                                for(var j=0;j<result[i].Education_Details__r.length;j++){
+                                    if(result[i].Education_Details__r[j].Degree__c != undefined || result[i].Education_Details__r[j].Degree__c != ""){
+                                        $scope.pairingDetails.Education_Details__r[j].Degree__c = result[i].Education_Details__r[j].Degree__c ? result[i].Education_Details__r[j].Degree__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result[i].Education_Details__r[j].Degree__c;
+                                    }
+                                    if(result[i].Education_Details__r[j].Area_of_specialization__c != undefined || result[i].Education_Details__r[j].Area_of_specialization__c != ""){
+                                        $scope.pairingDetails.Education_Details__r[j].Area_of_specialization__c = result[i].Education_Details__r[j].Area_of_specialization__c ? result[i].Education_Details__r[j].Area_of_specialization__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result[i].Education_Details__r[j].Area_of_specialization__c;
+                                    }
+                                    if(result[i].Education_Details__r[j].Institution_Name__c != undefined || result[i].Education_Details__r[j].Institution_Name__c != ""){
+                                        $scope.pairingDetails.Education_Details__r[j].Institution_Name__c = result[i].Education_Details__r[j].Institution_Name__c ? result[i].Education_Details__r[j].Institution_Name__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result[i].Education_Details__r[j].Institution_Name__c;
+                                    }
+                                }
                             }
                             if($scope.pairingDetails.Employment_Details__r == undefined){
                                 var emprec = {
@@ -260,6 +279,15 @@ $scope.deleteEducationRow = function(eduId){
                                 $scope.pairingDetails.Employment_Details__r = [];
                                 debugger;
                                 $scope.pairingDetails.Employment_Details__r.push(emprec);
+                            }else{
+                                for(var j=0;j<result[i].Employment_Details__r.length;j++){
+                                    if(result[i].Employment_Details__r[j].Organization_Name__c != undefined || result[i].Employment_Details__r[j].Organization_Name__c != ""){
+                                        $scope.pairingDetails.Employment_Details__r[j].Organization_Name__c = result[i].Employment_Details__r[j].Organization_Name__c ? result[i].Employment_Details__r[j].Organization_Name__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result[i].Employment_Details__r[j].Organization_Name__c;
+                                    }
+                                    if(result[i].Employment_Details__r[j].Position__c != undefined || result[i].Employment_Details__r[j].Position__c != ""){
+                                        $scope.pairingDetails.Employment_Details__r[j].Position__c = result[i].Employment_Details__r[j].Position__c ? result[i].Employment_Details__r[j].Position__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result[i].Employment_Details__r[j].Position__c;
+                                    }
+                                }
                             }
 
                             if($scope.pairingDetails.MailingCountry == "India"){
@@ -278,6 +306,17 @@ $scope.deleteEducationRow = function(eduId){
                                     debugger;
                                 $scope.pairList.Education_Details__r.push(rec);
                             }
+                            for(var j=0;j<result[i].Education_Details__r.length;j++){
+                                if(result[i].Education_Details__r[j].Degree__c != undefined || result[i].Education_Details__r[j].Degree__c != ""){
+                                    $scope.pairList.Education_Details__r[j].Degree__c = result[i].Education_Details__r[j].Degree__c ? result[i].Education_Details__r[j].Degree__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result[i].Education_Details__r[j].Degree__c;
+                                }
+                                if(result[i].Education_Details__r[j].Area_of_specialization__c != undefined || result[i].Education_Details__r[j].Area_of_specialization__c != ""){
+                                    $scope.pairList.Education_Details__r[j].Area_of_specialization__c = result[i].Education_Details__r[j].Area_of_specialization__c ? result[i].Education_Details__r[j].Area_of_specialization__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result[i].Education_Details__r[j].Area_of_specialization__c;
+                                }
+                                if(result[i].Education_Details__r[j].Institution_Name__c != undefined || result[i].Education_Details__r[j].Institution_Name__c != ""){
+                                    $scope.pairList.Education_Details__r[j].Institution_Name__c = result[i].Education_Details__r[j].Institution_Name__c ? result[i].Education_Details__r[j].Institution_Name__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result[i].Education_Details__r[j].Institution_Name__c;
+                                }
+                            }
                             if($scope.pairList.Employment_Details__r == undefined){
                                 var emprec = {
                                     "Organization_Name__c":"",
@@ -286,6 +325,15 @@ $scope.deleteEducationRow = function(eduId){
                                 $scope.pairList.Employment_Details__r = [];
                                 debugger;
                                 $scope.pairList.Employment_Details__r.push(emprec);
+                            }else{
+                                for(var j=0;j<result[i].Employment_Details__r.length;j++){
+                                    if(result[i].Employment_Details__r[j].Organization_Name__c != undefined || result[i].Employment_Details__r[j].Organization_Name__c != ""){
+                                        $scope.pairList.Employment_Details__r[j].Organization_Name__c = result[i].Employment_Details__r[j].Organization_Name__c ? result[i].Employment_Details__r[j].Organization_Name__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result[i].Employment_Details__r[j].Organization_Name__c;
+                                    }
+                                    if(result[i].Employment_Details__r[j].Position__c != undefined || result[i].Employment_Details__r[j].Position__c != ""){
+                                        $scope.pairList.Employment_Details__r[j].Position__c = result[i].Employment_Details__r[j].Position__c ? result[i].Employment_Details__r[j].Position__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result[i].Employment_Details__r[j].Position__c;
+                                    }
+                                }
                             }
                             if($scope.pairList.MailingCountry == "India"){
                                 $scope.pairList.stateList = $scope.indianStates;

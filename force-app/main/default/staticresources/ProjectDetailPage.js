@@ -38,7 +38,19 @@ angular.module('cp_app').controller('ProjectDetailCtrl', function($scope,$rootSc
                       $scope.tentitiveStartDate = new Date(result.Tentative_Start_Date__c);
                      }
                      if(result.Summary__c != undefined || result.Summary__c != ""){
-                        result.Summary__c = result.Summary__c ? result.Summary__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result.Summary__c;
+                        result.Summary__c = result.Summary__c ? result.Summary__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replace(/&#39;/g,'\'').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result.Summary__c;
+                    }
+                    if(result.Acronym__c != undefined || result.Acronym__c != ""){
+                        result.Acronym__c = result.Acronym__c ? result.Acronym__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replace(/&#39;/g,'\'').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result.Acronym__c;
+                    }
+                    if(result.Title_Of__c != undefined || result.Title_Of__c != ""){
+                        result.Title_Of__c = result.Title_Of__c ? result.Title_Of__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replace(/&#39;/g,'\'').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result.Title_Of__c;
+                    }
+                    if(result.Title_In_German__c != undefined || result.Title_In_German__c != ""){
+                        result.Title_In_German__c = result.Title_In_German__c ? result.Title_In_German__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replace(/&#39;/g,'\'').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result.Title_In_German__c;
+                    }
+                    if(result.KeyWords__c != undefined || result.KeyWords__c != ""){
+                        result.KeyWords__c = result.KeyWords__c ? result.KeyWords__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replace(/&#39;/g,'\'').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('lt;','<').replaceAll('&gt;','>').replaceAll('gt;','>').replaceAll('&amp;','&').replaceAll('amp;','&').replaceAll('&quot;','\'') : result.KeyWords__c;
                     }
                       $scope.applicantDetails = result;
                         //$scope.applicantDetails.Duration_In_Months_Max_36__c = Math.round($scope.applicantDetails.Duration_In_Months_Max_36__c);
@@ -101,6 +113,7 @@ angular.module('cp_app').controller('ProjectDetailCtrl', function($scope,$rootSc
         $scope.objKeyword.splice(index, 1);
         }  
       }
+      
       $scope.readCharacter=function(event,index){
         debugger
            try{
@@ -251,19 +264,36 @@ angular.module('cp_app').controller('ProjectDetailCtrl', function($scope,$rootSc
                         return;
             }
         }
+        $("#btnPreview").html('<i class="fa-solid fa-spinner fa-spin-pulse me-3"></i>Please wait...');
         debugger;
     ApplicantPortal_Contoller.insertApplication($scope.applicantDetails,$scope.selectedTheme,day,month,year,$rootScope.contactId,'Two Plus Two', function (result, event){
         debugger;   
+        $("#btnPreview").html('<i class="fa-solid fa-check me-2"></i>Save and Next');
         if(event.status && result != null) {
                 debugger;
-                Swal.fire(
-                    'Proposal Detail',
-                    'Basic Details have been saved successfully.',
-                    'success'
-                );
-                $scope.redirectPageURL('Consortia');
-                $rootScope.projectId = result;
-                $scope.$apply();
+                swal({
+                    title: "Proposal Detail",
+                    text: "Basic Details have been saved successfully.",
+                    icon: "success",
+                    buttons: true,
+                    dangerMode: false,
+                }).then((willDelete) => {
+                    if (willDelete) {                    
+                        $rootScope.projectId = result;
+                        $scope.$apply();
+                        $scope.redirectPageURL('Consortia');
+                    } else {
+                     return;
+                    }
+                  });
+                // Swal.fire(
+                //     'Proposal Detail',
+                //     'Basic Details have been saved successfully.',
+                //     'success'
+                // );
+                // $scope.redirectPageURL('Consortia');
+                // $rootScope.projectId = result;
+                // $scope.$apply();
         }
         },
         {escape: true}
@@ -370,4 +400,7 @@ angular.module('cp_app').controller('ProjectDetailCtrl', function($scope,$rootSc
     //         CKEDITOR.config.readOnly = true;
     //     }
     // });
+});
+$( document ).ready(function(){
+    $("#Acronym").focus();
 });

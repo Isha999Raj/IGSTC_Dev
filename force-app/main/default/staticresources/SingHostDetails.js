@@ -62,6 +62,20 @@ angular.module('cp_app').controller('singHost_ctrl', function($scope,$rootScope,
             if(event.status && result){
                 $scope.hostDetails = result;
                 $scope.contactDetails = result.Contacts[0];
+
+                if(result.Name != undefined || result.Name != ''){
+                  $scope.hostDetails.Name = $scope.hostDetails.Name ? $scope.hostDetails.Name.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.hostDetails.Name;  
+                }
+                if(result.Contacts[0].Designation__c != undefined || result.Contacts[0].Designation__c != ''){
+                  $scope.contactDetails.Designation__c = $scope.contactDetails.Designation__c ? $scope.contactDetails.Designation__c.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.contactDetails.Designation__c;  
+                }
+                if(result.BillingStreet != undefined || result.BillingStreet != ''){
+                  $scope.hostDetails.BillingStreet = $scope.hostDetails.BillingStreet ? $scope.hostDetails.BillingStreet.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.hostDetails.BillingStreet;  
+                }
+                if(result.BillingCity != undefined || result.BillingCity != ''){
+                  $scope.hostDetails.BillingCity = $scope.hostDetails.BillingCity ? $scope.hostDetails.BillingCity.replace(/&amp;/g,'&').replaceAll('&amp;amp;','&').replaceAll('&amp;gt;','>').replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&') : $scope.hostDetails.BillingCity;  
+                }
+
                 if($scope.hostDetails.BillingCountry == 'India'){
                   $scope.hostDetails.stateList = $scope.indianStates;
               }else if($scope.hostDetails.BillingCountry == 'Germany'){

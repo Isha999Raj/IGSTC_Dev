@@ -163,7 +163,8 @@
                                 <ul class="font-if">  
                                   <li><i class="fa-solid fa-circle text-success me-3"></i>IGSTC supports participants with an active role in the workshop. Participant should be a speaker in the workshop.</li>
                                   <li><i class="fa-solid fa-circle text-success me-3"></i>PAN-India/Germany presence of participants is necessary.</li>
-                                  <li><i class="fa-solid fa-circle text-success me-3"></i>The overall number of invited participants should be 30 (appx.). Students and young researchers from the hosting institution may attend the<br/>&nbsp;&nbsp;&nbsp;&nbsp; workshop programme.</li>
+                                  <li><i class="fa-solid fa-circle text-success me-3"></i>The overall number of invited participants should be 30 (appx.). Students and young researchers from the hosting institution may attend the<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; workshop programme.</li>
+                                  <li><i class="fa-solid fa-circle text-success me-3"></i>Click on Save and Next to regularly save the data.</li>
                                 </ul>
                             </div>
                         </div>
