@@ -1,0 +1,20 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false">
+    <html>
+    <div ng-app="file_preview" ng-controller="FilePreviewHandler_ctrl">
+    <!-- <iframe src="{!'/servlet/servlet.FileDownload?file=05D1y0000000S8PEAU'}" height="800px" /> -->
+    <iframe id="myIframe" ng-src="{{fileUrl}}" style="width:100%;height:39vh;border: 0px;border-radius: 10px"></iframe>
+    
+    <script ng-src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script>
+    var app = angular.module('file_preview', []);
+        app.controller('FilePreviewHandler_ctrl', function($scope,$sce) {
+            debuggre;
+            let baseUrl = window.location.origin;
+            $scope.fileUrl = $sce.trustAsResourceUrl(baseUrl+'/servlet/servlet.FileDownload?file=05D1y0000000S8PEAU&embedded=true');
+            $scope.$apply();
+            // <iframe src="{!'/servlet/servlet.FileDownload?file=05D1y0000000S8PEAU'}" height="800px" />
+    });
+    </script>
+        </div>
+    </html>
+    </apex:page>

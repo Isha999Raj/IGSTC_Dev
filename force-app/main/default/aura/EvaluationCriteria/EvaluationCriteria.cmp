@@ -1,0 +1,70 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" 
+                access="global" controller="Proposal_Controller" >
+	
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="EvaluationRecordsList" type="List" />
+    <aura:attribute name="SetEvaluationRecordsList" type="List" />
+    <aura:attribute name="commentBox" type="string"/>
+
+    <aura:attribute name="recordId" type="string" default=""/>   
+    <aura:attribute name="fileId" type="String"/>
+    <aura:attribute name="pdfLink" type="string" default="{!$Label.c.AwardLetterLink}" />
+    
+    <div class="slds-m-around_xx-large">
+        
+        <table class="slds-table slds-table--bordered slds-table--cell-buffer" role="grid" style="">      
+            <thead>  
+                <tr class="slds-text-title--caps">
+                    <th scope="col" style="width: 2%; background-color:#4998ff; color:white;">
+                        <div class="slds-truncate" title="Subject"><b>S.No.</b></div>
+                    </th>
+                    <th scope="col" style="width: 10%; background-color:#4998ff; color:white;">
+                        <div class="slds-truncate" title="Subject"><b>Criteria</b></div>
+                    </th>
+                    <th scope="col" style="width: 50%; background-color:#4998ff; color:white;">
+                        <div class="slds-truncate" title="Comments">Comments</div>
+                    </th>
+                     
+                    <th scope="col" style="width: 8%; background-color:#4998ff; color:white;">
+                        <div class="slds-align_absolute-center" title="Yes">Is it feasible?</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>        
+                <aura:iteration items="{!v.EvaluationRecordsList}" var="evaluationRec" indexVar="i">
+                    <tr>
+                        <th scope="row" style="width: 2%; background-color:lightgrey;">
+                            <b>{!i+1}</b>
+                        </th>
+                        <th scope="row" style="width: 10%; background-color:lightgrey;">
+                            <div class="slds-truncate"><b>{!evaluationRec.Subject__c}</b></div>
+                        </th>
+                        <td style="width: 50%; background-color:lightgrey;">
+                            <div class="slds-truncate">
+                                <lightning:input name="Comments" aura:id="comments" value="{!evaluationRec.Comments__c}"/>
+                            </div>
+                        </td>
+                        <th scope="row" style="width: 8%; background-color:lightgrey;">
+                            <div class="slds-align_absolute-center">
+                                <a onclick="{!c.handleyesCheckboxChange}" data-record="{!evaluationRec.Id}">
+                                    <lightning:input type="checkbox" aura:id="yes" name="Yes" checked="{!evaluationRec.Yes__c}"/>          
+                                </a>
+                            </div>
+                        </th>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+        <div class="slds-align_absolute-center" style="margin-top: 3%;">
+            <br/>
+            <lightning:button label="Save as Draft" onclick="{!c.SaveAsDraftEvaluationRecords }"  />
+            <lightning:spinner aura:id="mySpinner" alternativeText="Processing.." title="Processing.." variant="brand" size="large" class="slds-hide"/>
+            <lightning:button label="Submit" onclick="{!c.SaveEvaluationRecords }"  />
+            <lightning:spinner aura:id="mySpinner" alternativeText="Processing.." title="Processing.." variant="brand" size="large" class="slds-hide"/>
+        </div>
+        <div style="margin-top:5%;">
+            <iframe src="{!v.pdfLink+ v.fileId }" scrolling="no" height="auto" width="auto" style="height:100%;width:100%; display:block;  min-height: 100vh;  background-color: #f2f0ea; border: none;"/>
+        </div>
+    </div>
+    
+</aura:component>

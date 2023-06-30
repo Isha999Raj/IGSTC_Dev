@@ -1,0 +1,51 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global"
+                controller="ExpenseHeadCompWISERController" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="expenseHeads" type="List" />
+    
+    <div style="overflow-x:auto;">
+        <table class="slds-table slds-table--bordered " >
+            <thead>
+                <tr class="slds-text-title--caps">
+                    <th scope="col">
+                        <div class="slds-truncate" title="Subject"><b>Head</b></div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Comments">Grants Requested From IGSTC</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Comments">Approved Amount</div>
+                    </th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <aura:iteration items="{!v.expenseHeads}" var="expense">
+                    <tr>
+                        <th >
+                            <div class="slds-truncate">{!expense.Name}</div>
+                        </th>
+                        <td>
+                            <div class="slds-truncate">
+                                {!expense.ELI__c}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate">
+                                <lightning:input name="year1" aura:id="year1" value="{!expense.Year_1_Approved_Amount__c}"/>
+                            </div>
+                        </td>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+        
+        <div>
+            <br/>
+            <lightning:button label="Submit" class="slds-align_absolute-center" onclick="{!c.saveExpenseDetails }"  />
+            <lightning:spinner aura:id="mySpinner" alternativeText="Processing.." title="Processing.." variant="brand" size="large" class="slds-hide"/>
+        </div>
+    </div>
+	
+</aura:component>

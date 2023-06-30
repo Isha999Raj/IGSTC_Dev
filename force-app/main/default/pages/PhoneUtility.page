@@ -1,0 +1,145 @@
+<apex:page standardStylesheets="false" sidebar="false">
+    <html ng-app="cp_app">
+      <head>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/8.5.0/js/intlTelInput.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/8.5.0/js/utils.js"></script>
+        
+        <script src="//code.angularjs.org/1.5.0/angular.min.js"></script>
+        <script src="//code.angularjs.org/1.5.0/angular-messages.min.js"></script>
+        <script src="//code.angularjs.org/1.5.0/angular-animate.min.js"></script>
+        <script src="//code.angularjs.org/1.5.0/angular-aria.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js"></script>
+        
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/intl-tel-input/8.5.0/css/intlTelInput.css" />
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.css" />
+        <style>
+    	
+
+        .intl-tel-input {
+          position: static;
+          display: inline;
+          z-index: 3;
+        }
+        
+        .intl-tel-input .selected-flag {
+          height: 36px;
+          width: 36px !important;
+          padding: 0 2px 0 0;
+        }
+        
+        .intl-tel-input.allow-dropdown input, 
+        .intl-tel-input.allow-dropdown input[type="text"], 
+        .intl-tel-input.allow-dropdown input[type="tel"] {
+          padding-left: 2px;
+        }
+        
+        .md-block {
+          position: relative;
+        }  
+    </style>
+    
+    
+  </head>
+
+  <body ng-controller="TestController">
+    
+    <div class="bug-demo-block">
+      {{phone}}
+      <form name="loginForm">
+        <md-input-container class="md-block">
+          <label>Phone Number</label>
+          <md-icon></md-icon>
+            <input tabindex="1" type="tel" name="phone" ng-model="phone" wrap-intl-tel-input="true"/> 
+          <div ng-messages="loginForm.phone.$error">
+            <div ng-message="required">Phone is required</div>
+            <div ng-message="invalidIntlTel">Phone is invalid format</div>
+          </div>
+        </md-input-container>
+      </form>
+      
+    </div>
+  </body>
+</html>
+<script>
+    var app = angular.module('cp_app', ['ngMaterial', 'ngMessages']);
+
+app.controller('TestController', function ($scope) {
+  $scope.phone="+44";
+});
+
+app.directive('wrapIntlTelInput', function ($timeout) {
+  return {
+    restrict: 'A',
+    require: '^ngModel',
+    link: link
+  };
+
+  ////////////////////////////////////////////////////////////
+
+  function link (scope, elem, attrs, ctrl) {
+    hookFieldIntoIntlTelInputJqueryPlugin();
+    hookFieldIntoJqueryChangeEvent();
+
+    ctrl.$parsers.push(validateFieldAndFormatModelValue);
+
+    elem.on('blur keyup change', applyRenderWhenChange);
+    elem.on('$destroy', function () {
+      elem.off('blur keyup change');
+    });
+
+    $timeout(applyMaskingWhenInitWithPresetPhoneNumber);
+
+    ////////////
+
+    function hookFieldIntoIntlTelInputJqueryPlugin () {
+      elem.intlTelInput({
+        autoFormat: false,
+        autoHideDialCode: true,
+        autoPlaceholder: false,
+        defaultCountry: 'us',
+        nationalMode: true,
+        numberType: '',
+        preferredCountries: ['us', 'ca', 'gb', 'au'],
+        responsiveDropdown: false,
+        utilsScript: ''
+      });
+    }
+
+    function hookFieldIntoJqueryChangeEvent () {
+      elem.change(reformatPhoneNumberWithCountryCode);
+    }
+
+    function reformatPhoneNumberWithCountryCode () {
+      ctrl.$$parseAndValidate();
+    }
+
+    function validateFieldAndFormatModelValue (value) {
+      var parsedValue = elem.intlTelInput('getNumber') || value;
+      var formattedModelValue = removeInvalidInput(parsedValue);
+      ctrl.$setValidity('invalidIntlTel', elem.intlTelInput('isValidNumber'));
+      return formattedModelValue;
+
+      ////////////
+      
+      function removeInvalidInput (input) {
+        return input ? input.replace(/(?!^\+?)[^0-9]/g, '') : '';
+      }
+    }
+
+    function applyMaskingWhenInitWithPresetPhoneNumber () {
+      if (elem.val()) {
+        elem.intlTelInput('setNumber', elem.val());
+        applyRenderWhenChange();
+      }
+    }
+
+    function applyRenderWhenChange () {
+      scope.$apply(function () {
+        return ctrl.$setViewValue(elem.val());
+      });
+    }
+  }
+});
+    </script>
+</apex:page>

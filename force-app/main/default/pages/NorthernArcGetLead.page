@@ -1,0 +1,49 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false"  docType="html-5.0" controller="NorthernArcGetLead">
+    <html>
+        <head>
+            <apex:stylesheet value="{!$Resource.ApplicantPortalCSS}" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+            <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.1/ui-bootstrap-tpls.min.js"></script>
+            <script src="https://cdn.ckeditor.com/4.6.2/full/ckeditor.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/ng.ckeditor/2.0.2/ng-ckeditor.min.js"></script>
+            <script>
+                debugger;
+                var userId = '{!$CurrentPage.parameters.id}';
+            </script>
+        </head>
+
+        <div ng-app="myApp" ng-controller="myCtrl">
+            <body>
+                <div class="row">
+                    <label>Name</label>
+                    <input ng-model="leadDetails.Name" type="text" />
+                </div>
+            </body>
+        </div>
+
+        <script>
+            var candidateId = '{!candidateId}';
+            // $rootScope.userId = userId;
+            var app = angular.module('myApp', []);
+            app.controller('myCtrl', function($scope) {
+                // $rootScope.candidateId = candidateId;
+                $scope.getProjectdetils = function(){
+                debugger;
+                NorthernArcGetLead.getLeads(userId, function(result,event){
+                    debugger;
+                    if(event.status && result){
+                        debugger;
+                        $scope.leadDetails = result;
+                        $scope.$apply();
+                    }
+                },
+                {escape: true}
+                )
+            }
+            $scope.getProjectdetils();
+            });
+        </script>
+    </html>
+</apex:page>
