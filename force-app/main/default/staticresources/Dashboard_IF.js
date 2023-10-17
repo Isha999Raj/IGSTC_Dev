@@ -554,7 +554,7 @@ angular.module('cp_app').controller('Dashboard_iF_Ctlr', function($scope,$rootSc
                       console.log("exception");
                       console.log(event);
                   } else if (event.status) {
-                      if (doneUploading == true) {
+                      // if (doneUploading == true) {
                           swal(
                               'success',
                               'Uploaded Successfully!',
@@ -564,7 +564,7 @@ angular.module('cp_app').controller('Dashboard_iF_Ctlr', function($scope,$rootSc
                           $scope.getProjectdetils();
                           // $scope.disableSubmit = false;
                               
-                          }
+                          // }
                           $scope.showUplaodUserDoc = false;
                          // $scope.getCandidateDetails();
           
@@ -579,4 +579,19 @@ angular.module('cp_app').controller('Dashboard_iF_Ctlr', function($scope,$rootSc
               { buffer: true, escape: true, timeout: 120000 }
           );
           }
+
+          $scope.filePreviewHandler = function(fileContent){
+            debugger;
+            $scope.selectedFile = fileContent;
+        
+            console.log('selectedFile---', $scope.selectedFile);
+        
+            $('#file_frame').attr('src', $scope.selectedFile.ContentDistribution.DistributionPublicUrl);
+        
+            var myModal = new bootstrap.Modal(document.getElementById('filePreview'))        
+            myModal.show('slow') ;
+            $scope.$apply();
+        
+            //.ContentDistribution.DistributionPublicUrl
+        }
 });

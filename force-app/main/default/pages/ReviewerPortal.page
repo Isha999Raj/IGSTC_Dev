@@ -42,7 +42,7 @@
     var tabValues = JSON.parse('{!tabValues}');
     var reviewerId = '{!$CurrentPage.parameters.id}';
     debugger;
-    var pid = '{!$CurrentPage.parameters.pid}';
+    // var pid = '{!$CurrentPage.parameters.pid}';
     var GradValues = JSON.parse('{!GradValues}');
     var RatingValues = JSON.parse('{!RatingValues}');
     var stages = JSON.parse('{!stages}');

@@ -93,6 +93,7 @@ $scope.filePreviewHandler = function(fileContent){
           }
           console.log(file);
           if (file != undefined) {
+            var fileSize1 = file.size/2;
               if (file.size <= maxFileSize) {
                   
                   attachmentName = file.name;
@@ -108,7 +109,7 @@ $scope.filePreviewHandler = function(fileContent){
                       fileSize = attachment.length;
                       $scope.showSpinnereditProf = false;
                       console.log("Total Attachment Length: " + fileSize);
-                      doneUploading = false;
+                    //   doneUploading = false;
                       debugger;
                       
                       if (fileSize < maxStringSize) {
@@ -156,7 +157,7 @@ $scope.filePreviewHandler = function(fileContent){
           if (fileSize <= positionIndex + chunkSize) {
               debugger;
               attachmentBody = attachment.substring(positionIndex);
-              doneUploading = true;
+            //   doneUploading = true;
           } else {
               attachmentBody = attachment.substring(positionIndex, positionIndex + chunkSize);
           }
@@ -169,7 +170,7 @@ $scope.filePreviewHandler = function(fileContent){
                       console.log("exception");
                       console.log(event);
                   } else if (event.status) {
-                      if (doneUploading == true) {
+                    //   if (doneUploading == true) {
                           swal(
                               'success',
                               'Uploaded Successfully!',
@@ -179,7 +180,7 @@ $scope.filePreviewHandler = function(fileContent){
                           $scope.getProjectdetils();
                           // $scope.disableSubmit = false;
                               
-                          }
+                        //   }
                           $scope.showUplaodUserDoc = false;
                          // $scope.getCandidateDetails();
       

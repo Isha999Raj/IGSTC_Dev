@@ -3,8 +3,9 @@ angular.module('cp_app').controller('sign_Ctrl', function($scope,$sce,$rootScope
     $scope.siteURL = siteURL;
     $rootScope.projectId;
     $scope.decDetails = {};
-    $scope.SignDate=new Date($rootScope.signDate);
     $scope.disableUploadButton = true;
+    $scope.signDate;
+    $scope.signDate2;
 
     $scope.getProposalConsentCheckbox = function(){
         debugger;
@@ -18,6 +19,16 @@ angular.module('cp_app').controller('sign_Ctrl', function($scope,$sce,$rootScope
                     }else if(result.Contacts__r[i].Account.Country_Type__c == "Germany"){
                         $scope.germanCo = result.Contacts__r[i].Id;
                     }
+                }
+                if(result.Contacts__r[0].Declaration_Sign_Date__c!=undefined){
+                    $scope.signDate=new Date(result.Contacts__r[0].Declaration_Sign_Date__c);
+                }else {
+                    $scope.signDate=new Date($rootScope.signDate);
+                }
+                if(result.Contacts__r[1].Declaration_Sign_Date__c!=undefined){
+                    $scope.signDate2=new Date(result.Contacts__r[1].Declaration_Sign_Date__c);
+                }else{
+                    $scope.signDate2=new Date($rootScope.signDate);
                 }
                 $scope.$apply();
             }
@@ -344,7 +355,6 @@ angular.module('cp_app').controller('sign_Ctrl', function($scope,$sce,$rootScope
 
         $scope.submit = function(){
             debugger;
-            delete($scope.checkbox.Contacts__r);
 
             for(var i=0;i<$scope.allDocs.length;i++){
                 if($scope.allDocs[i].userDocument.Name == 'Coordinator 1 Signature'){
@@ -359,11 +369,23 @@ angular.module('cp_app').controller('sign_Ctrl', function($scope,$sce,$rootScope
                     }
                 }
             }
+
+            var year=0;
+            var month=0;
+            var day=0;
+
+        if($scope.SignDate!=undefined && $scope.SignDate!=''){
+            year = $scope.SignDate.getUTCFullYear();
+            month = $scope.SignDate.getUTCMonth()+1;
+            day = $scope.SignDate.getDate();
+        }
+
+        delete($scope.checkbox.Contacts__r);
             // if($scope.checkbox.Privacy_Policy_Accepted__c == false){
             //     swal("Required", "Please accept privacy policy.")
             //         return;
             // }
-            ApplicantPortal_Contoller.upsertCheckbox($scope.checkbox, function(result,event){
+            ApplicantPortal_Contoller.upsertCheckbox($scope.checkbox,$rootScope.projectId,year,month,day, function(result,event){
                 if(event.status){
                     debugger;
                     Swal.fire(
@@ -382,8 +404,18 @@ angular.module('cp_app').controller('sign_Ctrl', function($scope,$sce,$rootScope
 
         $scope.saveAsDraftWorkshop = function(){
             debugger;
+            var year=0;
+            var month=0;
+            var day=0;
+
+        if($scope.SignDate!=undefined && $scope.SignDate!=''){
+            year = $scope.SignDate.getUTCFullYear();
+            month = $scope.SignDate.getUTCMonth()+1;
+            day = $scope.SignDate.getDate();
+        }
+
             delete($scope.checkbox.Contacts__r);
-            ApplicantPortal_Contoller.saveAsDraftWorkshop($scope.checkbox, function(result,event){
+            ApplicantPortal_Contoller.saveAsDraftWorkshop($scope.checkbox,$rootScope.projectId,year,month,day, function(result,event){
                 if(event.status){
                     debugger;
                     Swal.fire(

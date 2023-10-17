@@ -516,31 +516,35 @@ public without sharing class RegistrationForm_Controller {
                 Application_Proposal__c appProposal = New Application_Proposal__c();
                 if(campaignURL == 'wiser'){
                     appProposal.RecordTypeId = Utility.getProposalRecordType('WISER');
-                    campaignData=[SELECT Id FROM Campaign where Name='WISER' LIMIT 1];
+                    campaignData=[SELECT Id,(SELECT Id From Yearly_Calls__r WHERE Active__c = True LIMIT 1) FROM Campaign where Name='WISER' LIMIT 1];
                     appProposal.Campaign__c=campaignData[0].Id;
                 }else if(campaignURL == 'workshop'){
                     appProposal.RecordTypeId = Utility.getProposalRecordType('Workshop');
-                    campaignData=[SELECT Id FROM Campaign where Name='workshop' LIMIT 1];
+                    campaignData=[SELECT Id,(SELECT Id From Yearly_Calls__r WHERE Active__c = True LIMIT 1) FROM Campaign where Name='workshop' LIMIT 1];
                     appProposal.Campaign__c=campaignData[0].Id;
+
+                    system.debug('workshop --> '+campaignData);
                 }else if(campaignURL == 'pecfar'){
                     appProposal.RecordTypeId = Utility.getProposalRecordType('PECFAR');
-                    campaignData=[SELECT Id FROM Campaign where Name='PECFAR' LIMIT 1];
+                    campaignData=[SELECT Id,(SELECT Id From Yearly_Calls__r WHERE Active__c = True LIMIT 1) FROM Campaign where Name='PECFAR' LIMIT 1];
                     appProposal.Campaign__c=campaignData[0].Id;
                 }else if(campaignURL == 'sing'){
                     appProposal.RecordTypeId = Utility.getProposalRecordType('SING');
-                    campaignData=[SELECT Id FROM Campaign where Name='SING' LIMIT 1];
+                    campaignData=[SELECT Id,(SELECT Id From Yearly_Calls__r WHERE Active__c = True LIMIT 1) FROM Campaign where Name='SING' LIMIT 1];
                     appProposal.Campaign__c=campaignData[0].Id;
                 }else if(campaignURL == '2plus2'){
                     appProposal.RecordTypeId = Utility.getProposalRecordType('Two Plus Two');
-                    campaignData=[SELECT Id FROM Campaign where Name='2+2 Call' LIMIT 1];
+                    campaignData=[SELECT Id,(SELECT Id From Yearly_Calls__r WHERE Active__c = True LIMIT 1) FROM Campaign where Name='2+2 Call' LIMIT 1];
                     appProposal.Campaign__c=campaignData[0].Id;
                 }else{
                     appProposal.RecordTypeId = Utility.getProposalRecordType('Industrial Fellowship');
-                    campaignData=[SELECT Id FROM Campaign where Name='Industrial Fellowships' LIMIT 1];
+                    campaignData=[SELECT Id,(SELECT Id From Yearly_Calls__r WHERE Active__c = True LIMIT 1) FROM Campaign where Name='Industrial Fellowships' LIMIT 1];
                     appProposal.Campaign__c=campaignData[0].Id;
                 }
 
                 appProposal.Proposal_Stages__c = 'Draft';
+                system.debug('campaignData[0].Yearly_Calls__r[0].Id ==> '+campaignData[0].Yearly_Calls__r[0].Id);
+                appProposal.yearly_Call__c = campaignData[0].Yearly_Calls__r[0].Id;
                 insert appProposal;
                 List<Contact> conList = [SELECT Id,Name,Email From Contact WHERE Email=: contactDetails.Email];
                 system.debug('conList ::'+conList);

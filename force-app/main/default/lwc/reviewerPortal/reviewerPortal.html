@@ -146,7 +146,7 @@
                   <lightning-layout>
                       <lightning-layout-item padding="around-large">
                          <div class="unallocatedRec">
-                          <h1 > Allocated</h1>
+                            <h1 style="padding-left:0px !important;">Allocated</h1>
                           </div>
                           <br>
                           <div class="allocatedRectangle">
@@ -154,7 +154,7 @@
                                   <div class="slds-grid slds-grid_vertical">
                                       <div class="slds-col">
                                           <lightning-layout-item size="2">
-                                              <div class="submittedtApplicationsNum1">{submittedApplications1}</div>
+                                              <!-- <div class="submittedtApplicationsNum1">{submittedApplications1}</div> -->
                                           </lightning-layout-item>
                                       </div>
                                       <div class="slds-col">
@@ -162,17 +162,20 @@
                                               <lightning-layout-item>
                                                   <div class="dottedline">
                                                       <div class="slds-grid slds-grid_vertical">
+                                                        <div class="slds-col">
+                                                            <div class="submittedtApplicationsNum1" style="padding-right:20px;padding-top:18px;">{submittedApplications1}</div>
+                                                        </div>
                                                           <div class="slds-col">
-                                                              <div class="submittedtApplicationsNum1">{pendingApp}</div>
+                                                              <div class="submittedtApplicationsNum1" style="padding-right:20px;padding-top:18px;">{pendingApp}</div>
                                                           </div>
                                                           <div class="slds-col">
-                                                              <div class="dottedlines1"> ----------></div>
+                                                              <div class="dottedlines1"></div>
                                                           </div>
                                                           <div class="slds-col">
-                                                              <div class="submittedtApplicationsNum1">{totalcompApps}</div>
+                                                              <div class="submittedtApplicationsNum1" style="padding-right:20px;padding-top:18px;">{totalcompApps}</div>
                                                           </div>
                                                           <div class="slds-col">
-                                                              <div class="dottedlines1"> ----------></div>
+                                                              <div class="dottedlines1"></div>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -235,7 +238,7 @@
                       </lightning-layout-item>
                       <lightning-layout-item padding="around-small">
                          <div class="unallocatedRec">
-                          <h1 > Unallocated</h1>
+                          <h1 style="padding-left:0px !important;">Unallocated</h1>
                           </div> 
                           <div style="padding-top: 32px">
                           <div class="unallocatedRectangle">
@@ -247,7 +250,7 @@
                                                   <div class="draftApplicationsNum1">{unallocatedSubmittedApplications}</div>
                                               </div>
                                               <div class="slds-col ">
-                                                  <div class="dottedlines"> ----------></div>
+                                                  <div class="dottedlines"></div>
                                               </div>
                                               <div class="slds-col "> <br> <br> <br>
                                                   <div class="totalunallocatedRectangle">

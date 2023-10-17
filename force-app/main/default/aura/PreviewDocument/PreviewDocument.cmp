@@ -6,6 +6,7 @@
     <aura:attribute name="recordId" type="string" default=""/>   
     <aura:attribute name="fileId" type="String"/>
     <aura:attribute name="pdfLink" type="string" default="{!$Label.c.AwardLetterLink}" />
+    <aura:attribute name="currentDate" type="Date" />
     
     <aura:if isTrue="{!v.showSpinner}"> 
         <div class="slds-spinner slds-spinner_medium slds-spinner_brand">

@@ -181,7 +181,7 @@
                 <div class="row mt-5 mx-5">
                     <div class="col-md-12 alert bg-color-list" role="alert">
                         <ul class="font-if">  
-                          <li><i class="fa-solid fa-circle text-success me-3"></i>Kindly upload the document in a pdf with maximum size of 1 MB</li>
+                          <li><i class="fa-solid fa-circle text-success me-3"></i>Kindly upload the workshop agenda in a pdf with maximum size of 1 MB</li>
                           <li><i class="fa-solid fa-circle text-success me-3"></i>Click on upload button to upload the documents</li>
                         </ul>
                     </div>

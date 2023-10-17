@@ -4,6 +4,7 @@ angular.module('cp_app').controller('IFDocUploads_Ctrl', function($scope,$rootSc
     $scope.Visa={};
     $scope.AttendanceReport={};
     $scope.SEUCUpload={};
+    $scope.scApproved=false;
     $scope.Undertaking={};
     $scope.CloserReport={};
     $scope.objProposal={};
@@ -22,7 +23,8 @@ angular.module('cp_app').controller('IFDocUploads_Ctrl', function($scope,$rootSc
     $scope.showExpiration = false;
     $scope.todayDate = new Date();
     $scope.expirationDate;
-    $rootScope.contId
+    $rootScope.contId;
+    $scope.disableBankanddates=false;
 
     $scope.selectedFile;
 
@@ -94,26 +96,33 @@ angular.module('cp_app').controller('IFDocUploads_Ctrl', function($scope,$rootSc
     $scope.getOnLoad=function(){
         debugger
         IndustrialFellowshipController.getDocUploadDet($rootScope.userHashId, function (result, event) {
-            
+            console.log('onload');
             console.log(result);
             console.log(event);    
             debugger  
             $scope.objContact=result;
             $scope.objProposal=result.Proposals__r;
                   $scope.$apply();
-                  if($scope.objProposal.Decision_Letter_Sent__c){                    
+                  if($scope.objProposal.SC_Review_Stages__c!=undefined && $scope.objProposal.SC_Review_Stages__c=="Sc Review Approved"){
+                    $scope.scApproved=true;
+                }  
+                //   if($scope.objProposal.Decision_Letter_Sent__c){                                     
                     if($scope.objProposal.Travel_Form_Status__c!=undefined && $scope.objProposal.Travel_Form_Status__c=="Approved"){
                         $scope.decision_letter_disabled=true;
                         $scope.showTravellerCheck=true;
-                        $scope.decision_letter=true;
+                        //$scope.decision_letter=true;
                     }
-                  }
+                //   }
                   if($scope.objProposal.Visa_Stages__c!=undefined){
                     if($scope.objProposal.Visa_Stages__c=="Sent"||$scope.objProposal.Visa_Stages__c=="Submitted")
+                    {
                         $scope.visa_stage=false;
+                        $scope.disableBankanddates=true;                        
+                    }
                     else{
                         $scope.showVisaCheck=true;
-                        $scope.visa_stage=true;
+                        $scope.visa_stage=false;        
+                        $scope.disableBankanddates=true;               
                         $scope.visa_stage_disabled=true;
                     }                    
                   }else{
@@ -133,6 +142,7 @@ angular.module('cp_app').controller('IFDocUploads_Ctrl', function($scope,$rootSc
                     else if($scope.objProposal.Undertaking_Status__c=="Approved"){
                         $scope.showUndertakingCheck=true;
                         $scope.undertaking_stage=true;
+                        $scope.undertaking_stage=false;
                         $scope.undertaking_stage_disabled=true;
                         $scope.monthly_stage=true;
                         $scope.monthly_stage_disabled=false;
@@ -175,7 +185,7 @@ angular.module('cp_app').controller('IFDocUploads_Ctrl', function($scope,$rootSc
                             uploadCount=uploadCount+1;                        
                         }
                     }
-                    else if($scope.allDocs[i].userDocument.Name == 'SC / UC Upload'){
+                    else if($scope.allDocs[i].userDocument.Name == 'SC / UC Upload' || $scope.allDocs[i].userDocument.Name == 'SE / UC Upload'){
                         $scope.SEUCUpload=$scope.allDocs[i];
                         if($scope.allDocs[i].userDocument.Status__c == 'Uploaded'){
                             uploadCount=uploadCount+1;                        

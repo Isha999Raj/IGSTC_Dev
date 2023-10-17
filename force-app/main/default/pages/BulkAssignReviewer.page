@@ -59,7 +59,7 @@
             </div>
             <div class="row mt-3">
                 <div class="col-md-5">
-                    <label>Select Call Type</label>
+                    <label><b>Select Call Type</b></label>
                     <select class="form-control w-100" id="listDropDown" ng-change="catchCampaign(myValue)" ng-model="myValue">
                         <option value="none" ng-selected="true">--None--</option>
                         <option ng-repeat="appID in listOfCampaign" value="{{appID.Id}}">
@@ -84,9 +84,9 @@
                                 <th colspan="{{applicationData.allReviewer.length+1}}"></th>
                             </tr> -->
                             <tr>
-                                <th>Application Id</th>
+                                <th nowrap="true">Application ID</th>
                                 <th>Title</th>
-                                <th>Submitted By</th>
+                                <th nowrap="true">Submitted By</th>
                                 <th colspan="{{applicationData.allReviewer.length}}" class="text-center">Reviewer(s)</th>
                             </tr>
                         </thead>
@@ -95,7 +95,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td ng-repeat="revID in applicationData.allReviewer">{{revID.Name}}
+                                <td ng-repeat="revID in applicationData.allReviewer" nowrap="true">{{revID.Name}}
                                     <span class="badge bg-success" ng-repeat="x in reviewerPropCount" ng-if="x.Id==revID.Id">{{x.count}}</span>
                                 </td>
                             </tr>
@@ -147,6 +147,7 @@
             $scope.reviewerPropCount=[];
             $scope.listOfCampaign = [];
             $scope.checkList = [];
+            $scope.myValue='none';
             $scope.getCampaignList = function () {
                 BulkAssignReviewerController.getCampaign(function (result, event) {
                     //debugger;

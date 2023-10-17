@@ -10,7 +10,7 @@ public with sharing class generateHashcodeForCons {
             system.debug('Proposal Igs ==> '+ids);
             List<Contact> contactList = New List<Contact>();
             List<Contact> contactListToUpdate = New List<Contact>();
-            contactList = [SELECT Id,Name,Login_Hash_Code__c FROM Contact WHERE ID IN : ids];
+            contactList = [SELECT Id,Name,Login_Hash_Code__c FROM Contact WHERE Proposals__c IN : ids];
             system.debug('contactList ==> '+contactList);
 
             for(Contact con : contactList){

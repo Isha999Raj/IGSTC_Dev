@@ -632,6 +632,14 @@
                                                 <!-- <span><a href="{{fileUrl}}" id="hrfAppPDF" style="text-decoration: none;color:black;" target="_blank">View Application</a></span> -->
                                             </a>
                                         </li>  
+                                        <li class="active pb-cursor">
+                                            <a ng-click="tabToggle('divFiles')">
+                                                <div class="icon-circle">
+                                                    <i class="fas fa-hand-holding-usd"></i>
+                                                </div>
+                                                <span>Files</span>
+                                            </a>
+                                        </li>   
                                         <!-- <li class="active pb-cursor">
                                             <a ng-click="tabToggle('AccountTable')">
                                                 <div class="icon-circle">
@@ -938,9 +946,10 @@
                                                 <h2>Score</h2>
                                                 <div class="progress-score">
                                                     <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" style="width: 33.33%" aria-valuenow="33.33" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <div class="progress-bar excellent" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <!-- <div class="progress-bar" role="progressbar" style="width: 33.33%" aria-valuenow="33.33" aria-valuemin="0" aria-valuemax="100"></div>
                                                         <div class="progress-bar good" role="progressbar" style="width: 33.33%" aria-valuenow="33.33" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        <div class="progress-bar excellent" role="progressbar" style="width: 33.33%" aria-valuenow="33.33" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <div class="progress-bar excellent" role="progressbar" style="width: 33.33%" aria-valuenow="33.33" aria-valuemin="0" aria-valuemax="100"></div> -->
                                                     </div> 
                                                 </div>
                                                 <h2>{{ratingScore}}/{{totalRating}}</h2>
@@ -1129,7 +1138,7 @@
                                                                     <div class="row" ng-show="quetemp.getQuesLineItemList.Is_Comment_Applicable__c">
                                                                         <div class="col-12 px-5">
                                                                     <label>Comments</label>
-                                                                    <textarea class="answer-field font-if" rows="10" maxlength="32768" ng-model="quetemp.RRLineItemList.Response__c" ng-disabled="disable"></textarea>
+                                                                    <textarea class="answer-field font-if" style="border:solid 1px orange" rows="10" maxlength="32768" ng-model="quetemp.RRLineItemList.Response__c" ng-disabled="disable"></textarea>
                                                                     <!-- <input type="text" class="answer-field font-if" ng-model="quetemp.RRLineItemList.Response__c" ng-disabled="disable" /> -->
                                                                 </div>
                                                             </div>

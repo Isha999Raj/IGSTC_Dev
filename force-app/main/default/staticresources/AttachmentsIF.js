@@ -246,7 +246,7 @@ $scope.uploadAttachment = function (type, userDocId, fileId) {
                 console.log("exception");
                 console.log(event);
             } else if (event.status) {
-                if (doneUploading == true) {
+                // if (doneUploading == true) {
                     $scope.getProjectdetils();
                     swal(
                         'success',
@@ -255,7 +255,7 @@ $scope.uploadAttachment = function (type, userDocId, fileId) {
                     )
                     $scope.getProjectdetils();
                         
-                    }
+                    // }
                    else {
                     debugger;
                     positionIndex += chunkSize;

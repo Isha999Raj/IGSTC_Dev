@@ -1774,15 +1774,28 @@ mapofIndexByListofExpense.put(exl.Index__c,new list<Expense_Line_Item__c>{exl});
     public static Application_Proposal__c getConsentCheckbox(string proposalId){
         Application_Proposal__c appDetails = New Application_Proposal__c();
         try{
-            appDetails = [SELECT Id,Name,Privacy_Policy_Accepted__c,(SELECT Id,Name,Account.Country_Type__c From Contacts__r) From Application_Proposal__c WHERE Id=: proposalId];
+            appDetails = [SELECT Id,Name,Privacy_Policy_Accepted__c,(SELECT Id,Name,Account.Country_Type__c,Declaration_Sign_Date__c From Contacts__r) From Application_Proposal__c WHERE Id=: proposalId];
             return appDetails;
         }catch(Exception e){
             return appDetails;
         }
     }
     
-    public static string saveAsDraftWorkshop(Application_Proposal__c proposalList){
+    public static string saveAsDraftWorkshop(Application_Proposal__c proposalList, String projectId, Integer year, Integer month, Integer day){
         try{
+            List<Contact> contactList = [SELECT Id,Name,Declaration_Sign_Date__c From Contact WHERE Proposals__c =: projectId];
+            if(!contactList.isEmpty()){
+                for(Contact con : contactList){
+                    if(year == 0 && month == 0 && day == 0){
+
+                    }else{
+                        Date newDate=Date.newInstance(year,month,day);
+                        con.Declaration_Sign_Date__c=newDate;
+                    }
+                }
+            }
+            
+            update contactList;
             // proposalDetails.Stage__c = '1st Stage';
             proposalList.Proposal_Stages__c = 'Draft';
             proposalList.Submitted__c = true;
@@ -1793,8 +1806,21 @@ mapofIndexByListofExpense.put(exl.Index__c,new list<Expense_Line_Item__c>{exl});
         }
     }
     
-    public static string upsertCheckbox(Application_Proposal__c proposalList){
+    public static string upsertCheckbox(Application_Proposal__c proposalList, String projectId, Integer year, Integer month, Integer day){
         try{
+            List<Contact> contactList = [SELECT Id,Name,Declaration_Sign_Date__c From Contact WHERE Proposals__c =: projectId];
+            if(!contactList.isEmpty()){
+                for(Contact con : contactList){
+                    if(year == 0 && month == 0 && day == 0){
+
+                    }else{
+                        Date newDate=Date.newInstance(year,month,day);
+                        con.Declaration_Sign_Date__c=newDate;
+                    }
+                }
+            }
+            
+            update contactList;
             // proposalDetails.Stage__c = '1st Stage';
             proposalList.Proposal_Stages__c = 'Submitted';
             proposalList.Submitted__c = true;

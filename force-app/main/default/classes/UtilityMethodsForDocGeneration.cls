@@ -32,6 +32,14 @@ public class UtilityMethodsForDocGeneration {
     
     @AuraEnabled
     Public Static void generateTempForAwardDraft(String proID){
+        List<Application_Proposal__c> proposalList = [SELECT Id,Award_Letter_Date__c From Application_Proposal__c WHERE Id =: proID LIMIT 1];
+        if(!proposalList.isEmpty()){
+            if(proposalList[0].Award_Letter_Date__c == null){
+                Date newDate=system.today();
+                proposalList[0].Award_Letter_Date__c=newDate;
+                update proposalList;
+            }
+        }
         
         list<contact> conList  =[select id,name,Industrial_Fellowship_Type__c from contact WHERE Proposals__c =:proID];
         system.debug('conList----'+conList);
@@ -226,10 +234,11 @@ public class UtilityMethodsForDocGeneration {
                 string returnValue;
                 List<Application_Proposal__c> appList = New List<Application_Proposal__c>();
                 List<Contact> conListToUpdateHashcode = New List<Contact>();
-                List<Contact> conList = [SELECT Id,Name,FirstName,LastName,Campaign__c,ApplicationId__c,Proposals__r.Tentative_Start_Date__c,Proposals__r.Duration_In_Months_Max_36__c,Proposals__r.Travel_Form_Status__c,Proposals__r.RecordType.DeveloperName,Proposals__r.Invitation_Letter_Form_Status__c,Login_Hash_Code__c FROM Contact WHERE Proposals__c =: propId];
+                List<Contact> conList1 = [SELECT Id,Name,FirstName,LastName,Campaign__c,ApplicationId__c,Proposals__r.Tentative_Start_Date__c,Proposals__r.Duration_In_Months_Max_36__c,Proposals__r.Travel_Form_Status__c,Proposals__r.RecordType.DeveloperName,Proposals__r.Invitation_Letter_Form_Status__c,Login_Hash_Code__c FROM Contact WHERE Proposals__c =: propId];
                 
+                system.debug('old Hashcode --> '+conList1[0].Login_Hash_Code__c);
                 /*Updating Hashcode */
-                for(Contact conRec : conList){
+                for(Contact conRec : conList1){
                     conRec.Login_Hash_Code__c = Utility.generateRandomString();
                     conRec.Hashcode_Expiration_Date__c = todayDate.addDays(3);
                     conListToUpdateHashcode.add(conRec);
@@ -237,6 +246,9 @@ public class UtilityMethodsForDocGeneration {
                 if(!conListToUpdateHashcode.isEmpty()){
                     update conListToUpdateHashcode;
                 }
+
+                List<Contact> conList = [SELECT Id,Name,FirstName,LastName,Campaign__c,ApplicationId__c,Proposals__r.Tentative_Start_Date__c,Proposals__r.Duration_In_Months_Max_36__c,Proposals__r.Travel_Form_Status__c,Proposals__r.RecordType.DeveloperName,Proposals__r.Invitation_Letter_Form_Status__c,Login_Hash_Code__c FROM Contact WHERE Proposals__c =: propId];
+                system.debug('new Hashcode --> '+conList[0].Login_Hash_Code__c);
 
 
                 String contactEmail = [Select Email From Contact where Proposals__c =: propId and Is_Primary__c = true].Email; 

@@ -111,6 +111,7 @@ public class ProposalTriggerHandler {
                         system.debug('tentitiveEndDate--->'+tentitiveEndDate);
                     }else{
                         disbursementRecord.Start_Date__c = tentitiveEndDate.addMonths(i-1);
+                        disbursementRecord.Start_Date__c = disbursementRecord.Start_Date__c.addDays(1);
                         system.debug(i+ 'Start Date -------- '+disbursementRecord.Start_Date__c);
                         disbursementRecord.End_Date__c = tentitiveEndDate.addMonths(i);
                         system.debug(i+ 'End Date -------- '+disbursementRecord.End_Date__c);

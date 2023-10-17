@@ -12,7 +12,7 @@
     
     <div class="slds-m-around_xx-large">
         
-        <table class="slds-table slds-table--bordered slds-table--cell-buffer" role="grid" style="">      
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"  role="grid" style="">      
             <thead>  
                 <tr class="slds-text-title--caps">
                     <th scope="col" style="width: 2%; background-color:#4998ff; color:white;">
@@ -30,21 +30,21 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>        
+            <tbody >        
                 <aura:iteration items="{!v.EvaluationRecordsList}" var="evaluationRec" indexVar="i">
-                    <tr>
-                        <th scope="row" style="width: 2%; background-color:lightgrey;">
+                    <tr class="slds-line-height_reset">
+                        <th scope="row" style="width: 2%;">
                             <b>{!i+1}</b>
                         </th>
-                        <th scope="row" style="width: 10%; background-color:lightgrey;">
+                        <th scope="row" style="width: 10%;">
                             <div class="slds-truncate"><b>{!evaluationRec.Subject__c}</b></div>
                         </th>
-                        <td style="width: 50%; background-color:lightgrey;">
+                        <td style="width: 50%;">
                             <div class="slds-truncate">
                                 <lightning:input name="Comments" aura:id="comments" value="{!evaluationRec.Comments__c}"/>
                             </div>
                         </td>
-                        <th scope="row" style="width: 8%; background-color:lightgrey;">
+                        <th scope="row" style="width: 8%;">
                             <div class="slds-align_absolute-center">
                                 <a onclick="{!c.handleyesCheckboxChange}" data-record="{!evaluationRec.Id}">
                                     <lightning:input type="checkbox" aura:id="yes" name="Yes" checked="{!evaluationRec.Yes__c}"/>          

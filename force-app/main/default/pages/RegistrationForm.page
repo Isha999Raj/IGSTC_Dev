@@ -1213,7 +1213,7 @@ $scope.onPassKeyUp = function() {
                             debugger;
                             var sitePrefix = window.location.href.includes('/apex') ? '/apex' : '/ApplicantDashboard';
                             // window.location.replace(window.location.origin + sitePrefix + '/ApplicantPortal?id=' + $scope.hashcodeId + '#/Home');
-                            window.location.replace(window.location.origin + sitePrefix + '/ApplicantPortal?id=' + $scope.hashcodeId + '&campaign='+$scope.campaingUrlText+'#/Home');
+                            window.location.replace(window.location.origin + sitePrefix + '/ApplicantPortal?id=' + $scope.hashcodeId + '&campaign='+$scope.campaingUrlText+'#/CalendlyMePage');
                             }else{
                                 swal("info", "you didnt applied for this programme.","info");
                                 return;  

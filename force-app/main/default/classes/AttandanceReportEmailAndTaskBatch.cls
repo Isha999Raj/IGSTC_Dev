@@ -38,6 +38,20 @@ public class AttandanceReportEmailAndTaskBatch implements Database.Batchable<sOb
                 
                 mail.setHtmlBody(emailHtmlValue);//Set HTML Body
                 Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+                // Messaging.SingleEmailMessage contactEmail = new Messaging.SingleEmailMessage();
+                // List <String> emailRecipients = new List <String>{conRecord.Email};
+                    
+                // contactEmail.setToAddresses(emailRecipients);
+                // contactEmail.setSubject('Attendance Report');
+                // contactEmail.setReplyTo(emailRecipients[0]);
+                
+                // String emailBody = 'Dear ' + conRecord.Name + ',' ;
+                // emailBody += ' <br> <br> We are writing this email to notify you for your attendance report for proposal title as' + conRecord.Proposals__r.Title_Of__c + '". <br> <br>';
+                // emailBody += ' It has been already 1 month and we have not recieved your attendance report on above mentioned proposal.  <br> Kindly Submit your attendance report on the below link. <br> <br>';
+                // emailBody += '<a href="https://indo-germansciencetechnologycentre--dev.sandbox.my.salesforce-sites.com/ApplicantDashboard/ApplicantPortal?id=' + conRecord.Login_Hash_Code__c+ '&campaign=if#/IFDocUploads">' + 'Click here'+ '</a><br><br>' ;
+                // emailBody += '<br><br> Thanks & Regards, <br> Amit Salvi, <br> Project Co-ordinator <br> IGSTC';
+                // contactEmail.setHtmlBody(emailBody);
+                // emailsList.add(contactEmail);
             }
         }
     }

@@ -1,4 +1,4 @@
-public withOut sharing class ApplicantPortal_Contoller {
+public without sharing class ApplicantPortal_Contoller {
     public string tabValues  {get;set;}
     public string thematicAreaList {get;set;}
     public string countrytype  {get;set;}
@@ -588,13 +588,13 @@ public withOut sharing class ApplicantPortal_Contoller {
     }
 
     @RemoteAction
-    public static string saveAsDraftWorkshop(Application_Proposal__c proposalList){
-        return Proposal_Controller.saveAsDraftWorkshop(proposalList);
+    public static string saveAsDraftWorkshop(Application_Proposal__c proposalList, String projectId, Integer year, Integer month, Integer day){
+        return Proposal_Controller.saveAsDraftWorkshop(proposalList,projectId,year,month,day);
     }
 
     @RemoteAction
-    public static string upsertCheckbox(Application_Proposal__c proposalList){
-        return Proposal_Controller.upsertCheckbox(proposalList);
+    public static string upsertCheckbox(Application_Proposal__c proposalList, String projectId, Integer year, Integer month, Integer day){
+        return Proposal_Controller.upsertCheckbox(proposalList,projectId,year,month,day);
     }
     @RemoteAction
     public static Proposal_Controller.WrapProposalPendings getProposalPendings(String pid){
@@ -1823,15 +1823,20 @@ public withOut sharing class ApplicantPortal_Contoller {
             Date todayDate  = System.today();
             Contact contactRecord = [SELECT Id,FirstName,LastName,Login_Hash_Code__c,Hashcode_Expiration_Date__c,Email FROM Contact WHERE Id =: contId];
             Emailtemplate emailTempRec =  [Select Id,HtmlValue,Subject from EmailTemplate where Name ='Regenerate Expired Link - IF'];
-
+            Id orgWideEmailAddressId = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'isha999raj@gmail.com'].Id;
+            system.debug('orgWideEmailAddressId ==> '+orgWideEmailAddressId);
+            system.debug('HashCode Before Update ==> '+contactRecord);
             contactRecord.Login_Hash_Code__c = Utility.generateRandomString();
             contactRecord.Hashcode_Expiration_Date__c = todayDate.addDays(3);
             update contactRecord;
 
             system.debug('contactRecord After Update ==> '+contactRecord);
+            system.debug('HashCode After Update ==> '+contactRecord);
 
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            mail.setOrgWideEmailAddressId(orgWideEmailAddressId);
             mail.setToAddresses(new String[] { contactRecord.Email});
+            system.debug('Email ==> '+contactRecord.Email);
             mail.setSubject(emailTempRec.Subject);
             string emailHtmlValue = emailTempRec.HtmlValue;
 
@@ -1849,11 +1854,29 @@ public withOut sharing class ApplicantPortal_Contoller {
             }
 
             mail.setHtmlBody(emailHtmlValue);//Set HTML Body
-            Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+            system.debug('mail ==>'+mail);
+            //Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+            system.debug('SUCCESS-----');
 
+            Messaging.sendEmailResult[] mrs = Messaging.sendEmail(new Messaging.Email[] { mail }, false);
+
+            for (Messaging.SendEmailResult mr : mrs) 
+            {
+                if (mr.isSuccess()) {
+                    system.debug('SUCCESS-----Email');//Do something for success
+                }  else {
+                    // Operation failed, so get all errors                
+                    for(Messaging.SendEmailError err : mr.getErrors()) {
+                        System.debug('The following error has occurred.');                    
+                        System.debug(err.getStatusCode() + ': ' + err.getMessage());
+                        System.debug('fields that affected this error: ' + err.getFields());
+                    }
+                }
+            }
             return 'SUCCESS';
 
         }catch(Exception e){
+            system.debug('ERROR ==> '+e.getMessage()+e.getLineNumber());
             return e.getMessage()+e.getLineNumber();
         }
     }

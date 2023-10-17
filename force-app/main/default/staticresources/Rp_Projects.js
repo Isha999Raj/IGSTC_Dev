@@ -279,9 +279,10 @@ angular.module('rp_app').controller('projects_ctrl', function($scope,$sce,$rootS
                 //     dList.push(item);
                 // })
                 $scope.documents = dList;
+                debugger;
 
                 let baseUrl = window.location.origin;
-                $scope.fileUrl = $sce.trustAsResourceUrl(baseUrl+'/servlet/servlet.FileDownload?file='+res[0].Id+'#view=FitH');
+                $scope.fileUrl = $sce.trustAsResourceUrl('https://indo-germansciencetechnologycentre--dev.sandbox.file.force.com/servlet/servlet.FileDownload?file='+res[0].Id);
                 // $scope.fileUrl = $sce.trustAsResourceUrl(res[0].ContentDistribution.DistributionPublicUrl+'#view=FitH');
                 // $scope.fileUrl = $sce.trustAsResourceUrl(baseUrl+'/servlet/servlet.FileDownload?file='+res[0].Id+'#view=FitH');
                 // console.log('URL---',baseUrl+'/servlet/servlet.FileDownload?file='+dList[cSelectedFIndex].Id+'&embedded=true');
@@ -571,7 +572,7 @@ $scope.getOnload();
                         })
                         $scope.documents = dList;
                         let baseUrl = window.location.origin;
-                        $scope.fileUrl = $sce.trustAsResourceUrl(baseUrl+'/servlet/servlet.FileDownload?file='+$scope.ProposalData.Attachments[0].Id+'#view=FitH');
+                        $scope.fileUrl = $sce.trustAsResourceUrl('https://indo-germansciencetechnologycentre--dev.sandbox.file.force.com/servlet/servlet.FileDownload?file='+$scope.ProposalData.Attachments[0].Id);
                     }else{
                         $scope.documents = [];
                     }
@@ -681,6 +682,9 @@ $scope.getOnload();
 
     $scope.getAllQuestionLineItem = function(QuesTempId,ProposalId,prop_stage,programme){
         debugger
+        if(prop_stage==undefined || prop_stage==null){
+            prop_stage='1st Stage';
+        }
         ReviewerPortal_Controller.getAllQLIAndRRLI(QuesTempId, $scope.reviewerMapId,prop_stage,programme, function(result, event){
             debugger
             console.log('all questions');

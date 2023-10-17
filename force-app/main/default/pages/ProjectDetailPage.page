@@ -303,9 +303,10 @@
                                 <b>Tentative Starting Date</b>
                             </label>
                             <span class="required-asterisk" style="color:red;">*</span>
-                            <input name="Tentative Starting Date" placeholder="Tentative Starting Date" ng-change="validateDate()" class="form-control" ng-init="tentitiveStartDate=(tentitiveStartDate | date:'yyyy-MM-dd')"
-                                type="date" ng-model="tentitiveStartDate" id="TSD" ng-focus="removeClass2('TSD')"
-                                ng-disabled="proposalStage" />
+                            <md-datepicker type="date" ng-disabled="proposalStage" ng-focus="removeClass2('TSD')" id="TSD" ng-model="tentitiveStartDate" class="form-control" ng-change="validateDate()"></md-datepicker>
+                            <!-- <input name="Tentative Starting Date" placeholder="Tentative Starting Date" ng-change="validateDate()" class="form-control" ng-init="tentitiveStartDate=(tentitiveStartDate | date:'dd-MMM-yyyy')"
+                                type="date" ng-model="tentitiveStartDate | date:'dd-MMM-yyyy'" id="TSD" ng-focus="removeClass2('TSD')"
+                                ng-disabled="proposalStage" /> -->
                         </div> 
                     </div>
                     <div class="row mt-5">

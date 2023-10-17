@@ -1,0 +1,240 @@
+<!--
+  @author            : Isha Raj
+  @Created On  : 03-06-2023
+-->
+
+<template>
+        <div class="slds-box menu">
+            <h1>Campaign Dashboard</h1>
+            <div class="block1">
+                    <lightning-layout>
+                        <template for:each={finalCampList} for:item="camp">
+                            <lightning-layout-item key={camp.Id} padding="around-large">
+                                <div class="rectangle">
+                                    <div slds-col>
+                                        <h3 style="color:forestgreen; font-size:21px; margin-left:12px;"><b>{camp.Name}</b></h3><br/>
+                                        <h4 style="margin-left:12px; margin-top:-5px;"><b>Start Date : {camp.StartDate}</b></h4><br/>
+                                        <h4 style="margin-left:12px; margin-top:-5px;"><b>End Date : {camp.EndDate}</b></h4><br/>
+                                        <h4 style="margin-left:12px; margin-top:-5px;"><b>Draft : {camp.DraftCount}</b></h4><br/>
+                                        <h4 style="margin-left:12px; margin-top:-5px;"><b>Submitted : {camp.SubmittedCount}</b></h4><br/>
+                                        <lightning-button style="margin-left:12px;" data-name={camp.Name} variant="base" label="View" onclick={handleClickSelectedCamp} title="Looks like a link" class="slds-m-left_x-small btn"></lightning-button>
+                                    </div>
+                                </div>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+
+                    <!--INDUSTRIAL FELLOWSHIP-->
+
+                    <div class="rectangle2" style="margin-left:26px;" if:true={showDetailsIF}>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Eligibility Check</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Passed : {eligibilitycheck}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Failed : {eligibilityFailed}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Review</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Review Completed : {reviewCompleted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Under Review : {underReview}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>SC Review Stage</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Aproved : {scApproved}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Rejected : {scRejected}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Waitlisted : {scWaitlisted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Declined : {scDeclined}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Travel Form Status</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Sent : {travelSent}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Submitted : {travelSubmitted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Approved : {travelApproved}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Rejected : {travelRejected}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Bank Detail Status</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Sent : {bankSent}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Submitted : {bankSubmitted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Approved : {bankApproved}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Rejected : {bankRejected}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Decision Letter</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Sent : {decisionLeterSent}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Not Sent : {decisionNotSent}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Visa Stage</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Sent : {visaSent}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Submitted : {visaSubmitted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Approved : {visaApproved}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Rejected : {visaRejected}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Undertaking Status</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Sent : {undertakingSent}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Submitted : {undertakingSubmitted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Approved : {undertakingApproved}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Rejected : {undertakingRejected}</b></h4><br/>
+                        </div>
+                    </div>
+
+
+                    <!--PECFAR-->
+
+                    <div class="rectangle2" style="margin-left:26px;" if:true={showDetailsPECFAR}>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Eligibility Check</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Passed : {eligibilitycheck}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Failed : {eligibilityFailed}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Review</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Review Completed : {reviewCompleted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Under Review : {underReview}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>SC Review Stage</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Aproved : {scApproved}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Rejected : {scRejected}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Waitlisted : {scWaitlisted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Declined : {scDeclined}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Invitation Letter Status</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Sent : {invitationSent}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Submitted : {invitationSubmitted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Approved : {invitationApproved}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Rejected : {invitationRejected}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Bank Detail Status</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Sent : {bankSent}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Submitted : {bankSubmitted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Approved : {bankApproved}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Rejected : {bankRejected}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Decision Letter</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Sent : {decisionLeterSent}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Not Sent : {decisionNotSent}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Visa Stage</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Sent : {visaSent}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Submitted : {visaSubmitted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Approved : {visaApproved}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Rejected : {visaRejected}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Undertaking Status</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Sent : {undertakingSent}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Submitted : {undertakingSubmitted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Approved : {undertakingApproved}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Rejected : {undertakingRejected}</b></h4><br/>
+                        </div>
+                    </div>
+
+
+                    <!-- SING -->
+
+                    <div class="rectangle2" style="margin-left:26px;" if:true={showDetailsSING}>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Eligibility Check</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Passed : {eligibilitycheck}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Failed : {eligibilityFailed}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Review</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Review Completed : {reviewCompleted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Under Review : {underReview}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>SC Review Stage</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Aproved : {scApproved}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Rejected : {scRejected}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Waitlisted : {scWaitlisted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Declined : {scDeclined}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Bank Detail Status</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Sent : {bankSent}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Submitted : {bankSubmitted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Approved : {bankApproved}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Rejected : {bankRejected}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Undertaking Status</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Sent : {undertakingSent}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Submitted : {undertakingSubmitted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Approved : {undertakingApproved}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Rejected : {undertakingRejected}</b></h4><br/>
+                        </div>
+                    </div>
+
+
+                    <!-- WORKSHOP -->
+
+                    <div class="rectangle2" style="margin-left:26px;" if:true={showDetailsWorkshop}>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Eligibility Check</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Passed : {eligibilitycheck}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Failed : {eligibilityFailed}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Review</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Review Completed : {reviewCompleted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Under Review : {underReview}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>SC Review Stage</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Aproved : {scApproved}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Rejected : {scRejected}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Waitlisted : {scWaitlisted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Declined : {scDeclined}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>Indian Invoice Status</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Sent : {indianInvoiceSent}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Submitted : {indianInvoiceSubmitted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Approved : {indianInvoiceApproved}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Rejected : {indianInvoiceRejected}</b></h4><br/>
+                        </div>
+
+                        <div slds-col>
+                            <h3 style="color:tomato; font-size:21px; margin-left:50px;"><b>German Invoice Status</b></h3><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Sent : {germanInvoiceSent}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Submitted : {germanInvoiceSubmitted}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Approved : {germanInvoiceApproved}</b></h4><br/>
+                            <h4 style="font-size:17px; margin-left:50px; margin-top:-5px;"><b>Rejected : {germanInvoiceRejected}</b></h4><br/>
+                        </div>
+                    </div>
+
+            </div><br>
+    </div>
+</template>

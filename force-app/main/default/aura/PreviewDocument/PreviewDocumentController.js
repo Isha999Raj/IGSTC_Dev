@@ -1,6 +1,8 @@
 ({
     doInit : function(component, event, helper) {
         debugger;
+        // var today = new Date();
+        // component.set("v.currentDate", today);
         var action = component.get("c.generateTempForAwardDraft");
         action.setParams({
             proID : component.get("v.recordId")

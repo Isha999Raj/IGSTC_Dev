@@ -9,6 +9,7 @@ public class FetchAttachment {
             String contactEmail = [Select Email From Contact where Proposals__c =: ProId and Is_Primary__c = true].Email; 
             List<String> attachmentsListToBeReturned = new List<String>();
             Emailtemplate emailTempRec = New Emailtemplate();
+            Id orgWideEmailAddressId = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'isha999raj@gmail.com'].Id;
             List<Attachment> attList = [Select Id,name,Body,ContentType from attachment where parentId = :ProId order by createdDate DESC];
             if(conRecord.Campaign__c == 'if'){
                 emailTempRec = [Select Id,HtmlValue,Subject from EmailTemplate where Name ='Email to Primary Contact for Proposal Submission IF'];
@@ -31,6 +32,7 @@ public class FetchAttachment {
             
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             //mail.setUseSignature(false);
+            mail.setOrgWideEmailAddressId(orgWideEmailAddressId);
             mail.setToAddresses(new String[] { contactEmail});//Set To Email Address
             mail.setSubject(emailTempRec.Subject);//Set Subject
             string emailHtmlValue = emailTempRec.HtmlValue;

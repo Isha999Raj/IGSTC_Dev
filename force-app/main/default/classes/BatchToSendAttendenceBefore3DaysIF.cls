@@ -1,4 +1,4 @@
-public with sharing class BatchToSendAttendenceBefore3DaysIF {
+public class BatchToSendAttendenceBefore3DaysIF implements Database.Batchable<sObject>, Database.Stateful {
     public BatchToSendAttendenceBefore3DaysIF() {
 
     }

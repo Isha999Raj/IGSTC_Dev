@@ -254,7 +254,7 @@
                                   </div>
                             </div>
 
-                            <div class="col-md-3" ng-show="acceptance..userDocument.Status__c=='Uploaded'">
+                            <div class="col-md-3" ng-show="acceptance.userDocument.Status__c=='Uploaded'">
                                 <!-- <label style="color: #fff;">.</label> -->
                                 <a class="blue-btn float-end mt-4 py-3"  ng-click="filePreviewHandler(acceptance)">View</a>
                             </div>
